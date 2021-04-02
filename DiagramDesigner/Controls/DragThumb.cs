@@ -13,46 +13,33 @@ namespace DiagramDesigner.Controls
             DragDelta += new DragDeltaEventHandler(DragThumb_DragDelta);
         }
 
-        void DragThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        private void DragThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            var designerItem = DataContext as DesignerItem;
-            var designer = VisualTreeHelper.GetParent(designerItem) as DesignerCanvas;
+            // Check
+            if (!(DataContext is DesignerItem designerItem)) return;
 
-            if (designerItem != null && designer != null && designerItem.IsSelected)
-            {
-                double minLeft = double.MaxValue;
-                double minTop = double.MaxValue;
+            // Get Canvas
+            if (!(VisualTreeHelper.GetParent(designerItem) is DesignerCanvas designer)) return;
 
-                // we only move DesignerItems
-                var designerItems = designer.SelectionService.CurrentSelection.OfType<DesignerItem>();
+            // Calculate drag limits
+            var itemLeft = Canvas.GetLeft(designerItem);
+            var itemTop = Canvas.GetTop(designerItem);
+            var itemMaxLeft = Math.Max(itemLeft, designer.ActualWidth - designerItem.Width);
+            var itemMaxTop = Math.Max(itemTop, designer.ActualHeight - designerItem.Height);
 
-                foreach (DesignerItem item in designerItems)
-                {
-                    double left = Canvas.GetLeft(item);
-                    double top = Canvas.GetTop(item);
+            // Horizontal change
+            if (e.HorizontalChange > 0)
+                Canvas.SetLeft(designerItem, Math.Min(itemMaxLeft, itemLeft + e.HorizontalChange));
+            else
+                Canvas.SetLeft(designerItem, Math.Max(0, itemLeft + e.HorizontalChange));
 
-                    minLeft = double.IsNaN(left) ? 0 : Math.Min(left, minLeft);
-                    minTop = double.IsNaN(top) ? 0 : Math.Min(top, minTop);
-                }
+            // Vertical change
+            if (e.VerticalChange > 0)
+                Canvas.SetTop(designerItem, Math.Min(itemMaxTop, itemTop + e.VerticalChange));
+            else
+                Canvas.SetTop(designerItem, Math.Max(0, itemTop + e.VerticalChange));
 
-                double deltaHorizontal = Math.Max(-minLeft, e.HorizontalChange);
-                double deltaVertical = Math.Max(-minTop, e.VerticalChange);
-
-                foreach (DesignerItem item in designerItems)
-                {
-                    double left = Canvas.GetLeft(item);
-                    double top = Canvas.GetTop(item);
-
-                    if (double.IsNaN(left)) left = 0;
-                    if (double.IsNaN(top)) top = 0;
-
-                    Canvas.SetLeft(item, left + deltaHorizontal);
-                    Canvas.SetTop(item, top + deltaVertical);
-                }
-
-                designer.InvalidateMeasure();
-                e.Handled = true;
-            }
+            e.Handled = true;
         }
     }
 }

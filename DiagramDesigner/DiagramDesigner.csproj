@@ -114,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\DragThumb.cs" />
-    <Compile Include="Controls\RelativePositionPanel.cs" />
     <Compile Include="Controls\ResizeThumb.cs" />
     <Compile Include="DesignerCanvas.Commands.cs" />
     <Compile Include="DesignerCanvas.cs" />

@@ -39,12 +39,10 @@
             <GridSplitter Focusable="False" Width="2" Background="LightGray"
                     VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
             <!-- Designer -->
-            <GroupBox Header="Diagram" Grid.Column="1" Margin="3,0,0,0">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <s:DesignerCanvas x:Name="MyDesigner" Focusable="true" Background="{StaticResource WindowBackgroundBrush}"
-                                      FocusVisualStyle="{x:Null}" ContextMenu="{StaticResource DesignerCanvasContextMenu}"/>
-                </ScrollViewer>
-            </GroupBox>
+            <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Margin="3,0,0,0" Width="500" Height="500">
+                <s:DesignerCanvas x:Name="MyDesigner" Focusable="true" Background="{StaticResource WindowBackgroundBrush}" Margin="0"
+                                      FocusVisualStyle="{x:Null}" ContextMenu="{StaticResource DesignerCanvasContextMenu}" />
+            </Border>
         </Grid>
     </Grid>
 </Window>
