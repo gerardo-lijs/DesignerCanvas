@@ -10,7 +10,6 @@ namespace DiagramDesigner
     //These attributes identify the types of the named parts that are used for templating
     [TemplatePart(Name = "PART_DragThumb", Type = typeof(DragThumb))]
     [TemplatePart(Name = "PART_ResizeDecorator", Type = typeof(Control))]
-    [TemplatePart(Name = "PART_ConnectorDecorator", Type = typeof(Control))]
     [TemplatePart(Name = "PART_ContentPresenter", Type = typeof(ContentPresenter))]
     public class DesignerItem : ContentControl, ISelectable, IGroupable
     {
@@ -71,42 +70,6 @@ namespace DiagramDesigner
         {
             element.SetValue(DragThumbTemplateProperty, value);
         }
-
-        #endregion
-
-        #region ConnectorDecoratorTemplate Property
-
-        // can be used to replace the default template for the ConnectorDecorator
-        public static readonly DependencyProperty ConnectorDecoratorTemplateProperty =
-            DependencyProperty.RegisterAttached("ConnectorDecoratorTemplate", typeof(ControlTemplate), typeof(DesignerItem));
-
-        public static ControlTemplate GetConnectorDecoratorTemplate(UIElement element)
-        {
-            return (ControlTemplate)element.GetValue(ConnectorDecoratorTemplateProperty);
-        }
-
-        public static void SetConnectorDecoratorTemplate(UIElement element, ControlTemplate value)
-        {
-            element.SetValue(ConnectorDecoratorTemplateProperty, value);
-        }
-
-        #endregion
-
-        #region IsDragConnectionOver
-
-        // while drag connection procedure is ongoing and the mouse moves over 
-        // this item this value is true; if true the ConnectorDecorator is triggered
-        // to be visible, see template
-        public bool IsDragConnectionOver
-        {
-            get { return (bool)GetValue(IsDragConnectionOverProperty); }
-            set { SetValue(IsDragConnectionOverProperty, value); }
-        }
-        public static readonly DependencyProperty IsDragConnectionOverProperty =
-            DependencyProperty.Register("IsDragConnectionOver",
-                                         typeof(bool),
-                                         typeof(DesignerItem),
-                                         new FrameworkPropertyMetadata(false));
 
         #endregion
 

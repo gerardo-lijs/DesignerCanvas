@@ -62,35 +62,6 @@
         </MenuItem>
     </ContextMenu>
 
-    <!-- Connector Style -->
-    <Style TargetType="{x:Type s:Connector}">
-        <Setter Property="Width" Value="8"/>
-        <Setter Property="Height" Value="8"/>
-        <Setter Property="Cursor" Value="Cross"/>
-        <Setter Property="SnapsToDevicePixels" Value="true"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type s:Connector}">
-                    <Grid>
-                        <!-- transparent extra space makes connector easier to hit -->
-                        <Rectangle Fill="Transparent" Margin="-2"/>
-                        <Rectangle Fill="Lavender" StrokeThickness="1" Stroke="#AA000080"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- ConnectorDecoratorTemplate Default Template -->
-    <ControlTemplate x:Key="ConnectorDecoratorTemplate" TargetType="{x:Type Control}">
-        <Grid Margin="-5">
-            <s:Connector x:Name="Left" Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <s:Connector x:Name="Top" Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <s:Connector x:Name="Right" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-            <s:Connector x:Name="Bottom" Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-        </Grid>
-    </ControlTemplate>
-
     <!-- ResizeDecorator Default Template -->
     <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type Control}">
         <Grid Opacity="0.7" SnapsToDevicePixels="true">
@@ -147,10 +118,6 @@
                                           VerticalAlignment="Stretch"
                                           Content="{TemplateBinding ContentControl.Content}"
                                           Margin="{TemplateBinding ContentControl.Padding}"/>
-                        <!-- PART_ConnectorDecorator -->
-                        <Control x:Name="PART_ConnectorDecorator"
-                                 Visibility="Hidden"
-                                 Template="{StaticResource ConnectorDecoratorTemplate}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsGroup}">
@@ -163,15 +130,6 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Visible"/>
                         </MultiDataTrigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </Trigger>
-                        <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsDragConnectionOver}">
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                        <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsGroup}">
-                            <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Hidden"/>
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

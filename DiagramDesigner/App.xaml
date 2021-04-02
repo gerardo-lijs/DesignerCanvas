@@ -14,8 +14,6 @@
         <ResourceDictionary Source="Resources/DesignerItem.xaml"/>
         <ResourceDictionary Source="Resources/ToolboxItem.xaml"/>
         <ResourceDictionary Source="Resources/Toolbox.xaml"/>
-        <ResourceDictionary Source="Resources/Connection.xaml"/>
-        <ResourceDictionary Source="Resources/Stencils/FlowChartStencils.xaml"/>
         <ResourceDictionary Source="Resources/Stencils/ShapeStencils.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

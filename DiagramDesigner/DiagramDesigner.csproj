@@ -63,15 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Connection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\DesignerItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Stencils\FlowChartStencils.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -121,10 +113,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connection.cs" />
-    <Compile Include="ConnectionAdorner.cs" />
-    <Compile Include="Connector.cs" />
-    <Compile Include="ConnectorAdorner.cs" />
     <Compile Include="Controls\DragThumb.cs" />
     <Compile Include="Controls\RelativePositionPanel.cs" />
     <Compile Include="Controls\ResizeThumb.cs" />
@@ -133,7 +121,6 @@
     <Compile Include="DesignerItem.cs" />
     <Compile Include="IGroupable.cs" />
     <Compile Include="ISelectable.cs" />
-    <Compile Include="PathFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

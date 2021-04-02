@@ -92,27 +92,9 @@ namespace DiagramDesigner
                 Guid id = new Guid(itemXML.Element("ID").Value);
                 DesignerItem item = DeserializeDesignerItem(itemXML, id, 0, 0);
                 this.Children.Add(item);
-                SetConnectorDecoratorTemplate(item);
             }
 
             this.InvalidateVisual();
-
-            IEnumerable<XElement> connectionsXML = root.Elements("Connections").Elements("Connection");
-            foreach (XElement connectionXML in connectionsXML)
-            {
-                Guid sourceID = new Guid(connectionXML.Element("SourceID").Value);
-                Guid sinkID = new Guid(connectionXML.Element("SinkID").Value);
-
-                String sourceConnectorName = connectionXML.Element("SourceConnectorName").Value;
-                String sinkConnectorName = connectionXML.Element("SinkConnectorName").Value;
-
-                Connector sourceConnector = GetConnector(sourceID, sourceConnectorName);
-                Connector sinkConnector = GetConnector(sinkID, sinkConnectorName);
-
-                Connection connection = new Connection(sourceConnector, sinkConnector);
-                Canvas.SetZIndex(connection, Int32.Parse(connectionXML.Element("zIndex").Value));
-                this.Children.Add(connection);
-            }
         }
 
         #endregion
@@ -122,14 +104,11 @@ namespace DiagramDesigner
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             IEnumerable<DesignerItem> designerItems = this.Children.OfType<DesignerItem>();
-            IEnumerable<Connection> connections = this.Children.OfType<Connection>();
 
             XElement designerItemsXML = SerializeDesignerItems(designerItems);
-            XElement connectionsXML = SerializeConnections(connections);
 
             XElement root = new XElement("Root");
             root.Add(designerItemsXML);
-            root.Add(connectionsXML);
 
             SaveFile(root);
         }
@@ -190,7 +169,6 @@ namespace DiagramDesigner
                 mappingOldToNewIDs.Add(oldID, newID);
                 DesignerItem item = DeserializeDesignerItem(itemXML, newID, offsetX, offsetY);
                 this.Children.Add(item);
-                SetConnectorDecoratorTemplate(item);
                 newItems.Add(item);
             }
 
@@ -208,32 +186,6 @@ namespace DiagramDesigner
                 if (item.ParentID == Guid.Empty)
                 {
                     SelectionService.AddToSelection(item);
-                }
-            }
-
-            // create Connections
-            IEnumerable<XElement> connectionsXML = root.Elements("Connections").Elements("Connection");
-            foreach (XElement connectionXML in connectionsXML)
-            {
-                Guid oldSourceID = new Guid(connectionXML.Element("SourceID").Value);
-                Guid oldSinkID = new Guid(connectionXML.Element("SinkID").Value);
-
-                if (mappingOldToNewIDs.ContainsKey(oldSourceID) && mappingOldToNewIDs.ContainsKey(oldSinkID))
-                {
-                    Guid newSourceID = mappingOldToNewIDs[oldSourceID];
-                    Guid newSinkID = mappingOldToNewIDs[oldSinkID];
-
-                    String sourceConnectorName = connectionXML.Element("SourceConnectorName").Value;
-                    String sinkConnectorName = connectionXML.Element("SinkConnectorName").Value;
-
-                    Connector sourceConnector = GetConnector(newSourceID, sourceConnectorName);
-                    Connector sinkConnector = GetConnector(newSinkID, sinkConnectorName);
-
-                    Connection connection = new Connection(sourceConnector, sinkConnector);
-                    Canvas.SetZIndex(connection, Int32.Parse(connectionXML.Element("zIndex").Value));
-                    this.Children.Add(connection);
-
-                    SelectionService.AddToSelection(connection);
                 }
             }
 
@@ -827,24 +779,6 @@ namespace DiagramDesigner
             return serializedItems;
         }
 
-        private XElement SerializeConnections(IEnumerable<Connection> connections)
-        {
-            var serializedConnections = new XElement("Connections",
-                           from connection in connections
-                           select new XElement("Connection",
-                                      new XElement("SourceID", connection.Source.ParentDesignerItem.ID),
-                                      new XElement("SinkID", connection.Sink.ParentDesignerItem.ID),
-                                      new XElement("SourceConnectorName", connection.Source.Name),
-                                      new XElement("SinkConnectorName", connection.Sink.Name),
-                                      new XElement("SourceArrowSymbol", connection.SourceArrowSymbol),
-                                      new XElement("SinkArrowSymbol", connection.SinkArrowSymbol),
-                                      new XElement("zIndex", Canvas.GetZIndex(connection))
-                                     )
-                                  );
-
-            return serializedConnections;
-        }
-
         private static DesignerItem DeserializeDesignerItem(XElement itemXML, Guid id, double OffsetX, double OffsetY)
         {
             DesignerItem item = new DesignerItem(id);
@@ -865,36 +799,10 @@ namespace DiagramDesigner
             IEnumerable<DesignerItem> selectedDesignerItems =
                 this.SelectionService.CurrentSelection.OfType<DesignerItem>();
 
-            List<Connection> selectedConnections =
-                this.SelectionService.CurrentSelection.OfType<Connection>().ToList();
-
-            foreach (Connection connection in this.Children.OfType<Connection>())
-            {
-                if (!selectedConnections.Contains(connection))
-                {
-                    DesignerItem sourceItem = (from item in selectedDesignerItems
-                                               where item.ID == connection.Source.ParentDesignerItem.ID
-                                               select item).FirstOrDefault();
-
-                    DesignerItem sinkItem = (from item in selectedDesignerItems
-                                             where item.ID == connection.Sink.ParentDesignerItem.ID
-                                             select item).FirstOrDefault();
-
-                    if (sourceItem != null &&
-                        sinkItem != null &&
-                        BelongToSameGroup(sourceItem, sinkItem))
-                    {
-                        selectedConnections.Add(connection);
-                    }
-                }
-            }
-
             XElement designerItemsXML = SerializeDesignerItems(selectedDesignerItems);
-            XElement connectionsXML = SerializeConnections(selectedConnections);
 
             XElement root = new XElement("Root");
             root.Add(designerItemsXML);
-            root.Add(connectionsXML);
 
             root.Add(new XAttribute("OffsetX", 10));
             root.Add(new XAttribute("OffsetY", 10));
@@ -905,25 +813,8 @@ namespace DiagramDesigner
 
         private void DeleteCurrentSelection()
         {
-            foreach (Connection connection in SelectionService.CurrentSelection.OfType<Connection>())
-            {
-                this.Children.Remove(connection);
-            }
-
             foreach (DesignerItem item in SelectionService.CurrentSelection.OfType<DesignerItem>())
             {
-                Control cd = item.Template.FindName("PART_ConnectorDecorator", item) as Control;
-
-                List<Connector> connectors = new List<Connector>();
-                GetConnectors(cd, connectors);
-
-                foreach (Connector connector in connectors)
-                {
-                    foreach (Connection con in connector.Connections)
-                    {
-                        this.Children.Remove(con);
-                    }
-                }
                 this.Children.Remove(item);
             }
 
@@ -960,33 +851,6 @@ namespace DiagramDesigner
             }
 
             return new Rect(new Point(x1, y1), new Point(x2, y2));
-        }
-
-        private void GetConnectors(DependencyObject parent, List<Connector> connectors)
-        {
-            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childrenCount; i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                if (child is Connector)
-                {
-                    connectors.Add(child as Connector);
-                }
-                else
-                    GetConnectors(child, connectors);
-            }
-        }
-
-        private Connector GetConnector(Guid itemID, String connectorName)
-        {
-            DesignerItem designerItem = (from item in this.Children.OfType<DesignerItem>()
-                                         where item.ID == itemID
-                                         select item).FirstOrDefault();
-
-            Control connectorDecorator = designerItem.Template.FindName("PART_ConnectorDecorator", designerItem) as Control;
-            connectorDecorator.ApplyTemplate();
-
-            return connectorDecorator.Template.FindName(connectorName, connectorDecorator) as Connector;
         }
 
         private bool BelongToSameGroup(IGroupable item1, IGroupable item2)

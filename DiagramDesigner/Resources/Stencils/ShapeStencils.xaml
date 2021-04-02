@@ -43,17 +43,6 @@
             <Path Fill="Transparent" Stretch="Fill" Data="M 9,2 11,7 17,7 12,10 14,15 9,12 4,15 6,10 1,7 7,7 Z"/>
           </ControlTemplate>
         </s:DesignerItem.DragThumbTemplate>
-        <s:DesignerItem.ConnectorDecoratorTemplate>
-          <ControlTemplate>
-            <c:RelativePositionPanel Margin="-4">
-              <s:Connector x:Name="Top1" Orientation="Top" c:RelativePositionPanel.RelativePosition="0.5,0"/>
-              <s:Connector x:Name="Top2" Orientation="Left" c:RelativePositionPanel.RelativePosition="0,0.385"/>
-              <s:Connector x:Name="Top3" Orientation="Right" c:RelativePositionPanel.RelativePosition="1,0.385"/>
-              <s:Connector x:Name="Top4" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.185,1"/>
-              <s:Connector x:Name="Top5" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.815,1"/>
-            </c:RelativePositionPanel>
-          </ControlTemplate>
-        </s:DesignerItem.ConnectorDecoratorTemplate>
       </Path>
 
     </ItemsControl.Items>
