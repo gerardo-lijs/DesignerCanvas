@@ -10,13 +10,14 @@ namespace DiagramDesigner.Controls
     {
         public DragThumb()
         {
-            base.DragDelta += new DragDeltaEventHandler(DragThumb_DragDelta);
+            DragDelta += new DragDeltaEventHandler(DragThumb_DragDelta);
         }
 
         void DragThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            DesignerItem designerItem = this.DataContext as DesignerItem;
-            DesignerCanvas designer = VisualTreeHelper.GetParent(designerItem) as DesignerCanvas;
+            var designerItem = DataContext as DesignerItem;
+            var designer = VisualTreeHelper.GetParent(designerItem) as DesignerCanvas;
+
             if (designerItem != null && designer != null && designerItem.IsSelected)
             {
                 double minLeft = double.MaxValue;
