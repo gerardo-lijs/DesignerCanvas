@@ -119,7 +119,6 @@
     <Compile Include="DesignerCanvas.Commands.cs" />
     <Compile Include="DesignerCanvas.cs" />
     <Compile Include="DesignerItem.cs" />
-    <Compile Include="IGroupable.cs" />
     <Compile Include="ISelectable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
