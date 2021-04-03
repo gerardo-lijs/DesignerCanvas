@@ -87,7 +87,7 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="Images/Delete.png" Width="16"/>
+                                <Image Source="/Resources/Images/Delete.png" Width="16"/>
                                 <TextBlock Margin="3,0,3,0" Text="Delete" VerticalAlignment="Center" Grid.Column="1"/>
                             </Grid>
                         </Button.Content>

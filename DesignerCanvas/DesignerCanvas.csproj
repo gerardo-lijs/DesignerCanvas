@@ -5,4 +5,30 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\Images\BringForward.png" />
+    <None Remove="Resources\Images\BringToFront.png" />
+    <None Remove="Resources\Images\Copy.png" />
+    <None Remove="Resources\Images\Cut.png" />
+    <None Remove="Resources\Images\Delete.png" />
+    <None Remove="Resources\Images\GenericDocument.png" />
+    <None Remove="Resources\Images\Paste.png" />
+    <None Remove="Resources\Images\PasteBig.png" />
+    <None Remove="Resources\Images\SendBackward.png" />
+    <None Remove="Resources\Images\SendToBack.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\BringForward.png" />
+    <Resource Include="Resources\Images\BringToFront.png" />
+    <Resource Include="Resources\Images\Copy.png" />
+    <Resource Include="Resources\Images\Cut.png" />
+    <Resource Include="Resources\Images\Delete.png" />
+    <Resource Include="Resources\Images\GenericDocument.png" />
+    <Resource Include="Resources\Images\Paste.png" />
+    <Resource Include="Resources\Images\PasteBig.png" />
+    <Resource Include="Resources\Images\SendBackward.png" />
+    <Resource Include="Resources\Images\SendToBack.png" />
+  </ItemGroup>
+
 </Project>

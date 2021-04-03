@@ -7,7 +7,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/ApplicationToolbar.xaml"/>
-                <ResourceDictionary Source="Resources/DesignerItem.xaml"/>
+
+                <!--TODO: Load default style automatically (CustomControl) -->
+                <ResourceDictionary Source="pack://application:,,,/DesignerCanvas;component/Styles/DesignerItem.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
