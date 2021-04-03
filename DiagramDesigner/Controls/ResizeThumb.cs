@@ -22,23 +22,23 @@ namespace DiagramDesigner.Controls
             // Get Canvas
             if (!(VisualTreeHelper.GetParent(designerItem) is DesignerCanvas designer)) return;
 
-            // Calculate resize limits
-            var itemLeft = Canvas.GetLeft(designerItem);
+            // Resize vertical
             var itemTop = Canvas.GetTop(designerItem);
-            var itemMinWidth = designerItem.ActualWidth - designerItem.MinWidth;
-            var itemMaxWidth = designer.ActualWidth - itemLeft;
-            var itemMinHeight = designerItem.ActualHeight - designerItem.MinHeight;
-            var itemMaxHeight = designer.ActualHeight - itemTop;
-
             switch (VerticalAlignment)
             {
                 case VerticalAlignment.Bottom:
                     if (e.VerticalChange > 0)
+                    {
+                        var itemMaxHeight = designer.ActualHeight - itemTop;
                         designerItem.Height = Math.Min(itemMaxHeight, designerItem.ActualHeight + e.VerticalChange);
+                    }
                     else
+                    {
                         designerItem.Height = Math.Max(0, designerItem.ActualHeight + e.VerticalChange);
+                    }
                     break;
                 case VerticalAlignment.Top:
+                    var itemMinHeight = designerItem.ActualHeight - designerItem.MinHeight;
                     var dragDeltaVertical = Math.Min(Math.Max(-itemTop, e.VerticalChange), itemMinHeight);
                     Canvas.SetTop(designerItem, itemTop + dragDeltaVertical);
                     designerItem.Height = designerItem.ActualHeight - dragDeltaVertical;
@@ -47,18 +47,26 @@ namespace DiagramDesigner.Controls
                     break;
             }
 
+            // Resize horizontal
+            var itemLeft = Canvas.GetLeft(designerItem);
             switch (HorizontalAlignment)
             {
                 case HorizontalAlignment.Left:
+                    var itemMinWidth = designerItem.ActualWidth - designerItem.MinWidth;
                     var dragDeltaHorizontal = Math.Min(Math.Max(-itemLeft, e.HorizontalChange), itemMinWidth);
                     Canvas.SetLeft(designerItem, itemLeft + dragDeltaHorizontal);
                     designerItem.Width = designerItem.ActualWidth - dragDeltaHorizontal;
                     break;
                 case HorizontalAlignment.Right:
                     if (e.HorizontalChange > 0)
+                    {
+                        var itemMaxWidth = designer.ActualWidth - itemLeft;
                         designerItem.Width = Math.Min(itemMaxWidth, designerItem.ActualWidth + e.HorizontalChange);
+                    }
                     else
+                    {
                         designerItem.Width = Math.Max(0, designerItem.ActualWidth + e.HorizontalChange);
+                    }
                     break;
                 default:
                     break;
