@@ -26,53 +26,6 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <StackPanel Orientation="Vertical" Margin="0,2,0,2">
-                    <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static ApplicationCommands.Open}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="Images/OpenFolder.png" Width="16"/>
-                                <TextBlock Margin="3,0,3,0" Text="Open" VerticalAlignment="Center"  Grid.Column="1"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static ApplicationCommands.Save}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="Images/Save.png" Width="16"/>
-                                <TextBlock Margin="3,0,3,0" Text="Save" VerticalAlignment="Center" Grid.Column="1"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static ApplicationCommands.Print}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="Images/Print.png" Width="16"/>
-                                <TextBlock Margin="3,0,3,0" Text="Print" VerticalAlignment="Center" Grid.Column="1"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
             </StackPanel>
         </GroupBox>
 
@@ -144,102 +97,6 @@
             </StackPanel>
         </GroupBox>
 
-        <!--Alignment-->
-        <GroupBox Header="Alignment" Style="{StaticResource ToolbarGroup}" Margin="3">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <Border BorderBrush="{StaticResource ToolbarBorderBrush}" BorderThickness="1" CornerRadius="2" Margin="3">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Padding="5" Style="{StaticResource ToolBarButtonBaseStyle}"
-                                    Command="{x:Static s:DesignerCanvas.AlignLeft}"
-                                    CommandTarget="{Binding ElementName=MyDesigner}">
-                                <Button.Content>
-                                    <Image Source="Images/AlignObjectsLeft.png" Width="16"/>
-                                </Button.Content>
-                            </Button>
-                            <Button Padding="5" Style="{StaticResource ToolBarButtonBaseStyle}"
-                                    Command="{x:Static s:DesignerCanvas.AlignHorizontalCenters}"
-                                    CommandTarget="{Binding ElementName=MyDesigner}">
-                                <Button.Content>
-                                    <Image Source="Images/AlignObjectsCenteredHorizontal.png" Width="16"/>
-                                </Button.Content>
-                            </Button>
-                            <Button Padding="5" Style="{StaticResource ToolBarButtonBaseStyle}"
-                                    Command="{x:Static s:DesignerCanvas.AlignRight}"
-                                    CommandTarget="{Binding ElementName=MyDesigner}">
-                                <Button.Content>
-                                    <Image Source="Images/AlignObjectsRight.png" Width="16"/>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                    <Border BorderBrush="{StaticResource ToolbarBorderBrush}" BorderThickness="1" CornerRadius="2" Margin="3">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Padding="5" Style="{StaticResource ToolBarButtonBaseStyle}"
-                                    Command="{x:Static s:DesignerCanvas.AlignTop}"
-                                    CommandTarget="{Binding ElementName=MyDesigner}">
-                                <Button.Content>
-                                    <Image Source="Images/AlignObjectsTop.png" Width="16"/>
-                                </Button.Content>
-                            </Button>
-                            <Button Padding="5" Style="{StaticResource ToolBarButtonBaseStyle}"
-                                    Command="{x:Static s:DesignerCanvas.AlignVerticalCenters}"
-                                    CommandTarget="{Binding ElementName=MyDesigner}">
-                                <Button.Content>
-                                    <Image Source="Images/AlignObjectsCenteredVertical.png" Width="16"/>
-                                </Button.Content>
-                            </Button>
-                            <Button Padding="5" Style="{StaticResource ToolBarButtonBaseStyle}"
-                                    Command="{x:Static s:DesignerCanvas.AlignBottom}"
-                                    CommandTarget="{Binding ElementName=MyDesigner}">
-                                <Button.Content>
-                                    <Image Source="Images/AlignObjectsBottom.png" Width="16"/>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,0,0,0">
-                    <Button Margin="3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvas.DistributeHorizontal}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="Images/DistributeObjectsHorizontal.png" Width="16"/>
-                                <TextBlock Margin="3" Text="Horizontal" VerticalAlignment="Center" Grid.Column="1"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <Button Margin="3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvas.DistributeVertical}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="Images/DistributeObjectsVertical.png" Width="16"/>
-                                <TextBlock Margin="3" Text="Vertical" VerticalAlignment="Center" Grid.Column="1"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-                <Line Stroke="{StaticResource ToolbarBorderBrush}" StrokeThickness="1" X1="0" Y1="0" X2="0" Y2="20" Stretch="Fill" HorizontalAlignment="Left"
-              Margin="3,0,0,0" Grid.Column="1"/>
-            </Grid>
-        </GroupBox>
-
         <!--Arrange-->
         <GroupBox Header="Arrange" Style="{StaticResource ToolbarGroup}" Margin="3">
             <Grid>
@@ -248,38 +105,6 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvas.Group}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="Images/Group.png" Width="16"/>
-                                <TextBlock Margin="3" Text="Group" VerticalAlignment="Center" Grid.Column="1"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvas.Ungroup}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Source="Images/Ungroup.png" Width="16"/>
-                                <TextBlock Margin="3" Text="Ungroup" VerticalAlignment="Center" Grid.Column="1"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
                 <StackPanel Grid.Column="1" Margin="7,0,0,0">
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"

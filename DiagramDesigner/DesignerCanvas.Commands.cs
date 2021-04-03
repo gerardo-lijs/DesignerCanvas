@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,37 +7,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
-using System.Windows.Media;
 using System.Xml;
 using System.Xml.Linq;
-using Microsoft.Win32;
 
 namespace DiagramDesigner
 {
     public partial class DesignerCanvas
     {
-        public static RoutedCommand Group = new RoutedCommand();
-        public static RoutedCommand Ungroup = new RoutedCommand();
         public static RoutedCommand BringForward = new RoutedCommand();
         public static RoutedCommand BringToFront = new RoutedCommand();
         public static RoutedCommand SendBackward = new RoutedCommand();
         public static RoutedCommand SendToBack = new RoutedCommand();
-        public static RoutedCommand AlignTop = new RoutedCommand();
-        public static RoutedCommand AlignVerticalCenters = new RoutedCommand();
-        public static RoutedCommand AlignBottom = new RoutedCommand();
-        public static RoutedCommand AlignLeft = new RoutedCommand();
-        public static RoutedCommand AlignHorizontalCenters = new RoutedCommand();
-        public static RoutedCommand AlignRight = new RoutedCommand();
-        public static RoutedCommand DistributeHorizontal = new RoutedCommand();
-        public static RoutedCommand DistributeVertical = new RoutedCommand();
         public static RoutedCommand SelectAll = new RoutedCommand();
 
         public DesignerCanvas()
         {
             this.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, New_Executed));
-            this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, Open_Executed));
-            this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, Save_Executed));
-            this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Print, Print_Executed));
             this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, Cut_Executed, Cut_Enabled));
             this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, Copy_Executed, Copy_Enabled));
             this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, Paste_Executed, Paste_Enabled));
@@ -60,63 +44,6 @@ namespace DiagramDesigner
         {
             this.Children.Clear();
             this.SelectionService.ClearSelection();
-        }
-
-        #endregion
-
-        #region Open Command
-
-        private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            XElement root = LoadSerializedDataFromFile();
-
-            if (root == null)
-                return;
-
-            this.Children.Clear();
-            this.SelectionService.ClearSelection();
-
-            IEnumerable<XElement> itemsXML = root.Elements("DesignerItems").Elements("DesignerItem");
-            foreach (XElement itemXML in itemsXML)
-            {
-                Guid id = new Guid(itemXML.Element("ID").Value);
-                DesignerItem item = DeserializeDesignerItem(itemXML, id, 0, 0);
-                this.Children.Add(item);
-            }
-
-            this.InvalidateVisual();
-        }
-
-        #endregion
-
-        #region Save Command
-
-        private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            IEnumerable<DesignerItem> designerItems = this.Children.OfType<DesignerItem>();
-
-            XElement designerItemsXML = SerializeDesignerItems(designerItems);
-
-            XElement root = new XElement("Root");
-            root.Add(designerItemsXML);
-
-            SaveFile(root);
-        }
-
-        #endregion
-
-        #region Print Command
-
-        private void Print_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            SelectionService.ClearSelection();
-
-            PrintDialog printDialog = new PrintDialog();
-
-            if (true == printDialog.ShowDialog())
-            {
-                printDialog.PrintVisual(this, "WPF Diagram");
-            }
         }
 
         #endregion
@@ -185,12 +112,30 @@ namespace DiagramDesigner
             root.Attribute("OffsetX").Value = (offsetX + 10).ToString();
             root.Attribute("OffsetY").Value = (offsetY + 10).ToString();
             Clipboard.Clear();
-            Clipboard.SetData(DataFormats.Xaml, root);
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    Clipboard.SetData(DataFormats.Xaml, root);
+                    return;
+                }
+                catch { }
+                System.Threading.Thread.Sleep(10);
+            }
         }
 
         private void Paste_Enabled(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = Clipboard.ContainsData(DataFormats.Xaml);
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    e.CanExecute = Clipboard.ContainsData(DataFormats.Xaml);
+                    return;
+                }
+                catch { }
+                System.Threading.Thread.Sleep(10);
+            }
         }
 
         #endregion
@@ -220,41 +165,6 @@ namespace DiagramDesigner
         private void Cut_Enabled(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.SelectionService.CurrentSelection.Count() > 0;
-        }
-
-        #endregion
-
-        #region Ungroup Command
-
-        private void Ungroup_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            var groups = (from item in SelectionService.CurrentSelection.OfType<DesignerItem>()
-                          where item.IsGroup && item.ParentID == Guid.Empty
-                          select item).ToArray();
-
-            foreach (DesignerItem groupRoot in groups)
-            {
-                var children = from child in SelectionService.CurrentSelection.OfType<DesignerItem>()
-                               where child.ParentID == groupRoot.ID
-                               select child;
-
-                foreach (DesignerItem child in children)
-                    child.ParentID = Guid.Empty;
-
-                this.SelectionService.RemoveFromSelection(groupRoot);
-                this.Children.Remove(groupRoot);
-                UpdateZIndex();
-            }
-        }
-
-        private void Ungroup_Enabled(object sender, CanExecuteRoutedEventArgs e)
-        {
-            var groupedItem = from item in SelectionService.CurrentSelection.OfType<DesignerItem>()
-                              where item.ParentID != Guid.Empty
-                              select item;
-
-
-            e.CanExecute = groupedItem.Count() > 0;
         }
 
         #endregion
@@ -402,59 +312,31 @@ namespace DiagramDesigner
 
         #region Helper Methods
 
-        private XElement LoadSerializedDataFromFile()
-        {
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Designer Files (*.xml)|*.xml|All Files (*.*)|*.*";
-
-            if (openFile.ShowDialog() == true)
-            {
-                try
-                {
-                    return XElement.Load(openFile.FileName);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.StackTrace, e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-
-            return null;
-        }
-
-        void SaveFile(XElement xElement)
-        {
-            SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.Filter = "Files (*.xml)|*.xml|All Files (*.*)|*.*";
-            if (saveFile.ShowDialog() == true)
-            {
-                try
-                {
-                    xElement.Save(saveFile.FileName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
         private XElement LoadSerializedDataFromClipBoard()
         {
-            if (Clipboard.ContainsData(DataFormats.Xaml))
+            for (int i = 0; i < 10; i++)
             {
-                String clipboardData = Clipboard.GetData(DataFormats.Xaml) as String;
-
-                if (String.IsNullOrEmpty(clipboardData))
-                    return null;
                 try
                 {
-                    return XElement.Load(new StringReader(clipboardData));
+                    if (Clipboard.ContainsData(DataFormats.Xaml))
+                    {
+                        String clipboardData = Clipboard.GetData(DataFormats.Xaml) as String;
+
+                        if (String.IsNullOrEmpty(clipboardData)) return null;
+                        try
+                        {
+                            return XElement.Load(new StringReader(clipboardData));
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.StackTrace, e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                    return null;
                 }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.StackTrace, e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                catch { }
+                System.Threading.Thread.Sleep(10);
             }
 
             return null;
@@ -472,7 +354,6 @@ namespace DiagramDesigner
                                                   new XElement("Height", item.Height),
                                                   new XElement("ID", item.ID),
                                                   new XElement("zIndex", Canvas.GetZIndex(item)),
-                                                  new XElement("IsGroup", item.IsGroup),
                                                   new XElement("ParentID", item.ParentID),
                                                   new XElement("Content", contentXaml)
                                               )
@@ -487,7 +368,6 @@ namespace DiagramDesigner
             item.Width = Double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture);
             item.Height = Double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture);
             item.ParentID = new Guid(itemXML.Element("ParentID").Value);
-            item.IsGroup = Boolean.Parse(itemXML.Element("IsGroup").Value);
             Canvas.SetLeft(item, Double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);
             Canvas.SetTop(item, Double.Parse(itemXML.Element("Top").Value, CultureInfo.InvariantCulture) + OffsetY);
             Canvas.SetZIndex(item, Int32.Parse(itemXML.Element("zIndex").Value));
@@ -510,7 +390,16 @@ namespace DiagramDesigner
             root.Add(new XAttribute("OffsetY", 10));
 
             Clipboard.Clear();
-            Clipboard.SetData(DataFormats.Xaml, root);
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    Clipboard.SetData(DataFormats.Xaml, root);
+                    return;
+                }
+                catch { }
+                System.Threading.Thread.Sleep(10);
+            }
         }
 
         private void DeleteCurrentSelection()

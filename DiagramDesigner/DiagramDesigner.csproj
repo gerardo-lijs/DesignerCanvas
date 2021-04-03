@@ -148,29 +148,16 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\AlignObjectsBottom.png" />
-    <Resource Include="Resources\Images\AlignObjectsCenteredHorizontal.png" />
-    <Resource Include="Resources\Images\AlignObjectsCenteredVertical.png" />
-    <Resource Include="Resources\Images\AlignObjectsLeft.png" />
-    <Resource Include="Resources\Images\AlignObjectsRight.png" />
-    <Resource Include="Resources\Images\AlignObjectsTop.png" />
     <Resource Include="Resources\Images\BringForward.png" />
     <Resource Include="Resources\Images\BringToFront.png" />
     <Resource Include="Resources\Images\Copy.png" />
     <Resource Include="Resources\Images\Cut.png" />
     <Resource Include="Resources\Images\Delete.png" />
-    <Resource Include="Resources\Images\DistributeObjectsHorizontal.png" />
-    <Resource Include="Resources\Images\DistributeObjectsVertical.png" />
     <Resource Include="Resources\Images\GenericDocument.png" />
-    <Resource Include="Resources\Images\Group.png" />
-    <Resource Include="Resources\Images\OpenFolder.png" />
     <Resource Include="Resources\Images\PasteBig.png" />
     <Resource Include="Resources\Images\Paste.png" />
-    <Resource Include="Resources\Images\Print.png" />
-    <Resource Include="Resources\Images\Save.png" />
     <Resource Include="Resources\Images\SendBackward.png" />
     <Resource Include="Resources\Images\SendToBack.png" />
-    <Resource Include="Resources\Images\Ungroup.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
