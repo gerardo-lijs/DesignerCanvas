@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Xml;
 
-namespace DiagramDesigner
+namespace DesignerCanvas
 {
     public partial class DesignerCanvas : Canvas
     {

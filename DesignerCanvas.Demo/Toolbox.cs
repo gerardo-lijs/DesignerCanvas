@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace DiagramDesigner
+namespace DesignerCanvasDemo
 {
     // Implements ItemsControl for ToolboxItems    
     public class Toolbox : ItemsControl

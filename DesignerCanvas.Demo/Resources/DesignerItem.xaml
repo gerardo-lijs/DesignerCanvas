@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                    xmlns:s="clr-namespace:DiagramDesigner"
-                    xmlns:c="clr-namespace:DiagramDesigner.Controls">
+                    xmlns:s="clr-namespace:DesignerCanvas;assembly=DesignerCanvas"
+                    xmlns:c="clr-namespace:DesignerCanvas.Controls;assembly=DesignerCanvas">
 
     <ContextMenu x:Key="DesignerItemContextMenu">
         <MenuItem Header="Cut" Command="{x:Static ApplicationCommands.Cut}">

@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\BringForward.png" />
+    <None Remove="Resources\Images\BringToFront.png" />
+    <None Remove="Resources\Images\Copy.png" />
+    <None Remove="Resources\Images\Cut.png" />
+    <None Remove="Resources\Images\Delete.png" />
+    <None Remove="Resources\Images\GenericDocument.png" />
+    <None Remove="Resources\Images\Paste.png" />
+    <None Remove="Resources\Images\PasteBig.png" />
+    <None Remove="Resources\Images\SendBackward.png" />
+    <None Remove="Resources\Images\SendToBack.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DesignerCanvas\DesignerCanvas.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\BringForward.png" />
+    <Resource Include="Resources\Images\BringToFront.png" />
+    <Resource Include="Resources\Images\Copy.png" />
+    <Resource Include="Resources\Images\Cut.png" />
+    <Resource Include="Resources\Images\Delete.png" />
+    <Resource Include="Resources\Images\GenericDocument.png" />
+    <Resource Include="Resources\Images\Paste.png" />
+    <Resource Include="Resources\Images\PasteBig.png" />
+    <Resource Include="Resources\Images\SendBackward.png" />
+    <Resource Include="Resources\Images\SendToBack.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Window1.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Resources\ApplicationToolbar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\DesignerItem.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Stencils\ShapeStencils.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\Expander.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\GroupBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\ScrollBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\Shared.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\ToolBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Toolbox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\ToolboxItem.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

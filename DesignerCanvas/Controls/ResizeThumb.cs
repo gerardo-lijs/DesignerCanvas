@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
-namespace DiagramDesigner.Controls
+namespace DesignerCanvas.Controls
 {
     public class ResizeThumb : Thumb
     {

@@ -1,4 +1,4 @@
-﻿namespace DiagramDesigner
+﻿namespace DesignerCanvas
 {
     internal interface ISelectable
     {

@@ -5,7 +5,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace DiagramDesigner
+namespace DesignerCanvas
 {
     public class RubberbandAdorner : Adorner
     {

@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace DiagramDesigner
+namespace DesignerCanvasDemo
 {
     // Represents a selectable item in the Toolbox/>.
     public class ToolboxItem : ContentControl
@@ -37,7 +37,7 @@ namespace DiagramDesigner
                 // XamlWriter.Save() has limitations in exactly what is serialized,
                 // see SDK documentation; short term solution only;
                 string xamlString = XamlWriter.Save(this.Content);
-                DragObject dataObject = new DragObject();
+                var dataObject = new DesignerCanvas.DragObject();
                 dataObject.Xaml = xamlString;
 
                 WrapPanel panel = VisualTreeHelper.GetParent(this) as WrapPanel;
@@ -53,16 +53,5 @@ namespace DiagramDesigner
                 e.Handled = true;
             }
         }
-    }
-
-    // Wraps info of the dragged object into a class
-    public class DragObject
-    {
-        // Xaml string that represents the serialized content
-        public String Xaml { get; set; }
-
-        // Defines width and height of the DesignerItem
-        // when this DragObject is dropped on the DesignerCanvas
-        public Size? DesiredSize { get; set; }
     }
 }

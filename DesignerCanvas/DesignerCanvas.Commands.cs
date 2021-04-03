@@ -10,7 +10,7 @@ using System.Windows.Markup;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace DiagramDesigner
+namespace DesignerCanvas
 {
     public partial class DesignerCanvas
     {
