@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -42,11 +40,8 @@ namespace DiagramDesigner.Controls
                     break;
                 case VerticalAlignment.Top:
                     var dragDeltaVertical = Math.Min(Math.Max(-itemTop, e.VerticalChange), itemMinHeight);
-                    var scaleVertical = (designerItem.ActualHeight - dragDeltaVertical) / designerItem.ActualHeight;
-
-                    var delta = designerItem.Height * (scaleVertical - 1);
-                    Canvas.SetTop(designerItem, itemTop - delta);
-                    designerItem.Height = designerItem.ActualHeight * scaleVertical;
+                    Canvas.SetTop(designerItem, itemTop + dragDeltaVertical);
+                    designerItem.Height = designerItem.ActualHeight - dragDeltaVertical;
                     break;
                 default:
                     break;
@@ -56,11 +51,8 @@ namespace DiagramDesigner.Controls
             {
                 case HorizontalAlignment.Left:
                     var dragDeltaHorizontal = Math.Min(Math.Max(-itemLeft, e.HorizontalChange), itemMinWidth);
-                    var scaleHorizontal = (designerItem.ActualWidth - dragDeltaHorizontal) / designerItem.ActualWidth;
-
-                    var delta = designerItem.Width * (scaleHorizontal - 1);
-                    Canvas.SetLeft(designerItem, itemLeft - delta);
-                    designerItem.Width = designerItem.ActualWidth * scaleHorizontal;
+                    Canvas.SetLeft(designerItem, itemLeft + dragDeltaHorizontal);
+                    designerItem.Width = designerItem.ActualWidth - dragDeltaHorizontal;
                     break;
                 case HorizontalAlignment.Right:
                     if (e.HorizontalChange > 0)
