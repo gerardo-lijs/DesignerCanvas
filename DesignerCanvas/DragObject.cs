@@ -7,7 +7,7 @@ namespace DesignerCanvas
     public class DragObject
     {
         // Xaml string that represents the serialized content
-        public String Xaml { get; set; }
+        public string Xaml { get; set; }
 
         // Defines width and height of the DesignerItem
         // when this DragObject is dropped on the DesignerCanvas
