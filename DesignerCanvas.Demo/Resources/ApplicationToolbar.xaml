@@ -3,7 +3,6 @@
                     xmlns:s="clr-namespace:DesignerCanvas;assembly=DesignerCanvas">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Styles/Shared.xaml"/>
         <ResourceDictionary Source="Styles/ToolBar.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     

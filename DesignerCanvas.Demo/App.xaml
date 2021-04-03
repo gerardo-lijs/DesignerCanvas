@@ -6,11 +6,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Shared.xaml"/>
-                <ResourceDictionary Source="Resources/Styles/ToolBar.xaml"/>
-                <ResourceDictionary Source="Resources/Styles/GroupBox.xaml"/>
-                <ResourceDictionary Source="Resources/Styles/Expander.xaml"/>
-                <ResourceDictionary Source="Resources/Styles/ScrollBar.xaml"/>
                 <ResourceDictionary Source="Resources/ApplicationToolbar.xaml"/>
                 <ResourceDictionary Source="Resources/DesignerItem.xaml"/>
             </ResourceDictionary.MergedDictionaries>
