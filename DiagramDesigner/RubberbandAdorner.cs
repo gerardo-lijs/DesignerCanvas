@@ -11,33 +11,33 @@ namespace DiagramDesigner
     {
         private Point? startPoint;
         private Point? endPoint;
-        private Pen rubberbandPen;
-
-        private DesignerCanvas designerCanvas;
+        private readonly Pen _rubberbandPen;
+        private readonly DesignerCanvas _designerCanvas;
 
         public RubberbandAdorner(DesignerCanvas designerCanvas, Point? dragStartPoint)
             : base(designerCanvas)
         {
-            this.designerCanvas = designerCanvas;
-            this.startPoint = dragStartPoint;
-            rubberbandPen = new Pen(Brushes.LightSlateGray, 1);
-            rubberbandPen.DashStyle = new DashStyle(new double[] { 2 }, 1);
+            _designerCanvas = designerCanvas;
+            startPoint = dragStartPoint;
+            _rubberbandPen = new Pen(Brushes.LightSlateGray, 1)
+            {
+                DashStyle = new DashStyle(new double[] { 2 }, 1)
+            };
         }
 
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (!this.IsMouseCaptured)
-                    this.CaptureMouse();
+                if (!IsMouseCaptured) CaptureMouse();
 
                 endPoint = e.GetPosition(this);
                 UpdateSelection();
-                this.InvalidateVisual();
+                InvalidateVisual();
             }
             else
             {
-                if (this.IsMouseCaptured) this.ReleaseMouseCapture();
+                if (IsMouseCaptured) ReleaseMouseCapture();
             }
 
             e.Handled = true;
@@ -49,7 +49,7 @@ namespace DiagramDesigner
             if (this.IsMouseCaptured) this.ReleaseMouseCapture();
 
             // remove this adorner from adorner layer
-            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this.designerCanvas);
+            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this._designerCanvas);
             if (adornerLayer != null)
                 adornerLayer.Remove(this);
 
@@ -66,24 +66,24 @@ namespace DiagramDesigner
             dc.DrawRectangle(Brushes.Transparent, null, new Rect(RenderSize));
 
             if (this.startPoint.HasValue && this.endPoint.HasValue)
-                dc.DrawRectangle(Brushes.Transparent, rubberbandPen, new Rect(this.startPoint.Value, this.endPoint.Value));
+                dc.DrawRectangle(Brushes.Transparent, _rubberbandPen, new Rect(this.startPoint.Value, this.endPoint.Value));
         }
 
         private void UpdateSelection()
         {
-            designerCanvas.SelectionService.ClearSelection();
+            _designerCanvas.SelectionService.ClearSelection();
 
             Rect rubberBand = new Rect(startPoint.Value, endPoint.Value);
-            foreach (Control item in designerCanvas.Children)
+            foreach (Control item in _designerCanvas.Children)
             {
                 Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
-                Rect itemBounds = item.TransformToAncestor(designerCanvas).TransformBounds(itemRect);
+                Rect itemBounds = item.TransformToAncestor(_designerCanvas).TransformBounds(itemRect);
 
                 if (rubberBand.Contains(itemBounds))
                 {
                     var di = item as DesignerItem;
                     if (di.ParentID == Guid.Empty)
-                        designerCanvas.SelectionService.AddToSelection(di);
+                        _designerCanvas.SelectionService.AddToSelection(di);
                 }
             }
         }

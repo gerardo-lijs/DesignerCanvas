@@ -32,7 +32,7 @@ namespace DiagramDesigner
             {
                 // in case that this click is the start of a 
                 // drag operation we cache the start point
-                this.rubberbandSelectionStartPoint = new Point?(e.GetPosition(this));
+                rubberbandSelectionStartPoint = new Point?(e.GetPosition(this));
 
                 // if you click directly on the canvas all 
                 // selected items are 'de-selected'
@@ -48,11 +48,11 @@ namespace DiagramDesigner
 
             // if mouse button is not pressed we have no drag operation, ...
             if (e.LeftButton != MouseButtonState.Pressed)
-                this.rubberbandSelectionStartPoint = null;
+                rubberbandSelectionStartPoint = null;
 
             // ... but if mouse button is pressed and start
             // point value is set we do have one
-            if (this.rubberbandSelectionStartPoint.HasValue)
+            if (rubberbandSelectionStartPoint.HasValue)
             {
                 // create rubberband adorner
                 AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
@@ -71,7 +71,7 @@ namespace DiagramDesigner
         protected override void OnDrop(DragEventArgs e)
         {
             base.OnDrop(e);
-            DragObject dragObject = e.Data.GetData(typeof(DragObject)) as DragObject;
+            var dragObject = e.Data.GetData(typeof(DragObject)) as DragObject;
             if (dragObject != null && !String.IsNullOrEmpty(dragObject.Xaml))
             {
                 DesignerItem newItem = null;
@@ -90,20 +90,20 @@ namespace DiagramDesigner
                         newItem.Width = desiredSize.Width;
                         newItem.Height = desiredSize.Height;
 
-                        DesignerCanvas.SetLeft(newItem, Math.Max(0, position.X - newItem.Width / 2));
-                        DesignerCanvas.SetTop(newItem, Math.Max(0, position.Y - newItem.Height / 2));
+                        SetLeft(newItem, Math.Max(0, position.X - newItem.Width / 2));
+                        SetTop(newItem, Math.Max(0, position.Y - newItem.Height / 2));
                     }
                     else
                     {
-                        DesignerCanvas.SetLeft(newItem, Math.Max(0, position.X));
-                        DesignerCanvas.SetTop(newItem, Math.Max(0, position.Y));
+                        SetLeft(newItem, Math.Max(0, position.X));
+                        SetTop(newItem, Math.Max(0, position.Y));
                     }
 
-                    Canvas.SetZIndex(newItem, this.Children.Count);
-                    this.Children.Add(newItem);                    
+                    SetZIndex(newItem, this.Children.Count);
+                    Children.Add(newItem);                    
 
                     //update selection
-                    this.SelectionService.SelectItem(newItem);
+                    SelectionService.SelectItem(newItem);
                     newItem.Focus();
                 }
 
