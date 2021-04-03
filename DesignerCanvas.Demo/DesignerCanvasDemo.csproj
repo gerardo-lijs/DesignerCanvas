@@ -36,44 +36,4 @@
     <Resource Include="Resources\Images\SendToBack.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Window1.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Resources\ApplicationToolbar.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\DesignerItem.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\Stencils\ShapeStencils.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\Styles\Expander.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\Styles\GroupBox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\Styles\ScrollBar.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\Styles\Shared.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\Styles\ToolBar.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\Toolbox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resources\ToolboxItem.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-
 </Project>
