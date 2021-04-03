@@ -21,23 +21,27 @@ namespace DiagramDesigner.Controls
             // Get Canvas
             if (!(VisualTreeHelper.GetParent(designerItem) is DesignerCanvas designer)) return;
 
-            // Calculate drag limits
-            var itemLeft = Canvas.GetLeft(designerItem);
-            var itemTop = Canvas.GetTop(designerItem);
-            var itemMaxLeft = Math.Max(itemLeft, designer.ActualWidth - designerItem.Width);
-            var itemMaxTop = Math.Max(itemTop, designer.ActualHeight - designerItem.Height);
-
             // Horizontal change
             if (e.HorizontalChange > 0)
-                Canvas.SetLeft(designerItem, Math.Min(itemMaxLeft, itemLeft + e.HorizontalChange));
+            {
+                // NB: itemMaxLeft = Math.Max(Canvas.GetLeft(designerItem), designer.ActualWidth - designerItem.Width);
+                Canvas.SetLeft(designerItem, Math.Min(Math.Max(Canvas.GetLeft(designerItem), designer.ActualWidth - designerItem.Width), Canvas.GetLeft(designerItem) + e.HorizontalChange));
+            }
             else
-                Canvas.SetLeft(designerItem, Math.Max(0, itemLeft + e.HorizontalChange));
+            {
+                Canvas.SetLeft(designerItem, Math.Max(0, Canvas.GetLeft(designerItem) + e.HorizontalChange));
+            }
 
             // Vertical change
             if (e.VerticalChange > 0)
-                Canvas.SetTop(designerItem, Math.Min(itemMaxTop, itemTop + e.VerticalChange));
+            {
+                // NB: itemMaxTop = Math.Max(Canvas.GetTop(designerItem), designer.ActualHeight - designerItem.Height);
+                Canvas.SetTop(designerItem, Math.Min(Math.Max(Canvas.GetTop(designerItem), designer.ActualHeight - designerItem.Height), Canvas.GetTop(designerItem) + e.VerticalChange));
+            }
             else
-                Canvas.SetTop(designerItem, Math.Max(0, itemTop + e.VerticalChange));
+            {
+                Canvas.SetTop(designerItem, Math.Max(0, Canvas.GetTop(designerItem) + e.VerticalChange));
+            }
 
             e.Handled = true;
         }
