@@ -73,7 +73,7 @@ namespace DiagramDesigner
         public DesignerItem(Guid id)
         {
             this.id = id;
-            this.Loaded += new RoutedEventHandler(DesignerItem_Loaded);
+            Loaded += new RoutedEventHandler(DesignerItem_Loaded);
         }
 
         public DesignerItem()

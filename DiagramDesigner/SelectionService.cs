@@ -6,29 +6,19 @@ namespace DiagramDesigner
 {
     internal class SelectionService
     {
-        private DesignerCanvas designerCanvas;
+        private readonly DesignerCanvas _designerCanvas;
 
-        private List<ISelectable> currentSelection;
-        internal List<ISelectable> CurrentSelection
+        internal List<ISelectable> CurrentSelection { get; } = new List<ISelectable>();
+
+        public SelectionService(DesignerCanvas designerCanvas)
         {
-            get
-            {
-                if (currentSelection == null)
-                    currentSelection = new List<ISelectable>();
-
-                return currentSelection;
-            }
-        }
-
-        public SelectionService(DesignerCanvas canvas)
-        {
-            this.designerCanvas = canvas;
+            _designerCanvas = designerCanvas;
         }
 
         internal void SelectItem(ISelectable item)
         {
-            this.ClearSelection();
-            this.AddToSelection(item);
+            ClearSelection();
+            AddToSelection(item);
         }
 
         internal void AddToSelection(ISelectable item)
@@ -52,7 +42,7 @@ namespace DiagramDesigner
         internal void SelectAll()
         {
             ClearSelection();
-            CurrentSelection.AddRange(designerCanvas.Children.OfType<ISelectable>());
+            CurrentSelection.AddRange(_designerCanvas.Children.OfType<ISelectable>());
             CurrentSelection.ForEach(item => item.IsSelected = true);
         }
     }
