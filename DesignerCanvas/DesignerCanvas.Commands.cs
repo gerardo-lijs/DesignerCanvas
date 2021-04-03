@@ -33,9 +33,6 @@ namespace DesignerCanvas
             this.CommandBindings.Add(new CommandBinding(DesignerCanvas.SendToBack, SendToBack_Executed, Order_Enabled));
             this.CommandBindings.Add(new CommandBinding(DesignerCanvas.SelectAll, SelectAll_Executed));
             SelectAll.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
-
-            this.AllowDrop = true;
-            Clipboard.Clear();
         }
 
         #region New Command

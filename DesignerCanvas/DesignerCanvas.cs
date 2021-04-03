@@ -1,11 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
-using System.Xml;
 
 namespace DesignerCanvas
 {
@@ -66,49 +63,6 @@ namespace DesignerCanvas
                 }
             }
             e.Handled = true;
-        }
-
-        protected override void OnDrop(DragEventArgs e)
-        {
-            base.OnDrop(e);
-            var dragObject = e.Data.GetData(typeof(DragObject)) as DragObject;
-            if (dragObject != null && !String.IsNullOrEmpty(dragObject.Xaml))
-            {
-                DesignerItem newItem = null;
-                Object content = XamlReader.Load(XmlReader.Create(new StringReader(dragObject.Xaml)));
-
-                if (content != null)
-                {
-                    newItem = new DesignerItem();
-                    newItem.Content = content;
-
-                    Point position = e.GetPosition(this);
-
-                    if (dragObject.DesiredSize.HasValue)
-                    {
-                        Size desiredSize = dragObject.DesiredSize.Value;
-                        newItem.Width = desiredSize.Width;
-                        newItem.Height = desiredSize.Height;
-
-                        SetLeft(newItem, Math.Max(0, position.X - newItem.Width / 2));
-                        SetTop(newItem, Math.Max(0, position.Y - newItem.Height / 2));
-                    }
-                    else
-                    {
-                        SetLeft(newItem, Math.Max(0, position.X));
-                        SetTop(newItem, Math.Max(0, position.Y));
-                    }
-
-                    SetZIndex(newItem, this.Children.Count);
-                    Children.Add(newItem);                    
-
-                    //update selection
-                    SelectionService.SelectItem(newItem);
-                    newItem.Focus();
-                }
-
-                e.Handled = true;
-            }
         }
     }
 }
