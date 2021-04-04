@@ -1,8 +1,9 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                    xmlns:s="clr-namespace:DesignerCanvas"
-                    xmlns:c="clr-namespace:DesignerCanvas.Controls">
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DesignerCanvas"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:c="clr-namespace:DesignerCanvas.Controls">
 
     <ContextMenu x:Key="DesignerItemContextMenu">
         <MenuItem Header="Cut" Command="{x:Static ApplicationCommands.Cut}">
@@ -27,22 +28,22 @@
         </MenuItem>
         <Separator/>
         <MenuItem Header="Order">
-            <MenuItem Header="Bring Forward" Command="{x:Static s:DesignerCanvas.BringForward}">
+            <MenuItem Header="Bring Forward" Command="{x:Static local:DesignerCanvas.BringForward}">
                 <MenuItem.Icon>
                     <Image Source="/Resources/Images/BringForward.png" Width="16"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Bring To Front" Command="{x:Static s:DesignerCanvas.BringToFront}">
+            <MenuItem Header="Bring To Front" Command="{x:Static local:DesignerCanvas.BringToFront}">
                 <MenuItem.Icon>
                     <Image Source="/Resources/Images/BringToFront.png" Width="16"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Send Backward" Command="{x:Static s:DesignerCanvas.SendBackward}">
+            <MenuItem Header="Send Backward" Command="{x:Static local:DesignerCanvas.SendBackward}">
                 <MenuItem.Icon>
                     <Image Source="/Resources/Images/SendBackward.png" Width="16"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Send To Back" Command="{x:Static s:DesignerCanvas.SendToBack}">
+            <MenuItem Header="Send To Back" Command="{x:Static local:DesignerCanvas.SendToBack}">
                 <MenuItem.Icon>
                     <Image Source="/Resources/Images/SendToBack.png" Width="16"/>
                 </MenuItem.Icon>
@@ -84,13 +85,13 @@
     </Style>
 
     <!-- DesignerItem Style -->
-    <Style TargetType="{x:Type s:DesignerItem}">
+    <Style TargetType="{x:Type local:DesignerItem}">
         <Setter Property="MinWidth" Value="10"/>
         <Setter Property="MinHeight" Value="10"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>        
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type s:DesignerItem}">
+                <ControlTemplate TargetType="{x:Type local:DesignerItem}">
                     <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                           ContextMenu="{StaticResource DesignerItemContextMenu}">
                         <!-- PART_DragThumb -->
@@ -120,5 +121,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    
 </ResourceDictionary>
