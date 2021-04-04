@@ -296,7 +296,7 @@ namespace DesignerCanvas
                     Canvas.SetZIndex(item, selectionSorted.Count + i++);
                 }
             }
-        }        
+        }
 
         #endregion
 
@@ -345,14 +345,14 @@ namespace DesignerCanvas
         {
             return new XElement("DesignerItems",
                                        from item in designerItems
-                                       let contentXaml = XamlWriter.Save(((DesignerItem)item).Content)
+                                       let contentXaml = XamlWriter.Save(item.Content)
                                        select new XElement("DesignerItem",
-                                                  new XElement("Left", Canvas.GetLeft(item)),
-                                                  new XElement("Top", Canvas.GetTop(item)),
+                                                  new XElement("Left", GetLeft(item)),
+                                                  new XElement("Top", GetTop(item)),
                                                   new XElement("Width", item.Width),
                                                   new XElement("Height", item.Height),
                                                   new XElement("Id", item.Id),
-                                                  new XElement("zIndex", Canvas.GetZIndex(item)),
+                                                  new XElement("zIndex", GetZIndex(item)),
                                                   new XElement("ParentId", item.ParentId),
                                                   new XElement("Content", contentXaml)
                                               )
@@ -361,15 +361,14 @@ namespace DesignerCanvas
 
         private static DesignerItem DeserializeDesignerItem(XElement itemXML, Guid id, double OffsetX, double OffsetY)
         {
-            DesignerItem item = new DesignerItem(id);
+            var item = new DesignerItem(id);
             item.Width = Double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture);
             item.Height = Double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture);
             item.ParentId = new Guid(itemXML.Element("ParentId").Value);
             Canvas.SetLeft(item, Double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);
             Canvas.SetTop(item, Double.Parse(itemXML.Element("Top").Value, CultureInfo.InvariantCulture) + OffsetY);
             Canvas.SetZIndex(item, Int32.Parse(itemXML.Element("zIndex").Value));
-            Object content = XamlReader.Load(XmlReader.Create(new StringReader(itemXML.Element("Content").Value)));
-            item.Content = content;
+            item.Content = XamlReader.Load(XmlReader.Create(new StringReader(itemXML.Element("Content").Value)));
             return item;
         }
 
