@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
+using DesignerCanvas.Controls;
+
 namespace DesignerCanvas
 {
     public partial class DesignerCanvas : Canvas

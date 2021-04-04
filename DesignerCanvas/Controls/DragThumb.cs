@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace DesignerCanvas.Controls
 {
-    public class DragThumb : Thumb
+    internal class DragThumb : Thumb
     {
         public DragThumb()
         {

@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace DesignerCanvas.Controls
 {
-    public class ResizeThumb : Thumb
+    internal class ResizeThumb : Thumb
     {
         public ResizeThumb()
         {

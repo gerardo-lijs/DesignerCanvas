@@ -5,9 +5,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace DesignerCanvas
+namespace DesignerCanvas.Controls
 {
-    public class RubberbandAdorner : Adorner
+    internal class RubberbandAdorner : Adorner
     {
         private Point? startPoint;
         private Point? endPoint;
