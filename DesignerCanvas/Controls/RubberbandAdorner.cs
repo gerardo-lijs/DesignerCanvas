@@ -82,7 +82,7 @@ namespace DesignerCanvas.Controls
                 if (rubberBand.Contains(itemBounds))
                 {
                     var di = item as DesignerItem;
-                    if (di.ParentID == Guid.Empty)
+                    if (di.ParentId == Guid.Empty)
                         _designerCanvas.SelectionService.AddToSelection(di);
                 }
             }

@@ -22,16 +22,18 @@ namespace DesignerCanvas
 
         public DesignerCanvas()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
+
             CommandBindings.Add(new CommandBinding(ApplicationCommands.New, New_Executed));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, Cut_Executed, Cut_Enabled));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, Copy_Executed, Copy_Enabled));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, Paste_Executed, Paste_Enabled));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Delete, Delete_Executed, Delete_Enabled));
-            CommandBindings.Add(new CommandBinding(DesignerCanvas.BringForward, BringForward_Executed, Order_Enabled));
-            CommandBindings.Add(new CommandBinding(DesignerCanvas.BringToFront, BringToFront_Executed, Order_Enabled));
-            CommandBindings.Add(new CommandBinding(DesignerCanvas.SendBackward, SendBackward_Executed, Order_Enabled));
-            CommandBindings.Add(new CommandBinding(DesignerCanvas.SendToBack, SendToBack_Executed, Order_Enabled));
-            CommandBindings.Add(new CommandBinding(DesignerCanvas.SelectAll, SelectAll_Executed));
+            CommandBindings.Add(new CommandBinding(BringForward, BringForward_Executed, Order_Enabled));
+            CommandBindings.Add(new CommandBinding(BringToFront, BringToFront_Executed, Order_Enabled));
+            CommandBindings.Add(new CommandBinding(SendBackward, SendBackward_Executed, Order_Enabled));
+            CommandBindings.Add(new CommandBinding(SendToBack, SendToBack_Executed, Order_Enabled));
+            CommandBindings.Add(new CommandBinding(SelectAll, SelectAll_Executed));
             SelectAll.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
         }
 
@@ -78,7 +80,7 @@ namespace DesignerCanvas
 
             foreach (XElement itemXML in itemsXML)
             {
-                Guid oldID = new Guid(itemXML.Element("ID").Value);
+                Guid oldID = new Guid(itemXML.Element("Id").Value);
                 Guid newID = Guid.NewGuid();
                 mappingOldToNewIDs.Add(oldID, newID);
                 DesignerItem item = DeserializeDesignerItem(itemXML, newID, offsetX, offsetY);
@@ -90,14 +92,14 @@ namespace DesignerCanvas
             SelectionService.ClearSelection();
             foreach (DesignerItem el in newItems)
             {
-                if (el.ParentID != Guid.Empty)
-                    el.ParentID = mappingOldToNewIDs[el.ParentID];
+                if (el.ParentId != Guid.Empty)
+                    el.ParentId = mappingOldToNewIDs[el.ParentId];
             }
 
 
             foreach (DesignerItem item in newItems)
             {
-                if (item.ParentID == Guid.Empty)
+                if (item.ParentId == Guid.Empty)
                 {
                     SelectionService.AddToSelection(item);
                 }
@@ -317,7 +319,7 @@ namespace DesignerCanvas
                 {
                     if (Clipboard.ContainsData(DataFormats.Xaml))
                     {
-                        String clipboardData = Clipboard.GetData(DataFormats.Xaml) as String;
+                        var clipboardData = Clipboard.GetData(DataFormats.Xaml) as string;
 
                         if (String.IsNullOrEmpty(clipboardData)) return null;
                         try
@@ -341,7 +343,7 @@ namespace DesignerCanvas
 
         private XElement SerializeDesignerItems(IEnumerable<DesignerItem> designerItems)
         {
-            XElement serializedItems = new XElement("DesignerItems",
+            return new XElement("DesignerItems",
                                        from item in designerItems
                                        let contentXaml = XamlWriter.Save(((DesignerItem)item).Content)
                                        select new XElement("DesignerItem",
@@ -349,14 +351,12 @@ namespace DesignerCanvas
                                                   new XElement("Top", Canvas.GetTop(item)),
                                                   new XElement("Width", item.Width),
                                                   new XElement("Height", item.Height),
-                                                  new XElement("ID", item.ID),
+                                                  new XElement("Id", item.Id),
                                                   new XElement("zIndex", Canvas.GetZIndex(item)),
-                                                  new XElement("ParentID", item.ParentID),
+                                                  new XElement("ParentId", item.ParentId),
                                                   new XElement("Content", contentXaml)
                                               )
                                    );
-
-            return serializedItems;
         }
 
         private static DesignerItem DeserializeDesignerItem(XElement itemXML, Guid id, double OffsetX, double OffsetY)
@@ -364,7 +364,7 @@ namespace DesignerCanvas
             DesignerItem item = new DesignerItem(id);
             item.Width = Double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture);
             item.Height = Double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture);
-            item.ParentID = new Guid(itemXML.Element("ParentID").Value);
+            item.ParentId = new Guid(itemXML.Element("ParentId").Value);
             Canvas.SetLeft(item, Double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);
             Canvas.SetTop(item, Double.Parse(itemXML.Element("Top").Value, CultureInfo.InvariantCulture) + OffsetY);
             Canvas.SetZIndex(item, Int32.Parse(itemXML.Element("zIndex").Value));
@@ -375,12 +375,11 @@ namespace DesignerCanvas
 
         private void CopyCurrentSelection()
         {
-            IEnumerable<DesignerItem> selectedDesignerItems =
-                this.SelectionService.CurrentSelection.OfType<DesignerItem>();
+            var selectedDesignerItems = SelectionService.CurrentSelection.OfType<DesignerItem>();
 
-            XElement designerItemsXML = SerializeDesignerItems(selectedDesignerItems);
+            var designerItemsXML = SerializeDesignerItems(selectedDesignerItems);
 
-            XElement root = new XElement("Root");
+            var root = new XElement("Root");
             root.Add(designerItemsXML);
 
             root.Add(new XAttribute("OffsetX", 10));

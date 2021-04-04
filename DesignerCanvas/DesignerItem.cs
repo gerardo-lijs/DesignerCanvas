@@ -13,66 +13,38 @@ namespace DesignerCanvas
     [TemplatePart(Name = "PART_ContentPresenter", Type = typeof(ContentPresenter))]
     public class DesignerItem : ContentControl, ISelectable
     {
-        #region ID
-        private Guid id;
-        public Guid ID
-        {
-            get { return id; }
-        }
-        #endregion
+        public Guid Id { get; }
 
-        #region ParentID
-        public Guid ParentID
+        public Guid ParentId
         {
-            get { return (Guid)GetValue(ParentIDProperty); }
-            set { SetValue(ParentIDProperty, value); }
+            get { return (Guid)GetValue(ParentIdProperty); }
+            set { SetValue(ParentIdProperty, value); }
         }
-        public static readonly DependencyProperty ParentIDProperty = DependencyProperty.Register("ParentID", typeof(Guid), typeof(DesignerItem));
-        #endregion
-
-        #region IsSelected Property
+        public static readonly DependencyProperty ParentIdProperty = DependencyProperty.Register(nameof(ParentId), typeof(Guid), typeof(DesignerItem));
 
         public bool IsSelected
         {
             get { return (bool)GetValue(IsSelectedProperty); }
             set { SetValue(IsSelectedProperty, value); }
         }
-        public static readonly DependencyProperty IsSelectedProperty =
-          DependencyProperty.Register("IsSelected",
-                                       typeof(bool),
-                                       typeof(DesignerItem),
-                                       new FrameworkPropertyMetadata(false));
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(false));
 
-        #endregion
+        /// <summary>
+        /// Allows to replace the default template for the DragThumb
+        /// </summary>
+        public static readonly DependencyProperty DragThumbTemplateProperty = DependencyProperty.RegisterAttached("DragThumbTemplate", typeof(ControlTemplate), typeof(DesignerItem));
 
-        #region DragThumbTemplate Property
-
-        // can be used to replace the default template for the DragThumb
-        public static readonly DependencyProperty DragThumbTemplateProperty =
-            DependencyProperty.RegisterAttached("DragThumbTemplate", typeof(ControlTemplate), typeof(DesignerItem));
-
-        public static ControlTemplate GetDragThumbTemplate(UIElement element)
-        {
-            return (ControlTemplate)element.GetValue(DragThumbTemplateProperty);
-        }
-
-        public static void SetDragThumbTemplate(UIElement element, ControlTemplate value)
-        {
-            element.SetValue(DragThumbTemplateProperty, value);
-        }
-
-        #endregion
+        public static ControlTemplate GetDragThumbTemplate(UIElement element) => (ControlTemplate)element.GetValue(DragThumbTemplateProperty);
+        public static void SetDragThumbTemplate(UIElement element, ControlTemplate value) => element.SetValue(DragThumbTemplateProperty, value);
 
         static DesignerItem()
         {
-            // set the key to reference the style for this control
-            FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(DesignerItem), new FrameworkPropertyMetadata(typeof(DesignerItem)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerItem), new FrameworkPropertyMetadata(typeof(DesignerItem)));
         }
 
         public DesignerItem(Guid id)
         {
-            this.id = id;
+            Id = id;
             Loaded += new RoutedEventHandler(DesignerItem_Loaded);
         }
 

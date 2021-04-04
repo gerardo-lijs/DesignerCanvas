@@ -17,7 +17,7 @@ namespace DesignerCanvas.Controls
         {
             // Check
             if (!(DataContext is DesignerItem designerItem)) return;
-            if (designerItem.ParentID != Guid.Empty) return;
+            if (designerItem.ParentId != Guid.Empty) return;
 
             // Get Canvas
             if (!(VisualTreeHelper.GetParent(designerItem) is DesignerCanvas designer)) return;
