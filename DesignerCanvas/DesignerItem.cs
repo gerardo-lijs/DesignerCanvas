@@ -45,25 +45,23 @@ namespace DesignerCanvas
         public DesignerItem(Guid id)
         {
             Id = id;
-            Loaded += new RoutedEventHandler(DesignerItem_Loaded);
         }
 
-        public DesignerItem()
-            : this(Guid.NewGuid())
+        public DesignerItem() : this(Guid.NewGuid())
         {
         }
-
 
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseDown(e);
-            DesignerCanvas designer = VisualTreeHelper.GetParent(this) as DesignerCanvas;
-
-            // update selection
+            
+            var designer = VisualTreeHelper.GetParent(this) as DesignerCanvas;
+            
+            // Update selection
             if (designer is not null)
             {
                 if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
-                    if (this.IsSelected)
+                    if (IsSelected)
                     {
                         designer.SelectionService.RemoveFromSelection(this);
                     }
@@ -71,7 +69,7 @@ namespace DesignerCanvas
                     {
                         designer.SelectionService.AddToSelection(this);
                     }
-                else if (!this.IsSelected)
+                else if (!IsSelected)
                 {
                     designer.SelectionService.SelectItem(this);
                 }
@@ -79,29 +77,6 @@ namespace DesignerCanvas
             }
 
             e.Handled = false;
-        }
-
-        void DesignerItem_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (base.Template is not null)
-            {
-                var contentPresenter = Template.FindName("PART_ContentPresenter", this) as ContentPresenter;
-                if (contentPresenter is not null)
-                {
-                    UIElement contentVisual = VisualTreeHelper.GetChild(contentPresenter, 0) as UIElement;
-                    if (contentVisual is not null)
-                    {
-                        DragThumb thumb = this.Template.FindName("PART_DragThumb", this) as DragThumb;
-                        if (thumb is not null)
-                        {
-                            ControlTemplate template =
-                                DesignerItem.GetDragThumbTemplate(contentVisual) as ControlTemplate;
-                            if (template is not null)
-                                thumb.Template = template;
-                        }
-                    }
-                }
-            }
         }
     }
 }
