@@ -39,8 +39,6 @@
 
     <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
 
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
-
     <!-- Border Brushes -->
 
     <LinearGradientBrush x:Key="PressedBorderBrush" StartPoint="0,0" EndPoint="0,1">
@@ -154,35 +152,6 @@
   <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
          BasedOn="{StaticResource ToolBarButtonBaseStyle}"
          TargetType="{x:Type RadioButton}"/>
-
-  <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}">
-    <Setter Property="SnapsToDevicePixels" Value="True"/>
-    <Setter Property="OverridesDefaultStyle" Value="True"/>
-    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-    <Setter Property="AllowDrop" Value="true"/>
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type TextBox}">
-          <Border
-            Name="Border"
-            Padding="2"
-            Background="{StaticResource WindowBackgroundBrush}"
-            BorderBrush="{StaticResource SolidBorderBrush}"
-            BorderThickness="1" >
-            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
-          </Border>
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}"/>
-              <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBackgroundBrush}"/>
-              <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
 
   <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">
     <Setter Property="OverridesDefaultStyle" Value="true"/>

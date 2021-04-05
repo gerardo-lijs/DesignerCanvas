@@ -13,7 +13,7 @@
                 <Button Margin="3" Width="55" Style="{StaticResource ToolBarButtonBaseStyle}"
                         HorizontalContentAlignment="Center"
                         Command="{x:Static ApplicationCommands.New}"
-                        CommandTarget="{Binding ElementName=MyDesigner}">
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                     <Button.Content>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -34,7 +34,7 @@
                 <Button Margin="3" Width="55"
                         Style="{StaticResource ToolBarButtonBaseStyle}"
                         Command="{x:Static ApplicationCommands.Paste}"
-                        CommandTarget="{Binding ElementName=MyDesigner}">
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                     <Button.Content>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -50,7 +50,7 @@
                     <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
                             Command="{x:Static ApplicationCommands.Cut}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -65,7 +65,7 @@
                     <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
                             Command="{x:Static ApplicationCommands.Copy}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -80,7 +80,7 @@
                     <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
                             Command="{x:Static ApplicationCommands.Delete}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -108,7 +108,7 @@
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
                             Command="{x:Static s:DesignerCanvas.BringForward}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -123,7 +123,7 @@
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
                             Command="{x:Static s:DesignerCanvas.BringToFront}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -144,7 +144,7 @@
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
                             Command="{x:Static s:DesignerCanvas.SendBackward}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -159,7 +159,7 @@
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
                             Command="{x:Static s:DesignerCanvas.SendToBack}"
-                            CommandTarget="{Binding ElementName=MyDesigner}">
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
