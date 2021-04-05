@@ -50,7 +50,7 @@ namespace DesignerCanvas.Controls
 
             // remove this adorner from adorner layer
             AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this._designerCanvas);
-            if (adornerLayer != null)
+            if (adornerLayer is not null)
                 adornerLayer.Remove(this);
 
             e.Handled = true;
@@ -73,11 +73,11 @@ namespace DesignerCanvas.Controls
         {
             _designerCanvas.SelectionService.ClearSelection();
 
-            Rect rubberBand = new Rect(startPoint.Value, endPoint.Value);
+            var rubberBand = new Rect(startPoint.Value, endPoint.Value);
             foreach (Control item in _designerCanvas.Children)
             {
-                Rect itemRect = VisualTreeHelper.GetDescendantBounds(item);
-                Rect itemBounds = item.TransformToAncestor(_designerCanvas).TransformBounds(itemRect);
+                var itemRect = VisualTreeHelper.GetDescendantBounds(item);
+                var itemBounds = item.TransformToAncestor(_designerCanvas).TransformBounds(itemRect);
 
                 if (rubberBand.Contains(itemBounds))
                 {

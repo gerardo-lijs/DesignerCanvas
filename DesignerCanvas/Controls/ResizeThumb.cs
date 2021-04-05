@@ -16,11 +16,11 @@ namespace DesignerCanvas.Controls
         void ResizeThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
             // Check
-            if (!(DataContext is DesignerItem designerItem)) return;
+            if (DataContext is not DesignerItem designerItem) return;
             if (designerItem.ParentId != Guid.Empty) return;
 
             // Get Canvas
-            if (!(VisualTreeHelper.GetParent(designerItem) is DesignerCanvas designer)) return;
+            if (VisualTreeHelper.GetParent(designerItem) is not DesignerCanvas designer) return;
 
             // Resize vertical
             var itemTop = Canvas.GetTop(designerItem);

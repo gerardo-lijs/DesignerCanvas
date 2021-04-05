@@ -55,10 +55,10 @@ namespace DesignerCanvas
             {
                 // create rubberband adorner
                 AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
-                if (adornerLayer != null)
+                if (adornerLayer is not null)
                 {
-                    RubberbandAdorner adorner = new RubberbandAdorner(this, rubberbandSelectionStartPoint);
-                    if (adorner != null)
+                    var adorner = new RubberbandAdorner(this, rubberbandSelectionStartPoint);
+                    if (adorner is not null)
                     {
                         adornerLayer.Add(adorner);
                     }

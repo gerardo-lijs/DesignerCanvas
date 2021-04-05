@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net45;net5.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

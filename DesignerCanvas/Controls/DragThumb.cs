@@ -15,10 +15,10 @@ namespace DesignerCanvas.Controls
         private void DragThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
             // Check
-            if (!(DataContext is DesignerItem designerItem)) return;
+            if (DataContext is not DesignerItem designerItem) return;
 
             // Get Canvas
-            if (!(VisualTreeHelper.GetParent(designerItem) is DesignerCanvas designer)) return;
+            if (VisualTreeHelper.GetParent(designerItem) is not DesignerCanvas designer) return;
 
             // Horizontal change
             if (e.HorizontalChange > 0)

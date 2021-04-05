@@ -14,11 +14,11 @@ namespace DesignerCanvas
 {
     public partial class DesignerCanvas
     {
-        public static RoutedCommand BringForward = new RoutedCommand();
-        public static RoutedCommand BringToFront = new RoutedCommand();
-        public static RoutedCommand SendBackward = new RoutedCommand();
-        public static RoutedCommand SendToBack = new RoutedCommand();
-        public static RoutedCommand SelectAll = new RoutedCommand();
+        public static RoutedCommand BringForward = new();
+        public static RoutedCommand BringToFront = new();
+        public static RoutedCommand SendBackward = new();
+        public static RoutedCommand SendToBack = new();
+        public static RoutedCommand SelectAll = new();
 
         public DesignerCanvas()
         {
@@ -56,7 +56,7 @@ namespace DesignerCanvas
 
         private void Copy_Enabled(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = SelectionService.CurrentSelection.Count() > 0;
+            e.CanExecute = SelectionService.CurrentSelection.Count > 0;
         }
 
         #endregion
@@ -71,17 +71,17 @@ namespace DesignerCanvas
                 return;
 
             // create DesignerItems
-            Dictionary<Guid, Guid> mappingOldToNewIDs = new Dictionary<Guid, Guid>();
-            List<ISelectable> newItems = new List<ISelectable>();
-            IEnumerable<XElement> itemsXML = root.Elements("DesignerItems").Elements("DesignerItem");
+            var mappingOldToNewIDs = new Dictionary<Guid, Guid>();
+            var newItems = new List<ISelectable>();
+            var itemsXML = root.Elements("DesignerItems").Elements("DesignerItem");
 
             double offsetX = Double.Parse(root.Attribute("OffsetX").Value, CultureInfo.InvariantCulture);
             double offsetY = Double.Parse(root.Attribute("OffsetY").Value, CultureInfo.InvariantCulture);
 
             foreach (XElement itemXML in itemsXML)
             {
-                Guid oldID = new Guid(itemXML.Element("Id").Value);
-                Guid newID = Guid.NewGuid();
+                var oldID = new Guid(itemXML.Element("Id").Value);
+                var newID = Guid.NewGuid();
                 mappingOldToNewIDs.Add(oldID, newID);
                 DesignerItem item = DeserializeDesignerItem(itemXML, newID, offsetX, offsetY);
                 this.Children.Add(item);
@@ -148,7 +148,7 @@ namespace DesignerCanvas
 
         private void Delete_Enabled(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = this.SelectionService.CurrentSelection.Count() > 0;
+            e.CanExecute = this.SelectionService.CurrentSelection.Count > 0;
         }
 
         #endregion
@@ -163,7 +163,7 @@ namespace DesignerCanvas
 
         private void Cut_Enabled(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = this.SelectionService.CurrentSelection.Count() > 0;
+            e.CanExecute = this.SelectionService.CurrentSelection.Count > 0;
         }
 
         #endregion
@@ -311,7 +311,7 @@ namespace DesignerCanvas
 
         #region Helper Methods
 
-        private XElement LoadSerializedDataFromClipBoard()
+        private static XElement LoadSerializedDataFromClipBoard()
         {
             for (int i = 0; i < 10; i++)
             {
@@ -326,9 +326,9 @@ namespace DesignerCanvas
                         {
                             return XElement.Load(new StringReader(clipboardData));
                         }
-                        catch (Exception e)
+                        catch
                         {
-                            MessageBox.Show(e.StackTrace, e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                            return null;
                         }
                     }
 
@@ -341,7 +341,7 @@ namespace DesignerCanvas
             return null;
         }
 
-        private XElement SerializeDesignerItems(IEnumerable<DesignerItem> designerItems)
+        private static XElement SerializeDesignerItems(IEnumerable<DesignerItem> designerItems)
         {
             return new XElement("DesignerItems",
                                        from item in designerItems
@@ -361,13 +361,15 @@ namespace DesignerCanvas
 
         private static DesignerItem DeserializeDesignerItem(XElement itemXML, Guid id, double OffsetX, double OffsetY)
         {
-            var item = new DesignerItem(id);
-            item.Width = Double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture);
-            item.Height = Double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture);
-            item.ParentId = new Guid(itemXML.Element("ParentId").Value);
-            Canvas.SetLeft(item, Double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);
-            Canvas.SetTop(item, Double.Parse(itemXML.Element("Top").Value, CultureInfo.InvariantCulture) + OffsetY);
-            Canvas.SetZIndex(item, Int32.Parse(itemXML.Element("zIndex").Value));
+            var item = new DesignerItem(id)
+            {
+                Width = Double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture),
+                Height = Double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture),
+                ParentId = new Guid(itemXML.Element("ParentId").Value)
+            };
+            SetLeft(item, Double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);
+            SetTop(item, Double.Parse(itemXML.Element("Top").Value, CultureInfo.InvariantCulture) + OffsetY);
+            SetZIndex(item, Int32.Parse(itemXML.Element("zIndex").Value));
             item.Content = XamlReader.Load(XmlReader.Create(new StringReader(itemXML.Element("Content").Value)));
             return item;
         }
