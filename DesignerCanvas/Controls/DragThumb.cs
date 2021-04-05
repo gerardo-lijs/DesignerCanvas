@@ -23,31 +23,29 @@ namespace DesignerCanvas.Controls
             // Horizontal change
             if (e.HorizontalChange > 0)
             {
-                // NB: itemMaxLeft = Math.Max(itemLeft, designer.ActualWidth - designerItem.Width);
                 var itemLeft = Canvas.GetLeft(designerItem);
-                var dragLeft = Math.Min(Math.Max(itemLeft, designer.ActualWidth - designerItem.Width), itemLeft + e.HorizontalChange);
-                if (itemLeft != dragLeft) Canvas.SetLeft(designerItem, dragLeft);
+                var dragHorizontal = Math.Min(Math.Max(itemLeft, designer.ActualWidth - designerItem.Width - designerItem.Margin.Left - designerItem.Margin.Right), itemLeft + e.HorizontalChange);
+                if (itemLeft != dragHorizontal) Canvas.SetLeft(designerItem, dragHorizontal);
             }
             else
             {
                 var itemLeft = Canvas.GetLeft(designerItem);
-                var dragLeft = Math.Max(0, itemLeft + e.HorizontalChange);
-                if (itemLeft != dragLeft) Canvas.SetLeft(designerItem, dragLeft);
+                var dragHorizontal = Math.Max(0, itemLeft + e.HorizontalChange);
+                if (itemLeft != dragHorizontal) Canvas.SetLeft(designerItem, dragHorizontal);
             }
 
             // Vertical change
             if (e.VerticalChange > 0)
             {
-                // NB: itemMaxTop = Math.Max(itemTop, designer.ActualHeight - designerItem.Height);
                 var itemTop = Canvas.GetTop(designerItem);
-                var dragTop = Math.Min(Math.Max(itemTop, designer.ActualHeight - designerItem.Height), itemTop + e.VerticalChange);
-                if (itemTop != dragTop) Canvas.SetTop(designerItem, dragTop);
+                var dragVertical = Math.Min(Math.Max(itemTop, designer.ActualHeight - designerItem.Height - designerItem.Margin.Top - designerItem.Margin.Bottom), itemTop + e.VerticalChange);
+                if (itemTop != dragVertical) Canvas.SetTop(designerItem, dragVertical);
             }
             else
             {
                 var itemTop = Canvas.GetTop(designerItem);
-                var dragTop = Math.Max(0, itemTop + e.VerticalChange);
-                if (itemTop != dragTop) Canvas.SetTop(designerItem, dragTop);
+                var dragVertical = Math.Max(0, itemTop + e.VerticalChange);
+                if (itemTop != dragVertical) Canvas.SetTop(designerItem, dragVertical);
             }
 
             e.Handled = true;

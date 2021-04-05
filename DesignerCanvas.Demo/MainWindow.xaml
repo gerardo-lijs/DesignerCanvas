@@ -19,7 +19,7 @@
             <Border BorderBrush="Black" BorderThickness="2" Width="500" Height="500">
                 <s:DesignerCanvas x:Name="DemoDesignerCanvas">
 
-                    <s:DesignerItem Width="150" Height="150" Canvas.Top="10" Canvas.Left="10">
+                    <s:DesignerItem Margin="50" Padding="30" Background="White" Width="150" Height="150" Canvas.Top="10" Canvas.Left="10">
                         <Rectangle Fill="Coral" IsHitTestVisible="False"/>
                     </s:DesignerItem>
 
