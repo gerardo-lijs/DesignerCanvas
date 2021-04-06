@@ -12,6 +12,11 @@ namespace DesignerCanvas
     {
         private Point? rubberbandSelectionStartPoint = null;
 
+        static DesignerCanvas()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
+        }
+
         private SelectionService selectionService;
         internal SelectionService SelectionService
         {

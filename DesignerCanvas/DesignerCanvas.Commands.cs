@@ -22,8 +22,6 @@ namespace DesignerCanvas
 
         public DesignerCanvas()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
-
             CommandBindings.Add(new CommandBinding(ApplicationCommands.New, New_Executed));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, Cut_Executed, Cut_Enabled));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, Copy_Executed, Copy_Enabled));
