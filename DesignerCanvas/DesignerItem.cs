@@ -7,11 +7,17 @@ using DesignerCanvas.Controls;
 
 namespace DesignerCanvas
 {
-    [TemplatePart(Name = "PART_DragThumb", Type = typeof(DragThumb))]
-    [TemplatePart(Name = "PART_ResizeDecorator", Type = typeof(Control))]
-    [TemplatePart(Name = "PART_ContentPresenter", Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = DragThumbPart, Type = typeof(DragThumb))]
+    [TemplatePart(Name = ResizeDecoratorPart, Type = typeof(Control))]
+    [TemplatePart(Name = ContentPresenterPart, Type = typeof(ContentPresenter))]
     public class DesignerItem : ContentControl, ISelectable
     {
+        private const string DragThumbPart = "PART_DragThumb";
+        private const string ResizeDecoratorPart = "PART_ResizeDecorator";
+        private const string ContentPresenterPart = "PART_ContentPresenter";
+
+        private Control _resizeDecorator;
+
         public Guid Id { get; }
 
         public Guid ParentId
@@ -39,6 +45,13 @@ namespace DesignerCanvas
         static DesignerItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerItem), new FrameworkPropertyMetadata(typeof(DesignerItem)));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _resizeDecorator = GetTemplateChild(ResizeDecoratorPart) as Control;
         }
 
         public DesignerItem(Guid id)
