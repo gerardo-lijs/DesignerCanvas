@@ -351,6 +351,7 @@ namespace DesignerCanvas
                                                   new XElement("Height", item.Height),
                                                   new XElement("Id", item.Id),
                                                   new XElement("zIndex", GetZIndex(item)),
+                                                  new XElement("Opacity", item.Opacity),
                                                   new XElement("ParentId", item.ParentId),
                                                   new XElement("Content", contentXaml)
                                               )
@@ -363,6 +364,7 @@ namespace DesignerCanvas
             {
                 Width = Double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture),
                 Height = Double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture),
+                Opacity = Double.Parse(itemXML.Element("Opacity").Value),
                 ParentId = new Guid(itemXML.Element("ParentId").Value)
             };
             SetLeft(item, Double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);

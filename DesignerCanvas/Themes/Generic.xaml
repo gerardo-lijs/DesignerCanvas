@@ -95,6 +95,7 @@
 
     <!-- DesignerItem Style -->
     <Style TargetType="{x:Type local:DesignerItem}">
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="MinWidth" Value="10"/>
         <Setter Property="MinHeight" Value="10"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -115,7 +116,7 @@
                                           HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch"
                                           Content="{TemplateBinding Content}"
-                                          Margin="{TemplateBinding Padding}"/>
+                                          Margin="{TemplateBinding Padding}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiDataTrigger>
@@ -132,7 +133,7 @@
     </Style>
 
     <Style TargetType="{x:Type local:DesignerCanvas}">
-        <Setter Property="Background" Value="{x:Static SystemColors.WindowBrush}"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="ContextMenu" Value="{StaticResource DesignerCanvasContextMenu}"/>
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
