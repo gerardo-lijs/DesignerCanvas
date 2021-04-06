@@ -22,25 +22,17 @@ namespace DesignerCanvas
 
         public Guid ParentId
         {
-            get { return (Guid)GetValue(ParentIdProperty); }
-            set { SetValue(ParentIdProperty, value); }
+            get => (Guid)GetValue(ParentIdProperty);
+            set => SetValue(ParentIdProperty, value);
         }
         public static readonly DependencyProperty ParentIdProperty = DependencyProperty.Register(nameof(ParentId), typeof(Guid), typeof(DesignerItem));
 
         public bool IsSelected
         {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
+            get => (bool)GetValue(IsSelectedProperty);
+            set => SetValue(IsSelectedProperty, value);
         }
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(false));
-
-        /// <summary>
-        /// Allows to replace the default template for the DragThumb
-        /// </summary>
-        public static readonly DependencyProperty DragThumbTemplateProperty = DependencyProperty.RegisterAttached("DragThumbTemplate", typeof(ControlTemplate), typeof(DesignerItem));
-
-        public static ControlTemplate GetDragThumbTemplate(UIElement element) => (ControlTemplate)element.GetValue(DragThumbTemplateProperty);
-        public static void SetDragThumbTemplate(UIElement element, ControlTemplate value) => element.SetValue(DragThumbTemplateProperty, value);
 
         static DesignerItem()
         {
