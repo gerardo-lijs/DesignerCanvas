@@ -29,8 +29,7 @@ namespace DesignerCanvas.Controls
                 case VerticalAlignment.Bottom:
                     if (e.VerticalChange > 0)
                     {
-                        // NB: itemMaxHeight = designer.ActualHeight - itemTop;
-                        designerItem.Height = Math.Min(designer.ActualHeight - itemTop, designerItem.ActualHeight + e.VerticalChange);
+                        designerItem.Height = Math.Min(designer.ActualHeight - itemTop - designerItem.Margin.Top - designerItem.Margin.Bottom, designerItem.ActualHeight + e.VerticalChange);
                     }
                     else
                     {
@@ -38,7 +37,6 @@ namespace DesignerCanvas.Controls
                     }
                     break;
                 case VerticalAlignment.Top:
-                    // NB: itemMinHeight = designerItem.ActualHeight - designerItem.MinHeight;
                     var dragDeltaVertical = Math.Min(Math.Max(-itemTop, e.VerticalChange), designerItem.ActualHeight - designerItem.MinHeight);
                     Canvas.SetTop(designerItem, itemTop + dragDeltaVertical);
                     designerItem.Height = designerItem.ActualHeight - dragDeltaVertical;
@@ -52,7 +50,6 @@ namespace DesignerCanvas.Controls
             switch (HorizontalAlignment)
             {
                 case HorizontalAlignment.Left:
-                    // NB: itemMinWidth = designerItem.ActualWidth - designerItem.MinWidth;
                     var dragDeltaHorizontal = Math.Min(Math.Max(-itemLeft, e.HorizontalChange), designerItem.ActualWidth - designerItem.MinWidth);
                     Canvas.SetLeft(designerItem, itemLeft + dragDeltaHorizontal);
                     designerItem.Width = designerItem.ActualWidth - dragDeltaHorizontal;
@@ -60,8 +57,7 @@ namespace DesignerCanvas.Controls
                 case HorizontalAlignment.Right:
                     if (e.HorizontalChange > 0)
                     {
-                        // NB: itemMaxWidth = designer.ActualWidth - itemLeft;
-                        designerItem.Width = Math.Min(designer.ActualWidth - itemLeft, designerItem.ActualWidth + e.HorizontalChange);
+                        designerItem.Width = Math.Min(designer.ActualWidth - itemLeft - designerItem.Margin.Left - designerItem.Margin.Right, designerItem.ActualWidth + e.HorizontalChange);
                     }
                     else
                     {
