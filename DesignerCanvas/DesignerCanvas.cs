@@ -10,7 +10,10 @@ namespace DesignerCanvas
 {
     public partial class DesignerCanvas : Canvas
     {
-        private Point? rubberbandSelectionStartPoint = null;
+        private Point? _mouseDownStartPoint;
+        private Point? currentPosition;
+        private Pen? _crosshairPen;
+        private bool _crosshairRender;
 
         static DesignerCanvas()
         {
@@ -41,8 +44,15 @@ namespace DesignerCanvas
                 case Tool.Select:
                     break;
                 case Tool.Rectangle:
+                    if (_crosshairPen is null)
+                    {
+                        _crosshairPen = new Pen(Brushes.LightSlateGray, 1)
+                        {
+                            DashStyle = new DashStyle(new double[] { 5 }, 1)
+                        };
+                    }
                     // Create crosshair adorner
-                    adornerLayer.Add(new CrosshairAdorner(this));
+                    //adornerLayer.Add(new CrosshairAdorner(this));
                     break;
                 case Tool.Polygon:
                     break;
@@ -55,6 +65,8 @@ namespace DesignerCanvas
             }
             SelectionService.ClearSelection();
             ToolMode = tool;
+            _crosshairRender = false;
+            InvalidateVisual();
         }
 
         private SelectionService selectionService;
@@ -78,7 +90,7 @@ namespace DesignerCanvas
                 case Tool.Select:
                     // in case that this click is the start of a 
                     // drag operation we cache the start point
-                    rubberbandSelectionStartPoint = new Point?(e.GetPosition(this));
+                    _mouseDownStartPoint = e.GetPosition(this);
 
                     // if you click directly on the canvas all 
                     // selected items are 'de-selected'
@@ -87,6 +99,11 @@ namespace DesignerCanvas
                     e.Handled = true;
                     break;
                 case Tool.Rectangle:
+                    // in case that this click is the start of a rectangle operation we cache the start point
+                    _mouseDownStartPoint = e.GetPosition(this);
+                    _crosshairRender = false;
+                    InvalidateVisual();
+                    e.Handled = true;
                     break;
                 case Tool.Polygon:
                     break;
@@ -109,17 +126,17 @@ namespace DesignerCanvas
                     break;
                 case Tool.Select:
                     // If mouse button is not pressed we have no drag operation, ...
-                    if (e.LeftButton != MouseButtonState.Pressed) rubberbandSelectionStartPoint = null;
+                    if (e.LeftButton != MouseButtonState.Pressed) _mouseDownStartPoint = null;
 
                     // ... but if mouse button is pressed and start
                     // point value is set we do have one
-                    if (rubberbandSelectionStartPoint is not null)
+                    if (_mouseDownStartPoint is not null)
                     {
                         // create rubberband adorner
                         var adornerLayer = AdornerLayer.GetAdornerLayer(this);
                         if (adornerLayer is not null)
                         {
-                            var adorner = new RubberbandAdorner(this, rubberbandSelectionStartPoint);
+                            var adorner = new RubberbandAdorner(this, _mouseDownStartPoint);
                             if (adorner is not null)
                             {
                                 adornerLayer.Add(adorner);
@@ -129,15 +146,26 @@ namespace DesignerCanvas
                     }
                     break;
                 case Tool.Rectangle:
+                    if (e.LeftButton != MouseButtonState.Pressed && e.RightButton != MouseButtonState.Pressed)
+                    {
+                        _crosshairRender = true;
+                        currentPosition = e.GetPosition(this);
+                        InvalidateVisual();
+                    }
+                    else
+                    {
+                        // Create rectangle adorner
+                        var adornerLayer = AdornerLayer.GetAdornerLayer(this);
+                        if (adornerLayer is not null)
+                        {
+                            var adorner = new RectangleAdorner(this, _mouseDownStartPoint);
+                            if (adorner is not null)
+                            {
+                                adornerLayer.Add(adorner);
+                            }
+                        }
+                    }
                     e.Handled = true;
-                    //// Draw Crosshair lines
-                    //if (e.LeftButton != MouseButtonState.Pressed && e.RightButton != MouseButtonState.Pressed)
-                    //{
-                    //    var currentPosition = e.GetPosition(this);
-
-                    //    e.Handled = true;
-                    //    //Children.Add(new System.Windows.Shapes.Line() { X1 = currentPosition.X, Y1 = 0, X2 = currentPosition.X, Y2 = 1024, StrokeThickness = 2, Stroke = new SolidColorBrush(Colors.Black) });
-                    //}
                     break;
                 case Tool.Polygon:
                     break;
@@ -147,6 +175,18 @@ namespace DesignerCanvas
                     break;
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        protected override void OnRender(DrawingContext dc)
+        {
+            base.OnRender(dc);
+
+            // Crosshair
+            if (_crosshairRender && currentPosition is not null)
+            {
+                dc.DrawLine(_crosshairPen, new Point(currentPosition.Value.X, 0), new Point(currentPosition.Value.X, RenderSize.Height));
+                dc.DrawLine(_crosshairPen, new Point(0, currentPosition.Value.Y), new Point(RenderSize.Width, currentPosition.Value.Y));
             }
         }
     }
