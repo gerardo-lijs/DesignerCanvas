@@ -5,7 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles/ToolBar.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
+
     <ToolBar x:Key="MyToolbar" Height="120">
         <!--File-->
         <GroupBox Header="File" Style="{StaticResource ToolbarGroup}" Margin="5,3,3,3">
@@ -153,7 +153,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Source="Images/SendBackward.png" Width="16"/>
                                 <TextBlock Margin="3" Text="Backward" VerticalAlignment="Center"  Grid.Column="1"/>
-                             </Grid>
+                            </Grid>
                         </Button.Content>
                     </Button>
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
@@ -173,6 +173,44 @@
                     </Button>
                 </StackPanel>
             </Grid>
+        </GroupBox>
+
+        <!--Tools-->
+        <GroupBox Header="Tools" Style="{StaticResource ToolbarGroup}" Margin="3">
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="7,0,0,0">
+                <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
+                            Style="{StaticResource ToolBarButtonBaseStyle}"
+                            Command="{x:Static s:DesignerCanvas.ToolModeChange}"
+                            CommandParameter="{x:Static s:Tool.Select}"
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="Images/BringForward.png" Width="16"/>
+                            <TextBlock Margin="3" Text="Select" VerticalAlignment="Center" Grid.Column="1"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
+                            Style="{StaticResource ToolBarButtonBaseStyle}"
+                            Command="{x:Static s:DesignerCanvas.ToolModeChange}"
+                            CommandParameter="{x:Static s:Tool.Rectangle}"
+                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="Images/BringToFront.png" Width="16"/>
+                            <TextBlock Margin="3" Text="Rectangle" VerticalAlignment="Center" Grid.Column="1"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
         </GroupBox>
     </ToolBar>
 </ResourceDictionary>

@@ -19,6 +19,7 @@ namespace DesignerCanvas
         public static RoutedCommand SendBackward = new();
         public static RoutedCommand SendToBack = new();
         public static RoutedCommand SelectAll = new();
+        public static RoutedCommand ToolModeChange = new();
 
         public DesignerCanvas()
         {
@@ -32,6 +33,7 @@ namespace DesignerCanvas
             CommandBindings.Add(new CommandBinding(SendBackward, SendBackward_Executed, Order_Enabled));
             CommandBindings.Add(new CommandBinding(SendToBack, SendToBack_Executed, Order_Enabled));
             CommandBindings.Add(new CommandBinding(SelectAll, SelectAll_Executed));
+            CommandBindings.Add(new CommandBinding(ToolModeChange, ToolModeChange_Executed));
             SelectAll.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
         }
 
@@ -306,6 +308,14 @@ namespace DesignerCanvas
         }
 
         #endregion
+
+        private void ToolModeChange_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Parameter is Tool tool)
+            {
+                ChangeToolMode(tool);
+            }
+        }
 
         #region Helper Methods
 
