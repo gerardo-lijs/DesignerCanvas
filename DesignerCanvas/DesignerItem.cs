@@ -58,11 +58,12 @@ namespace DesignerCanvas
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseDown(e);
-            
-            var designer = VisualTreeHelper.GetParent(this) as DesignerCanvas;
-            
+
+            // Get parent / Must be of type DesignerCanvas
+            if (VisualTreeHelper.GetParent(this) is not DesignerCanvas designer) return;
+
             // Update selection
-            if (designer is not null)
+            if (designer.ToolMode == Tool.Select)
             {
                 if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
                     if (IsSelected)
@@ -79,8 +80,6 @@ namespace DesignerCanvas
                 }
                 Focus();
             }
-
-            e.Handled = false;
         }
     }
 }

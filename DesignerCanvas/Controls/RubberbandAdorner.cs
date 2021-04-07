@@ -25,7 +25,7 @@ namespace DesignerCanvas.Controls
             };
         }
 
-        protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -43,13 +43,13 @@ namespace DesignerCanvas.Controls
             e.Handled = true;
         }
 
-        protected override void OnMouseUp(System.Windows.Input.MouseButtonEventArgs e)
+        protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             // release mouse capture
-            if (this.IsMouseCaptured) this.ReleaseMouseCapture();
+            if (IsMouseCaptured) this.ReleaseMouseCapture();
 
             // remove this adorner from adorner layer
-            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this._designerCanvas);
+            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(_designerCanvas);
             if (adornerLayer is not null)
                 adornerLayer.Remove(this);
 

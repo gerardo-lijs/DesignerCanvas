@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace DesignerCanvas.Controls
@@ -20,35 +21,39 @@ namespace DesignerCanvas.Controls
             // Get Canvas
             if (VisualTreeHelper.GetParent(designerItem) is not DesignerCanvas designer) return;
 
-            // Horizontal change
-            if (e.HorizontalChange > 0)
+            // Only drag in Select Mode
+            if (designer.ToolMode == Tool.Select)
             {
-                var itemLeft = Canvas.GetLeft(designerItem);
-                var dragHorizontal = Math.Min(Math.Max(itemLeft, designer.ActualWidth - designerItem.Width - designerItem.Margin.Left - designerItem.Margin.Right), itemLeft + e.HorizontalChange);
-                if (itemLeft != dragHorizontal) Canvas.SetLeft(designerItem, dragHorizontal);
-            }
-            else
-            {
-                var itemLeft = Canvas.GetLeft(designerItem);
-                var dragHorizontal = Math.Max(0, itemLeft + e.HorizontalChange);
-                if (itemLeft != dragHorizontal) Canvas.SetLeft(designerItem, dragHorizontal);
-            }
+                // Horizontal change
+                if (e.HorizontalChange > 0)
+                {
+                    var itemLeft = Canvas.GetLeft(designerItem);
+                    var dragHorizontal = Math.Min(Math.Max(itemLeft, designer.ActualWidth - designerItem.Width - designerItem.Margin.Left - designerItem.Margin.Right), itemLeft + e.HorizontalChange);
+                    if (itemLeft != dragHorizontal) Canvas.SetLeft(designerItem, dragHorizontal);
+                }
+                else
+                {
+                    var itemLeft = Canvas.GetLeft(designerItem);
+                    var dragHorizontal = Math.Max(0, itemLeft + e.HorizontalChange);
+                    if (itemLeft != dragHorizontal) Canvas.SetLeft(designerItem, dragHorizontal);
+                }
 
-            // Vertical change
-            if (e.VerticalChange > 0)
-            {
-                var itemTop = Canvas.GetTop(designerItem);
-                var dragVertical = Math.Min(Math.Max(itemTop, designer.ActualHeight - designerItem.Height - designerItem.Margin.Top - designerItem.Margin.Bottom), itemTop + e.VerticalChange);
-                if (itemTop != dragVertical) Canvas.SetTop(designerItem, dragVertical);
-            }
-            else
-            {
-                var itemTop = Canvas.GetTop(designerItem);
-                var dragVertical = Math.Max(0, itemTop + e.VerticalChange);
-                if (itemTop != dragVertical) Canvas.SetTop(designerItem, dragVertical);
-            }
+                // Vertical change
+                if (e.VerticalChange > 0)
+                {
+                    var itemTop = Canvas.GetTop(designerItem);
+                    var dragVertical = Math.Min(Math.Max(itemTop, designer.ActualHeight - designerItem.Height - designerItem.Margin.Top - designerItem.Margin.Bottom), itemTop + e.VerticalChange);
+                    if (itemTop != dragVertical) Canvas.SetTop(designerItem, dragVertical);
+                }
+                else
+                {
+                    var itemTop = Canvas.GetTop(designerItem);
+                    var dragVertical = Math.Max(0, itemTop + e.VerticalChange);
+                    if (itemTop != dragVertical) Canvas.SetTop(designerItem, dragVertical);
+                }
 
-            e.Handled = true;
+                e.Handled = true;
+            }
         }
     }
 }
