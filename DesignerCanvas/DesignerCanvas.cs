@@ -20,6 +20,36 @@ namespace DesignerCanvas
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
         }
 
+        public class RectangleDrawnEventArgs : RoutedEventArgs
+        {
+            public double Left { get; }
+            public double Top { get; }
+            public double Width { get; }
+            public double Height { get; }
+
+            public RectangleDrawnEventArgs(RoutedEvent routedEvent, double left, double top, double width, double height) : base(routedEvent)
+            {
+                Left = left;
+                Top = top;
+                Width = width;
+                Height = height;
+            }
+        }
+
+        public static readonly RoutedEvent RectangleDrawnEvent = EventManager.RegisterRoutedEvent("RectangleDrawn", RoutingStrategy.Bubble, typeof(RectangleDrawnEventHandler), typeof(DesignerCanvas));
+        public delegate void RectangleDrawnEventHandler(object sender, RectangleDrawnEventArgs e);
+        public event RectangleDrawnEventHandler RectangleDrawn
+        {
+            add => AddHandler(RectangleDrawnEvent, value);
+            remove => RemoveHandler(RectangleDrawnEvent, value);
+        }
+
+        protected internal void OnRectangleDrawn(double left, double top, double width, double height)
+        {
+            var newEventArgs = new RectangleDrawnEventArgs(RectangleDrawnEvent, left, top, width, height);
+            RaiseEvent(newEventArgs);
+        }
+
         public Tool ToolMode { get; private set; } = Tool.Select;
         public void ChangeToolMode(Tool tool)
         {

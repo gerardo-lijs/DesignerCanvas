@@ -21,5 +21,25 @@ namespace DesignerCanvasDemo
         {
             InitializeComponent();
         }
+
+        private void DemoDesignerCanvas_RectangleDrawn(object sender, DesignerCanvas.DesignerCanvas.RectangleDrawnEventArgs e)
+        {
+            var objBox = new System.Windows.Shapes.Rectangle
+            {
+                Fill = new SolidColorBrush(Colors.Black),
+                IsHitTestVisible = false
+            };
+            var regionItem = new DesignerCanvas.DesignerItem(Guid.NewGuid())
+            {
+                Opacity = 0.4,
+                Width = e.Width,
+                Height = e.Height,
+                Content = objBox,
+            };
+            Canvas.SetLeft(regionItem, e.Left);
+            Canvas.SetTop(regionItem, e.Top);
+
+            DemoDesignerCanvas.Children.Add(regionItem);
+        }
     }
 }

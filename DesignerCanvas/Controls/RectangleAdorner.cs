@@ -52,24 +52,15 @@ namespace DesignerCanvas.Controls
             if (adornerLayer is not null)
                 adornerLayer.Remove(this);
 
-            // Create rectangle
+            // Create rectangle event
             if (startPoint is not null && endPoint is not null)
             {
-                var objBox = new System.Windows.Shapes.Rectangle
-                {
-                    Fill = new SolidColorBrush(Colors.Black),
-                    IsHitTestVisible = false
-                };
-                var regionItem = new DesignerItem(Guid.NewGuid())
-                {
-                    Opacity = 0.4,
-                    Width = Math.Abs(endPoint.Value.X - startPoint.Value.X),
-                    Height = Math.Abs(endPoint.Value.Y - startPoint.Value.Y),
-                    Content = objBox,
-                };
-                Canvas.SetLeft(regionItem, Math.Min(startPoint.Value.X, endPoint.Value.X));
-                Canvas.SetTop(regionItem, Math.Min(startPoint.Value.Y, endPoint.Value.Y));
-                _designerCanvas.Children.Add(regionItem);
+                var left = Math.Min(startPoint.Value.X, endPoint.Value.X);
+                var top = Math.Min(startPoint.Value.Y, endPoint.Value.Y);
+                var width = Math.Abs(endPoint.Value.X - startPoint.Value.X);
+                var height = Math.Abs(endPoint.Value.Y - startPoint.Value.Y);
+
+                _designerCanvas.OnRectangleDrawn(left, top, width, height);
             }
 
             e.Handled = true;
