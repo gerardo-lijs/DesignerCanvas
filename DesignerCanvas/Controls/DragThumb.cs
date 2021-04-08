@@ -10,6 +10,7 @@ namespace DesignerCanvas.Controls
     {
         public DragThumb()
         {
+            Background = new SolidColorBrush(Colors.Transparent);
             DragDelta += new DragDeltaEventHandler(DragThumb_DragDelta);
         }
 
@@ -28,7 +29,7 @@ namespace DesignerCanvas.Controls
                 if (e.HorizontalChange > 0)
                 {
                     var itemLeft = Canvas.GetLeft(designerItem);
-                    var dragHorizontal = Math.Min(Math.Max(itemLeft, designer.ActualWidth - designerItem.Width - designerItem.Margin.Left - designerItem.Margin.Right), itemLeft + e.HorizontalChange);
+                    var dragHorizontal = Math.Min(Math.Max(itemLeft, designer.ActualWidth - designerItem.ActualWidth - designerItem.Margin.Left - designerItem.Margin.Right), itemLeft + e.HorizontalChange);
                     if (itemLeft != dragHorizontal) Canvas.SetLeft(designerItem, dragHorizontal);
                 }
                 else
@@ -42,7 +43,7 @@ namespace DesignerCanvas.Controls
                 if (e.VerticalChange > 0)
                 {
                     var itemTop = Canvas.GetTop(designerItem);
-                    var dragVertical = Math.Min(Math.Max(itemTop, designer.ActualHeight - designerItem.Height - designerItem.Margin.Top - designerItem.Margin.Bottom), itemTop + e.VerticalChange);
+                    var dragVertical = Math.Min(Math.Max(itemTop, designer.ActualHeight - designerItem.ActualHeight - designerItem.Margin.Top - designerItem.Margin.Bottom), itemTop + e.VerticalChange);
                     if (itemTop != dragVertical) Canvas.SetTop(designerItem, dragVertical);
                 }
                 else

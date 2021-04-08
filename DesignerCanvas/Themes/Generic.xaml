@@ -105,7 +105,8 @@
                     <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                           ContextMenu="{StaticResource DesignerItemContextMenu}">
                         <!-- PART_DragThumb -->
-                        <c:DragThumb x:Name="PART_DragThumb" 
+                        <c:DragThumb x:Name="PART_DragThumb"
+                                     Opacity="0" 
                                      Cursor="SizeAll"/>
                         <!-- PART_ResizeDecorator -->
                         <Control x:Name="PART_ResizeDecorator" 
