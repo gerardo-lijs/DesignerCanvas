@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -74,7 +75,7 @@ namespace DesignerCanvas.Controls
             _designerCanvas.SelectionService.ClearSelection();
 
             var rubberBand = new Rect(startPoint.Value, endPoint.Value);
-            foreach (Control item in _designerCanvas.Children)
+            foreach (Control item in _designerCanvas.Children.OfType<ISelectable>())
             {
                 var itemRect = VisualTreeHelper.GetDescendantBounds(item);
                 var itemBounds = item.TransformToAncestor(_designerCanvas).TransformBounds(itemRect);
