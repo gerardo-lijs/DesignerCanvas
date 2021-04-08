@@ -313,7 +313,7 @@ namespace DesignerCanvas
         {
             if (e.Parameter is Tool tool)
             {
-                ChangeToolMode(tool);
+                ToolMode = tool;
             }
         }
 

@@ -20,6 +20,7 @@ namespace DesignerCanvas
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
         }
 
+        #region RectangleDrawnEvent
         public class RectangleDrawnEventArgs : RoutedEventArgs
         {
             public double Left { get; }
@@ -49,9 +50,26 @@ namespace DesignerCanvas
             var newEventArgs = new RectangleDrawnEventArgs(RectangleDrawnEvent, left, top, width, height);
             RaiseEvent(newEventArgs);
         }
+        #endregion RectangleDrawnEvent
 
-        public Tool ToolMode { get; private set; } = Tool.Select;
-        public void ChangeToolMode(Tool tool)
+        #region ToolMode
+        public static readonly DependencyProperty ToolModeProperty = DependencyProperty.Register("ToolMode", typeof(Tool), typeof(DesignerCanvas), new PropertyMetadata(Tool.Select, new PropertyChangedCallback(OnToolModeChanged)));
+        public Tool ToolMode
+        {
+            get { return (Tool)GetValue(ToolModeProperty); }
+            set { SetValue(ToolModeProperty, value); }
+        }
+
+        private static void OnToolModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as DesignerCanvas;
+            if (control is not null)
+            {
+                control.OnToolModeChanged((Tool)e.OldValue, (Tool)e.NewValue);
+            }
+        }
+
+        protected virtual void OnToolModeChanged(Tool oldValue, Tool newValue)
         {
             // Clear previous adorners
             var adornerLayer = AdornerLayer.GetAdornerLayer(this);
@@ -67,7 +85,7 @@ namespace DesignerCanvas
             }
 
             // Create tool adorner/mode
-            switch (tool)
+            switch (newValue)
             {
                 case Tool.None:
                     break;
@@ -94,10 +112,10 @@ namespace DesignerCanvas
                     break;
             }
             SelectionService.ClearSelection();
-            ToolMode = tool;
             _crosshairRender = false;
             InvalidateVisual();
         }
+        #endregion ToolMode
 
         private SelectionService selectionService;
         internal SelectionService SelectionService
