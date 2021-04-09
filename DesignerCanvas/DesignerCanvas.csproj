@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Cursors\add.cur" />
+    <None Remove="Cursors\delete.cur" />
+    <None Remove="Cursors\oval.cur" />
+    <None Remove="Cursors\ruler.cur" />
+    <None Remove="Cursors\zoom-in.cur" />
+    <None Remove="Cursors\zoom-out.cur" />
     <None Remove="Resources\Images\BringForward.png" />
     <None Remove="Resources\Images\BringToFront.png" />
     <None Remove="Resources\Images\Copy.png" />
@@ -21,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Cursors\add.cur" />
+    <Resource Include="Cursors\delete.cur" />
+    <Resource Include="Cursors\oval.cur" />
+    <Resource Include="Cursors\ruler.cur" />
+    <Resource Include="Cursors\zoom-in.cur" />
+    <Resource Include="Cursors\zoom-out.cur" />
     <Resource Include="Resources\Images\BringForward.png" />
     <Resource Include="Resources\Images\BringToFront.png" />
     <Resource Include="Resources\Images\Copy.png" />

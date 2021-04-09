@@ -15,9 +15,13 @@ namespace DesignerCanvas
         private Pen? _crosshairPen;
         private bool _crosshairRender;
 
+        private static readonly Cursor Add_Cursor;
+
         static DesignerCanvas()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
+            var cursorUri = new Uri("pack://application:,,,/DesignerCanvas;component/Cursors/add.cur");
+            Add_Cursor = new Cursor(Application.GetResourceStream(cursorUri).Stream);
         }
 
         #region RectangleDrawnEvent
@@ -51,6 +55,34 @@ namespace DesignerCanvas
             RaiseEvent(newEventArgs);
         }
         #endregion RectangleDrawnEvent
+
+        #region RectangleAutoDetectEvent
+        public class RectangleAutoDetectEventArgs : RoutedEventArgs
+        {
+            public double CenterPosX { get; }
+            public double CenterPosY { get; }
+
+            public RectangleAutoDetectEventArgs(RoutedEvent routedEvent, double centerPosX, double centerPosY) : base(routedEvent)
+            {
+                CenterPosX = centerPosX;
+                CenterPosY = centerPosY;
+            }
+        }
+
+        public static readonly RoutedEvent RectangleAutoDetectEvent = EventManager.RegisterRoutedEvent("RectangleAutoDetect", RoutingStrategy.Bubble, typeof(RectangleAutoDetectEventHandler), typeof(DesignerCanvas));
+        public delegate void RectangleAutoDetectEventHandler(object sender, RectangleAutoDetectEventArgs e);
+        public event RectangleAutoDetectEventHandler RectangleAutoDetect
+        {
+            add => AddHandler(RectangleAutoDetectEvent, value);
+            remove => RemoveHandler(RectangleAutoDetectEvent, value);
+        }
+
+        protected internal void OnRectangleAutoDetect(double centerPosX, double centerPosY)
+        {
+            var newEventArgs = new RectangleAutoDetectEventArgs(RectangleAutoDetectEvent, centerPosX, centerPosY);
+            RaiseEvent(newEventArgs);
+        }
+        #endregion RectangleAutoDetectEvent
 
         #region ToolMode
         public static readonly DependencyProperty ToolModeProperty = DependencyProperty.Register("ToolMode", typeof(Tool), typeof(DesignerCanvas), new PropertyMetadata(Tool.Select, new PropertyChangedCallback(OnToolModeChanged)));
@@ -127,6 +159,24 @@ namespace DesignerCanvas
             }
         }
 
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+            if (ToolMode == Tool.Rectangle)
+            {
+                if (Keyboard.Modifiers == ModifierKeys.Control)
+                {
+                    Cursor = Add_Cursor;
+                }
+            }
+        }
+
+        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        {
+            base.OnPreviewKeyUp(e);
+            Cursor = Cursors.Arrow;
+        }
+
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
@@ -147,10 +197,19 @@ namespace DesignerCanvas
                     e.Handled = true;
                     break;
                 case Tool.Rectangle:
-                    // in case that this click is the start of a rectangle operation we cache the start point
-                    _mouseDownStartPoint = e.GetPosition(this);
-                    _crosshairRender = false;
-                    InvalidateVisual();
+                    if ((Keyboard.Modifiers & (ModifierKeys.Control)) != ModifierKeys.None)
+                    {
+                        // Auto detect rectangle at current position
+                        var detectCenterPosition = e.GetPosition(this);
+                        OnRectangleAutoDetect(detectCenterPosition.X, detectCenterPosition.Y);
+                    }
+                    else
+                    {
+                        // in case that this click is the start of a rectangle operation we cache the start point
+                        _mouseDownStartPoint = e.GetPosition(this);
+                        _crosshairRender = false;
+                        InvalidateVisual();
+                    }
                     e.Handled = true;
                     break;
                 case Tool.Polygon:
@@ -162,6 +221,19 @@ namespace DesignerCanvas
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        protected override void OnMouseEnter(MouseEventArgs e)
+        {
+            if (ToolMode == Tool.Rectangle && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                Cursor = Add_Cursor;
+            }
+            else
+            {
+                Cursor = Cursors.Arrow;
+            }
+            base.OnMouseEnter(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -194,6 +266,14 @@ namespace DesignerCanvas
                     }
                     break;
                 case Tool.Rectangle:
+                    if (Keyboard.Modifiers == ModifierKeys.Control)
+                    {
+                        Cursor = Add_Cursor;
+                    }
+                    else
+                    {
+                        Cursor = Cursors.Arrow;
+                    }
                     if (e.LeftButton != MouseButtonState.Pressed && e.RightButton != MouseButtonState.Pressed)
                     {
                         _crosshairRender = true;
