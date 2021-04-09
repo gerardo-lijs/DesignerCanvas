@@ -162,19 +162,34 @@ namespace DesignerCanvas
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
+            RefreshCursor();
+        }
+
+        private void RefreshCursor()
+        {
             if (ToolMode == Tool.Rectangle)
             {
                 if (Keyboard.Modifiers == ModifierKeys.Control)
-                {
                     Cursor = Add_Cursor;
-                }
+                else
+                    Cursor = Cursors.Cross;
             }
+            else
+            {
+                Cursor = Cursors.Arrow;
+            }
+        }
+
+        protected override void OnPreviewMouseMove(MouseEventArgs e)
+        {
+            base.OnPreviewMouseMove(e);
+            RefreshCursor();
         }
 
         protected override void OnPreviewKeyUp(KeyEventArgs e)
         {
             base.OnPreviewKeyUp(e);
-            Cursor = Cursors.Arrow;
+            RefreshCursor();
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -223,17 +238,13 @@ namespace DesignerCanvas
             }
         }
 
-        protected override void OnMouseEnter(MouseEventArgs e)
+        protected override void OnMouseLeave(MouseEventArgs e)
         {
-            if (ToolMode == Tool.Rectangle && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                Cursor = Add_Cursor;
-            }
-            else
-            {
-                Cursor = Cursors.Arrow;
-            }
-            base.OnMouseEnter(e);
+            base.OnMouseLeave(e);
+
+            // Remove crosshair
+            _crosshairRender = false;
+            InvalidateVisual();
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -266,14 +277,6 @@ namespace DesignerCanvas
                     }
                     break;
                 case Tool.Rectangle:
-                    if (Keyboard.Modifiers == ModifierKeys.Control)
-                    {
-                        Cursor = Add_Cursor;
-                    }
-                    else
-                    {
-                        Cursor = Cursors.Arrow;
-                    }
                     if (e.LeftButton != MouseButtonState.Pressed && e.RightButton != MouseButtonState.Pressed)
                     {
                         _crosshairRender = true;

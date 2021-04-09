@@ -23,6 +23,7 @@ namespace DesignerCanvas.Controls
             {
                 DashStyle = new DashStyle(new double[] { 10 }, 1)
             };
+            Cursor = Cursors.Cross;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
