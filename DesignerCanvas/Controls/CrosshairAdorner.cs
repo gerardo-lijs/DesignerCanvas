@@ -35,9 +35,6 @@ namespace DesignerCanvas.Controls
         {
             base.OnRender(dc);
 
-            // NB: Without a background the OnMouseMove event would not be fired!
-            dc.DrawRectangle(Brushes.Transparent, null, new Rect(RenderSize));
-
             // Check
             if (currentPosition is null) return;
 

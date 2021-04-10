@@ -71,7 +71,7 @@ namespace DesignerCanvas.Controls
         {
             base.OnRender(dc);
 
-            // without a background the OnMouseMove event would not be fired!
+            // NB: Without a background the OnMouseMove event would not be fired!
             // Alternative: implement a Canvas as a child of this adorner, like
             // the ConnectionAdorner does.
             dc.DrawRectangle(Brushes.Transparent, null, new Rect(RenderSize));

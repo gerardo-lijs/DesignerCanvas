@@ -163,6 +163,42 @@ namespace DesignerCanvas
             RefreshCursor();
         }
 
+        protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseDown(e);
+            switch (ToolMode)
+            {
+                case Tool.None:
+                    break;
+                case Tool.Select:
+                    break;
+                case Tool.Rectangle:
+                    if ((Keyboard.Modifiers & (ModifierKeys.Control)) != ModifierKeys.None)
+                    {
+                        // Auto detect rectangle at current position
+                        var detectCenterPosition = e.GetPosition(this);
+                        RaiseRectangleAutoDetectEvent(detectCenterPosition.X, detectCenterPosition.Y);
+                    }
+                    else
+                    {
+                        // in case that this click is the start of a rectangle operation we cache the start point
+                        _mouseDownStartPoint = e.GetPosition(this);
+                        _crosshairRender = false;
+                        InvalidateVisual();
+                    }
+                    e.Handled = true;
+                    break;
+                case Tool.Polygon:
+                    break;
+                case Tool.DetectRectangle:
+                    break;
+                case Tool.DetectPolygon:
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
@@ -183,20 +219,6 @@ namespace DesignerCanvas
                     e.Handled = true;
                     break;
                 case Tool.Rectangle:
-                    if ((Keyboard.Modifiers & (ModifierKeys.Control)) != ModifierKeys.None)
-                    {
-                        // Auto detect rectangle at current position
-                        var detectCenterPosition = e.GetPosition(this);
-                        RaiseRectangleAutoDetectEvent(detectCenterPosition.X, detectCenterPosition.Y);
-                    }
-                    else
-                    {
-                        // in case that this click is the start of a rectangle operation we cache the start point
-                        _mouseDownStartPoint = e.GetPosition(this);
-                        _crosshairRender = false;
-                        InvalidateVisual();
-                    }
-                    e.Handled = true;
                     break;
                 case Tool.Polygon:
                     break;
