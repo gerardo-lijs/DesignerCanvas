@@ -14,12 +14,6 @@ namespace DesignerCanvas
 {
     public partial class DesignerCanvas
     {
-        public static RoutedCommand BringForward = new();
-        public static RoutedCommand BringToFront = new();
-        public static RoutedCommand SendBackward = new();
-        public static RoutedCommand SendToBack = new();
-        public static RoutedCommand SelectAll = new();
-        public static RoutedCommand ToolModeChange = new();
 
         public DesignerCanvas()
         {
@@ -28,13 +22,13 @@ namespace DesignerCanvas
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, Copy_Executed, Copy_CanExecute));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, Paste_Executed, Paste_CanExecute));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Delete, Delete_Executed, Delete_CanExecute));
-            CommandBindings.Add(new CommandBinding(BringForward, BringForward_Executed, Order_CanExecute));
-            CommandBindings.Add(new CommandBinding(BringToFront, BringToFront_Executed, Order_CanExecute));
-            CommandBindings.Add(new CommandBinding(SendBackward, SendBackward_Executed, Order_CanExecute));
-            CommandBindings.Add(new CommandBinding(SendToBack, SendToBack_Executed, Order_CanExecute));
-            CommandBindings.Add(new CommandBinding(SelectAll, SelectAll_Executed));
-            CommandBindings.Add(new CommandBinding(ToolModeChange, ToolModeChange_Executed));
-            SelectAll.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(DesignerCanvasCommands.BringForward, BringForward_Executed, Order_CanExecute));
+            CommandBindings.Add(new CommandBinding(DesignerCanvasCommands.BringToFront, BringToFront_Executed, Order_CanExecute));
+            CommandBindings.Add(new CommandBinding(DesignerCanvasCommands.SendBackward, SendBackward_Executed, Order_CanExecute));
+            CommandBindings.Add(new CommandBinding(DesignerCanvasCommands.SendToBack, SendToBack_Executed, Order_CanExecute));
+            CommandBindings.Add(new CommandBinding(DesignerCanvasCommands.SelectAll, SelectAll_Executed));
+            CommandBindings.Add(new CommandBinding(DesignerCanvasCommands.ToolModeChange, ToolModeChange_Executed));
+            DesignerCanvasCommands.SelectAll.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
         }
 
         #region New Command
@@ -105,7 +99,7 @@ namespace DesignerCanvas
                 }
             }
 
-            DesignerCanvas.BringToFront.Execute(null, this);
+            DesignerCanvasCommands.BringToFront.Execute(null, this);
 
             // update paste offset
             root.Attribute("OffsetX").Value = (offsetX + 10).ToString();
