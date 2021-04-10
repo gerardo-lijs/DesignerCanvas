@@ -25,31 +25,15 @@ namespace DesignerCanvas
         }
 
         #region RectangleDrawnEvent
-        public class RectangleDrawnEventArgs : RoutedEventArgs
-        {
-            public double Left { get; }
-            public double Top { get; }
-            public double Width { get; }
-            public double Height { get; }
-
-            public RectangleDrawnEventArgs(RoutedEvent routedEvent, double left, double top, double width, double height) : base(routedEvent)
-            {
-                Left = left;
-                Top = top;
-                Width = width;
-                Height = height;
-            }
-        }
 
         public static readonly RoutedEvent RectangleDrawnEvent = EventManager.RegisterRoutedEvent("RectangleDrawn", RoutingStrategy.Bubble, typeof(RectangleDrawnEventHandler), typeof(DesignerCanvas));
-        public delegate void RectangleDrawnEventHandler(object sender, RectangleDrawnEventArgs e);
         public event RectangleDrawnEventHandler RectangleDrawn
         {
             add => AddHandler(RectangleDrawnEvent, value);
             remove => RemoveHandler(RectangleDrawnEvent, value);
         }
 
-        protected internal void OnRectangleDrawn(double left, double top, double width, double height)
+        protected internal void RaiseRectangleDrawnEvent(double left, double top, double width, double height)
         {
             var newEventArgs = new RectangleDrawnEventArgs(RectangleDrawnEvent, left, top, width, height);
             RaiseEvent(newEventArgs);
@@ -57,27 +41,14 @@ namespace DesignerCanvas
         #endregion RectangleDrawnEvent
 
         #region RectangleAutoDetectEvent
-        public class RectangleAutoDetectEventArgs : RoutedEventArgs
-        {
-            public double CenterPosX { get; }
-            public double CenterPosY { get; }
-
-            public RectangleAutoDetectEventArgs(RoutedEvent routedEvent, double centerPosX, double centerPosY) : base(routedEvent)
-            {
-                CenterPosX = centerPosX;
-                CenterPosY = centerPosY;
-            }
-        }
-
         public static readonly RoutedEvent RectangleAutoDetectEvent = EventManager.RegisterRoutedEvent("RectangleAutoDetect", RoutingStrategy.Bubble, typeof(RectangleAutoDetectEventHandler), typeof(DesignerCanvas));
-        public delegate void RectangleAutoDetectEventHandler(object sender, RectangleAutoDetectEventArgs e);
         public event RectangleAutoDetectEventHandler RectangleAutoDetect
         {
             add => AddHandler(RectangleAutoDetectEvent, value);
             remove => RemoveHandler(RectangleAutoDetectEvent, value);
         }
 
-        protected internal void OnRectangleAutoDetect(double centerPosX, double centerPosY)
+        protected internal void RaiseRectangleAutoDetectEvent(double centerPosX, double centerPosY)
         {
             var newEventArgs = new RectangleAutoDetectEventArgs(RectangleAutoDetectEvent, centerPosX, centerPosY);
             RaiseEvent(newEventArgs);
@@ -216,7 +187,7 @@ namespace DesignerCanvas
                     {
                         // Auto detect rectangle at current position
                         var detectCenterPosition = e.GetPosition(this);
-                        OnRectangleAutoDetect(detectCenterPosition.X, detectCenterPosition.Y);
+                        RaiseRectangleAutoDetectEvent(detectCenterPosition.X, detectCenterPosition.Y);
                     }
                     else
                     {

@@ -61,7 +61,7 @@ namespace DesignerCanvas.Controls
                 var width = Math.Abs(endPoint.Value.X - startPoint.Value.X);
                 var height = Math.Abs(endPoint.Value.Y - startPoint.Value.Y);
 
-                _designerCanvas.OnRectangleDrawn(left, top, width, height);
+                _designerCanvas.RaiseRectangleDrawnEvent(left, top, width, height);
             }
 
             e.Handled = true;

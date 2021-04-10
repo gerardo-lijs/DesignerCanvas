@@ -22,7 +22,7 @@ namespace DesignerCanvasDemo
             InitializeComponent();
         }
 
-        private void DemoDesignerCanvas_RectangleDrawn(object sender, DesignerCanvas.DesignerCanvas.RectangleDrawnEventArgs e)
+        private void DemoDesignerCanvas_RectangleDrawn(object sender, DesignerCanvas.RectangleDrawnEventArgs e)
         {
             var objBox = new System.Windows.Shapes.Rectangle
             {
