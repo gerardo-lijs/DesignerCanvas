@@ -16,8 +16,6 @@ namespace DesignerCanvas
         private const string ResizeDecoratorPart = "PART_ResizeDecorator";
         private const string ContentPresenterPart = "PART_ContentPresenter";
 
-        private Control _resizeDecorator;
-
         public Guid Id { get; }
 
         public Guid ParentId
@@ -37,13 +35,6 @@ namespace DesignerCanvas
         static DesignerItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerItem), new FrameworkPropertyMetadata(typeof(DesignerItem)));
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            _resizeDecorator = GetTemplateChild(ResizeDecoratorPart) as Control;
         }
 
         public DesignerItem(Guid id)
