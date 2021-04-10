@@ -24,14 +24,14 @@ namespace DesignerCanvas
         public DesignerCanvas()
         {
             CommandBindings.Add(new CommandBinding(ApplicationCommands.New, New_Executed));
-            CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, Cut_Executed, Cut_Enabled));
-            CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, Copy_Executed, Copy_Enabled));
-            CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, Paste_Executed, Paste_Enabled));
-            CommandBindings.Add(new CommandBinding(ApplicationCommands.Delete, Delete_Executed, Delete_Enabled));
-            CommandBindings.Add(new CommandBinding(BringForward, BringForward_Executed, Order_Enabled));
-            CommandBindings.Add(new CommandBinding(BringToFront, BringToFront_Executed, Order_Enabled));
-            CommandBindings.Add(new CommandBinding(SendBackward, SendBackward_Executed, Order_Enabled));
-            CommandBindings.Add(new CommandBinding(SendToBack, SendToBack_Executed, Order_Enabled));
+            CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, Cut_Executed, Cut_CanExecute));
+            CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, Copy_Executed, Copy_CanExecute));
+            CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, Paste_Executed, Paste_CanExecute));
+            CommandBindings.Add(new CommandBinding(ApplicationCommands.Delete, Delete_Executed, Delete_CanExecute));
+            CommandBindings.Add(new CommandBinding(BringForward, BringForward_Executed, Order_CanExecute));
+            CommandBindings.Add(new CommandBinding(BringToFront, BringToFront_Executed, Order_CanExecute));
+            CommandBindings.Add(new CommandBinding(SendBackward, SendBackward_Executed, Order_CanExecute));
+            CommandBindings.Add(new CommandBinding(SendToBack, SendToBack_Executed, Order_CanExecute));
             CommandBindings.Add(new CommandBinding(SelectAll, SelectAll_Executed));
             CommandBindings.Add(new CommandBinding(ToolModeChange, ToolModeChange_Executed));
             SelectAll.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
@@ -41,8 +41,8 @@ namespace DesignerCanvas
 
         private void New_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Children.Clear();
-            this.SelectionService.ClearSelection();
+            Children.Clear();
+            SelectionService.ClearSelection();
         }
 
         #endregion
@@ -54,7 +54,7 @@ namespace DesignerCanvas
             CopyCurrentSelection();
         }
 
-        private void Copy_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        private void Copy_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = SelectionService.CurrentSelection.Count > 0;
         }
@@ -123,7 +123,7 @@ namespace DesignerCanvas
             }
         }
 
-        private void Paste_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        private void Paste_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -146,7 +146,7 @@ namespace DesignerCanvas
             DeleteCurrentSelection();
         }
 
-        private void Delete_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        private void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.SelectionService.CurrentSelection.Count > 0;
         }
@@ -161,9 +161,9 @@ namespace DesignerCanvas
             DeleteCurrentSelection();
         }
 
-        private void Cut_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        private void Cut_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = this.SelectionService.CurrentSelection.Count > 0;
+            e.CanExecute = SelectionService.CurrentSelection.Count > 0;
         }
 
         #endregion
@@ -199,7 +199,7 @@ namespace DesignerCanvas
             }
         }
 
-        private void Order_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        private void Order_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             //e.CanExecute = SelectionService.CurrentSelection.Count() > 0;
             e.CanExecute = true;
