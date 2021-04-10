@@ -106,8 +106,7 @@
                           ContextMenu="{StaticResource DesignerItemContextMenu}">
                         <!-- PART_DragThumb -->
                         <c:DragThumb x:Name="PART_DragThumb"
-                                     Opacity="0" 
-                                     Cursor="SizeAll"/>
+                                     Opacity="0" />
                         <!-- PART_ResizeDecorator -->
                         <Control x:Name="PART_ResizeDecorator" 
                                  Visibility="Collapsed"
