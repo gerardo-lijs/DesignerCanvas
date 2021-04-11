@@ -14,7 +14,6 @@ namespace DesignerCanvas
 {
     public partial class DesignerCanvas
     {
-
         public DesignerCanvas()
         {
             CommandBindings.Add(new CommandBinding(ApplicationCommands.New, New_Executed));
