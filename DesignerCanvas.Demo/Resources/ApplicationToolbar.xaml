@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:s="clr-namespace:LijsDev.DesignerCanvas;assembly=LijsDev.DesignerCanvas">
+                    xmlns:lijsdev="http://lijs.dev/xaml/controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles/ToolBar.xaml"/>
@@ -107,7 +107,7 @@
                 <StackPanel Grid.Column="1" Margin="7,0,0,0">
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvasCommands.BringForward}"
+                            Command="{x:Static lijsdev:DesignerCanvasCommands.BringForward}"
                             CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
@@ -122,7 +122,7 @@
                     </Button>
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvasCommands.BringToFront}"
+                            Command="{x:Static lijsdev:DesignerCanvasCommands.BringToFront}"
                             CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
@@ -143,7 +143,7 @@
                 <StackPanel Grid.Column="2">
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvasCommands.SendBackward}"
+                            Command="{x:Static lijsdev:DesignerCanvasCommands.SendBackward}"
                             CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
@@ -158,7 +158,7 @@
                     </Button>
                     <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvasCommands.SendToBack}"
+                            Command="{x:Static lijsdev:DesignerCanvasCommands.SendToBack}"
                             CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                         <Button.Content>
                             <Grid>
@@ -180,8 +180,8 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="7,0,0,0">
                 <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvasCommands.ToolModeChange}"
-                            CommandParameter="{x:Static s:Tool.Select}"
+                            Command="{x:Static lijsdev:DesignerCanvasCommands.ToolModeChange}"
+                            CommandParameter="{x:Static lijsdev:Tool.Select}"
                             CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                     <Button.Content>
                         <Grid>
@@ -196,8 +196,8 @@
                 </Button>
                 <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
                             Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static s:DesignerCanvasCommands.ToolModeChange}"
-                            CommandParameter="{x:Static s:Tool.Rectangle}"
+                            Command="{x:Static lijsdev:DesignerCanvasCommands.ToolModeChange}"
+                            CommandParameter="{x:Static lijsdev:Tool.Rectangle}"
                             CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
                     <Button.Content>
                         <Grid>

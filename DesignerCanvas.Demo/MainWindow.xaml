@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:dc="clr-namespace:LijsDev.DesignerCanvas;assembly=LijsDev.DesignerCanvas"
+        xmlns:lijsdev="http://lijs.dev/xaml/controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1000">
 
@@ -17,13 +17,13 @@
 
         <Grid Grid.Row="1" Margin="3,10,3,0">
             <Border BorderBrush="Black" BorderThickness="2" Width="500" Height="500">
-                <dc:DesignerCanvas x:Name="DemoDesignerCanvas" RectangleDrawn="DemoDesignerCanvas_RectangleDrawn">
+                <lijsdev:DesignerCanvas x:Name="DemoDesignerCanvas" RectangleDrawn="DemoDesignerCanvas_RectangleDrawn">
 
-                    <dc:DesignerItem Margin="50" Background="White" Width="150" Height="150" Canvas.Top="10" Canvas.Left="10">
+                    <lijsdev:DesignerItem Margin="50" Background="White" Width="150" Height="150" Canvas.Top="10" Canvas.Left="10">
                         <Rectangle Fill="Coral" IsHitTestVisible="False"/>
-                    </dc:DesignerItem>
+                    </lijsdev:DesignerItem>
 
-                </dc:DesignerCanvas>
+                </lijsdev:DesignerCanvas>
             </Border>
         </Grid>
     </Grid>
