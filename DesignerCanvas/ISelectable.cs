@@ -1,4 +1,4 @@
-﻿namespace DesignerCanvas
+﻿namespace LijsDev.DesignerCanvas
 {
     internal interface ISelectable
     {

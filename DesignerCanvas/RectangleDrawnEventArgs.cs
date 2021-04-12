@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DesignerCanvas
+namespace LijsDev.DesignerCanvas
 {
     public delegate void RectangleDrawnEventHandler(object sender, RectangleDrawnEventArgs e);
     public class RectangleDrawnEventArgs : RoutedEventArgs

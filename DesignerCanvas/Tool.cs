@@ -1,4 +1,4 @@
-﻿namespace DesignerCanvas
+﻿namespace LijsDev.DesignerCanvas
 {
     public enum Tool
     {

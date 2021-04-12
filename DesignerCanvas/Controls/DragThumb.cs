@@ -4,7 +4,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace DesignerCanvas.Controls
+namespace LijsDev.DesignerCanvas.Controls
 {
     internal class DragThumb : Thumb
     {

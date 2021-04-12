@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesignerCanvasDemo", "DesignerCanvas.Demo\DesignerCanvasDemo.csproj", "{DF5E4E28-2432-4AB7-9D75-BA5C7203457C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LijsDev.DesignerCanvasDemo", "DesignerCanvas.Demo\LijsDev.DesignerCanvasDemo.csproj", "{DF5E4E28-2432-4AB7-9D75-BA5C7203457C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignerCanvas", "DesignerCanvas\DesignerCanvas.csproj", "{B437DF5F-20E0-4082-A92E-5C1D9C31A8E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LijsDev.DesignerCanvas", "DesignerCanvas\LijsDev.DesignerCanvas.csproj", "{B437DF5F-20E0-4082-A92E-5C1D9C31A8E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

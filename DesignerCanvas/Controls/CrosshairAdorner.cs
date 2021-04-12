@@ -5,7 +5,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace DesignerCanvas.Controls
+namespace LijsDev.DesignerCanvas.Controls
 {
     internal class CrosshairAdorner : Adorner
     {

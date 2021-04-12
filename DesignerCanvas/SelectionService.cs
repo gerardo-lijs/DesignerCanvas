@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DesignerCanvas
+namespace LijsDev.DesignerCanvas
 {
     internal class SelectionService
     {

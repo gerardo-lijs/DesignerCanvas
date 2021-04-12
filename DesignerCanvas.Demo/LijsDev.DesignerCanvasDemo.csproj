@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DesignerCanvas\DesignerCanvas.csproj" />
+    <ProjectReference Include="..\DesignerCanvas\LijsDev.DesignerCanvas.csproj" />
   </ItemGroup>
 
   <ItemGroup>

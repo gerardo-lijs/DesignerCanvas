@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DesignerCanvas
+namespace LijsDev.DesignerCanvas
 {
     public delegate void RectangleAutoDetectEventHandler(object sender, RectangleAutoDetectEventArgs e);
     public class RectangleAutoDetectEventArgs : RoutedEventArgs

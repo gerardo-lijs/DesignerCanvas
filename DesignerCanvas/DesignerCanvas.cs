@@ -4,9 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using DesignerCanvas.Controls;
+using LijsDev.DesignerCanvas.Controls;
 
-namespace DesignerCanvas
+namespace LijsDev.DesignerCanvas
 {
     public partial class DesignerCanvas : Canvas
     {
@@ -20,7 +20,7 @@ namespace DesignerCanvas
         static DesignerCanvas()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
-            var cursorUri = new Uri("pack://application:,,,/DesignerCanvas;component/Cursors/add.cur");
+            var cursorUri = new Uri("pack://application:,,,/LijsDev.DesignerCanvas;component/Cursors/add.cur");
             Add_Cursor = new Cursor(Application.GetResourceStream(cursorUri).Stream);
         }
 

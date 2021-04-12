@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace DesignerCanvas
+namespace LijsDev.DesignerCanvas
 {
     public static class DesignerCanvasCommands
     {

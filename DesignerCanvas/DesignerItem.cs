@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using DesignerCanvas.Controls;
+using LijsDev.DesignerCanvas.Controls;
 
-namespace DesignerCanvas
+namespace LijsDev.DesignerCanvas
 {
     [TemplatePart(Name = DragThumbPart, Type = typeof(DragThumb))]
     [TemplatePart(Name = ResizeDecoratorPart, Type = typeof(Control))]
