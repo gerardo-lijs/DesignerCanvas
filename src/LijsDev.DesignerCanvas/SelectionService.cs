@@ -16,9 +16,8 @@ namespace LijsDev.DesignerCanvas
 
         internal void SelectItem(IDesignerItem item)
         {
-            ClearSelection();
+            ClearSelection(dontRaiseSelectionChangedEvent: true);
             AddToSelection(item);
-            _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
 
         internal void AddToSelection(IDesignerItem item)
@@ -35,11 +34,13 @@ namespace LijsDev.DesignerCanvas
             _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
 
-        internal void ClearSelection()
+        internal void ClearSelection(bool dontRaiseSelectionChangedEvent = false)
         {
+            if (CurrentSelection.Count == 0) return;
+
             CurrentSelection.ForEach(item => item.IsSelected = false);
             CurrentSelection.Clear();
-            _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
+            if (!dontRaiseSelectionChangedEvent) _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
 
         internal void SelectAll()
