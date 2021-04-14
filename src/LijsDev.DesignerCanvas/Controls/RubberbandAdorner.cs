@@ -72,19 +72,23 @@ namespace LijsDev.DesignerCanvas.Controls
 
         private void UpdateSelection()
         {
+            // Check
+            if (startPoint is null || endPoint is null) return;
+
             _designerCanvas.SelectionService.ClearSelection();
 
             var rubberBand = new Rect(startPoint.Value, endPoint.Value);
-            foreach (Control item in _designerCanvas.Children.OfType<ISelectable>())
+            foreach (var item in _designerCanvas.Children.OfType<IDesignerItem>())
             {
-                var itemRect = VisualTreeHelper.GetDescendantBounds(item);
-                var itemBounds = item.TransformToAncestor(_designerCanvas).TransformBounds(itemRect);
+                if (!item.AllowSelection) continue;
+                if (item is not Control control) continue;
+
+                var itemRect = VisualTreeHelper.GetDescendantBounds(control);
+                var itemBounds = control.TransformToAncestor(_designerCanvas).TransformBounds(itemRect);
 
                 if (rubberBand.Contains(itemBounds))
                 {
-                    var di = item as DesignerItem;
-                    if (di.ParentId == Guid.Empty)
-                        _designerCanvas.SelectionService.AddToSelection(di);
+                    _designerCanvas.SelectionService.AddToSelection(item);
                 }
             }
         }

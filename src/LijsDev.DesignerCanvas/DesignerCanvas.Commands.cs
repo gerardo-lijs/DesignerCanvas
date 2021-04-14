@@ -58,18 +58,16 @@ namespace LijsDev.DesignerCanvas
 
         private void Paste_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            XElement root = LoadSerializedDataFromClipBoard();
+            var root = LoadSerializedDataFromClipBoard();
+            if (root is null) return;
 
-            if (root == null)
-                return;
-
-            // create DesignerItems
+            // Create DesignerItems
             var mappingOldToNewIDs = new Dictionary<Guid, Guid>();
-            var newItems = new List<ISelectable>();
+            var newItems = new List<IDesignerItem>();
             var itemsXML = root.Elements("DesignerItems").Elements("DesignerItem");
 
-            double offsetX = Double.Parse(root.Attribute("OffsetX").Value, CultureInfo.InvariantCulture);
-            double offsetY = Double.Parse(root.Attribute("OffsetY").Value, CultureInfo.InvariantCulture);
+            var offsetX = double.Parse(root.Attribute("OffsetX").Value, CultureInfo.InvariantCulture);
+            var offsetY = double.Parse(root.Attribute("OffsetY").Value, CultureInfo.InvariantCulture);
 
             foreach (XElement itemXML in itemsXML)
             {
@@ -77,25 +75,15 @@ namespace LijsDev.DesignerCanvas
                 var newID = Guid.NewGuid();
                 mappingOldToNewIDs.Add(oldID, newID);
                 DesignerItem item = DeserializeDesignerItem(itemXML, newID, offsetX, offsetY);
-                this.Children.Add(item);
+                Children.Add(item);
                 newItems.Add(item);
             }
 
-            // update group hierarchy
+            // Update selection
             SelectionService.ClearSelection();
-            foreach (DesignerItem el in newItems)
-            {
-                if (el.ParentId != Guid.Empty)
-                    el.ParentId = mappingOldToNewIDs[el.ParentId];
-            }
-
-
             foreach (DesignerItem item in newItems)
             {
-                if (item.ParentId == Guid.Empty)
-                {
-                    SelectionService.AddToSelection(item);
-                }
+                SelectionService.AddToSelection(item);
             }
 
             DesignerCanvasCommands.BringToFront.Execute(null, this);
@@ -312,7 +300,7 @@ namespace LijsDev.DesignerCanvas
 
         #region Helper Methods
 
-        private static XElement LoadSerializedDataFromClipBoard()
+        private static XElement? LoadSerializedDataFromClipBoard()
         {
             for (int i = 0; i < 10; i++)
             {
@@ -355,7 +343,6 @@ namespace LijsDev.DesignerCanvas
                                                   new XElement("Id", item.Id),
                                                   new XElement("zIndex", GetZIndex(item)),
                                                   new XElement("Opacity", item.Opacity),
-                                                  new XElement("ParentId", item.ParentId),
                                                   new XElement("Content", contentXaml)
                                               )
                                    );
@@ -365,14 +352,13 @@ namespace LijsDev.DesignerCanvas
         {
             var item = new DesignerItem(id)
             {
-                Width = Double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture),
-                Height = Double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture),
-                Opacity = Double.Parse(itemXML.Element("Opacity").Value),
-                ParentId = new Guid(itemXML.Element("ParentId").Value)
+                Width = double.Parse(itemXML.Element("Width").Value, CultureInfo.InvariantCulture),
+                Height = double.Parse(itemXML.Element("Height").Value, CultureInfo.InvariantCulture),
+                Opacity = double.Parse(itemXML.Element("Opacity").Value),
             };
-            SetLeft(item, Double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);
-            SetTop(item, Double.Parse(itemXML.Element("Top").Value, CultureInfo.InvariantCulture) + OffsetY);
-            SetZIndex(item, Int32.Parse(itemXML.Element("zIndex").Value));
+            SetLeft(item, double.Parse(itemXML.Element("Left").Value, CultureInfo.InvariantCulture) + OffsetX);
+            SetTop(item, double.Parse(itemXML.Element("Top").Value, CultureInfo.InvariantCulture) + OffsetY);
+            SetZIndex(item, int.Parse(itemXML.Element("zIndex").Value));
             item.Content = XamlReader.Load(XmlReader.Create(new StringReader(itemXML.Element("Content").Value)));
             return item;
         }

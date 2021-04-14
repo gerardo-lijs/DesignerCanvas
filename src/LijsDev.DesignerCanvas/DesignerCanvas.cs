@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -20,13 +21,31 @@ namespace LijsDev.DesignerCanvas
         static DesignerCanvas()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DesignerCanvas), new FrameworkPropertyMetadata(typeof(DesignerCanvas)));
+
+            // Load cursors
             var cursorUri = new Uri("pack://application:,,,/LijsDev.DesignerCanvas;component/Cursors/add.cur");
             Add_Cursor = new Cursor(Application.GetResourceStream(cursorUri).Stream);
         }
 
+        #region SelectionChangedEvent
+
+        public static readonly RoutedEvent SelectionChangedEvent = EventManager.RegisterRoutedEvent(nameof(SelectionChanged), RoutingStrategy.Bubble, typeof(SelectionChangedEventHandler), typeof(DesignerCanvas));
+        public event SelectionChangedEventHandler SelectionChanged
+        {
+            add => AddHandler(SelectionChangedEvent, value);
+            remove => RemoveHandler(SelectionChangedEvent, value);
+        }
+
+        protected internal void RaiseSelectionChangedEvent(List<IDesignerItem> items)
+        {
+            var newEventArgs = new SelectionChangedEventArgs(SelectionChangedEvent, items);
+            RaiseEvent(newEventArgs);
+        }
+        #endregion SelectionChangedEvent
+
         #region RectangleDrawnEvent
 
-        public static readonly RoutedEvent RectangleDrawnEvent = EventManager.RegisterRoutedEvent("RectangleDrawn", RoutingStrategy.Bubble, typeof(RectangleDrawnEventHandler), typeof(DesignerCanvas));
+        public static readonly RoutedEvent RectangleDrawnEvent = EventManager.RegisterRoutedEvent(nameof(RectangleDrawn), RoutingStrategy.Bubble, typeof(RectangleDrawnEventHandler), typeof(DesignerCanvas));
         public event RectangleDrawnEventHandler RectangleDrawn
         {
             add => AddHandler(RectangleDrawnEvent, value);
@@ -41,7 +60,7 @@ namespace LijsDev.DesignerCanvas
         #endregion RectangleDrawnEvent
 
         #region RectangleAutoDetectEvent
-        public static readonly RoutedEvent RectangleAutoDetectEvent = EventManager.RegisterRoutedEvent("RectangleAutoDetect", RoutingStrategy.Bubble, typeof(RectangleAutoDetectEventHandler), typeof(DesignerCanvas));
+        public static readonly RoutedEvent RectangleAutoDetectEvent = EventManager.RegisterRoutedEvent(nameof(RectangleAutoDetect), RoutingStrategy.Bubble, typeof(RectangleAutoDetectEventHandler), typeof(DesignerCanvas));
         public event RectangleAutoDetectEventHandler RectangleAutoDetect
         {
             add => AddHandler(RectangleAutoDetectEvent, value);

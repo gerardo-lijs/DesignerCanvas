@@ -10,7 +10,7 @@ namespace LijsDev.DesignerCanvas
     [TemplatePart(Name = DragThumbPart, Type = typeof(DragThumb))]
     [TemplatePart(Name = ResizeDecoratorPart, Type = typeof(Control))]
     [TemplatePart(Name = ContentPresenterPart, Type = typeof(ContentPresenter))]
-    public class DesignerItem : ContentControl, ISelectable
+    public class DesignerItem : ContentControl, IDesignerItem
     {
         private const string DragThumbPart = "PART_DragThumb";
         private const string ResizeDecoratorPart = "PART_ResizeDecorator";
@@ -18,19 +18,19 @@ namespace LijsDev.DesignerCanvas
 
         public Guid Id { get; }
 
-        public Guid ParentId
-        {
-            get => (Guid)GetValue(ParentIdProperty);
-            set => SetValue(ParentIdProperty, value);
-        }
-        public static readonly DependencyProperty ParentIdProperty = DependencyProperty.Register(nameof(ParentId), typeof(Guid), typeof(DesignerItem));
-
         public bool IsSelected
         {
             get => (bool)GetValue(IsSelectedProperty);
             set => SetValue(IsSelectedProperty, value);
         }
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register(nameof(IsSelected), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(false));
+
+        public bool AllowSelection
+        {
+            get => (bool)GetValue(AllowSelectionProperty);
+            set => SetValue(AllowSelectionProperty, value);
+        }
+        public static readonly DependencyProperty AllowSelectionProperty = DependencyProperty.Register(nameof(AllowSelection), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(true));
 
         static DesignerItem()
         {
@@ -49,6 +49,9 @@ namespace LijsDev.DesignerCanvas
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseDown(e);
+
+            // Check item can be selected
+            if (!AllowSelection) return;
 
             // Get parent / Must be of type DesignerCanvas
             if (VisualTreeHelper.GetParent(this) is not DesignerCanvas designer) return;

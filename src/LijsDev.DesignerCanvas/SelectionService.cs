@@ -7,42 +7,47 @@ namespace LijsDev.DesignerCanvas
     {
         private readonly DesignerCanvas _designerCanvas;
 
-        internal List<ISelectable> CurrentSelection { get; } = new List<ISelectable>();
+        internal List<IDesignerItem> CurrentSelection { get; } = new();
 
         public SelectionService(DesignerCanvas designerCanvas)
         {
             _designerCanvas = designerCanvas;
         }
 
-        internal void SelectItem(ISelectable item)
+        internal void SelectItem(IDesignerItem item)
         {
             ClearSelection();
             AddToSelection(item);
+            _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
 
-        internal void AddToSelection(ISelectable item)
+        internal void AddToSelection(IDesignerItem item)
         {
             item.IsSelected = true;
             CurrentSelection.Add(item);
+            _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
 
-        internal void RemoveFromSelection(ISelectable item)
+        internal void RemoveFromSelection(IDesignerItem item)
         {
             item.IsSelected = false;
             CurrentSelection.Remove(item);
+            _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
 
         internal void ClearSelection()
         {
             CurrentSelection.ForEach(item => item.IsSelected = false);
             CurrentSelection.Clear();
+            _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
 
         internal void SelectAll()
         {
             ClearSelection();
-            CurrentSelection.AddRange(_designerCanvas.Children.OfType<ISelectable>());
+            CurrentSelection.AddRange(_designerCanvas.Children.OfType<IDesignerItem>());
             CurrentSelection.ForEach(item => item.IsSelected = true);
+            _designerCanvas.RaiseSelectionChangedEvent(CurrentSelection);
         }
     }
 }
