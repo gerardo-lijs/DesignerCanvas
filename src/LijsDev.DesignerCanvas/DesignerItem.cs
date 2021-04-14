@@ -60,14 +60,12 @@ namespace LijsDev.DesignerCanvas
             if (designer.ToolMode == Tool.Select)
             {
                 if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
+                {
                     if (IsSelected)
-                    {
                         designer.SelectionService.RemoveFromSelection(this);
-                    }
                     else
-                    {
                         designer.SelectionService.AddToSelection(this);
-                    }
+                }
                 else if (!IsSelected)
                 {
                     designer.SelectionService.SelectItem(this);

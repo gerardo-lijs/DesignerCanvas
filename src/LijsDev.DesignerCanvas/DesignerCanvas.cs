@@ -139,6 +139,8 @@ namespace LijsDev.DesignerCanvas
         }
         #endregion ToolMode
 
+        public List<IDesignerItem> SelectedItems { get; } = new();
+
         private SelectionService selectionService;
         internal SelectionService SelectionService
         {

@@ -49,7 +49,7 @@ namespace LijsDev.DesignerCanvas
 
         private void Copy_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = SelectionService.CurrentSelection.Count > 0;
+            e.CanExecute = SelectedItems.Count > 0;
         }
 
         #endregion
@@ -129,7 +129,7 @@ namespace LijsDev.DesignerCanvas
 
         private void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = this.SelectionService.CurrentSelection.Count > 0;
+            e.CanExecute = SelectedItems.Count > 0;
         }
 
         #endregion
@@ -144,7 +144,7 @@ namespace LijsDev.DesignerCanvas
 
         private void Cut_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = SelectionService.CurrentSelection.Count > 0;
+            e.CanExecute = SelectedItems.Count > 0;
         }
 
         #endregion
@@ -153,26 +153,22 @@ namespace LijsDev.DesignerCanvas
 
         private void BringForward_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            List<UIElement> ordered = (from item in SelectionService.CurrentSelection
-                                       orderby Canvas.GetZIndex(item as UIElement) descending
-                                       select item as UIElement).ToList();
+            var ordered = SelectedItems.Cast<UIElement>().OrderByDescending(GetZIndex).ToList();
 
-            int count = this.Children.Count;
+            int count = Children.Count;
 
             for (int i = 0; i < ordered.Count; i++)
             {
-                int currentIndex = Canvas.GetZIndex(ordered[i]);
+                int currentIndex = GetZIndex(ordered[i]);
                 int newIndex = Math.Min(count - 1 - i, currentIndex + 1);
                 if (currentIndex != newIndex)
                 {
-                    Canvas.SetZIndex(ordered[i], newIndex);
-                    IEnumerable<UIElement> it = this.Children.OfType<UIElement>().Where(item => Canvas.GetZIndex(item) == newIndex);
-
-                    foreach (UIElement elm in it)
+                    SetZIndex(ordered[i], newIndex);
+                    foreach (var elm in Children.OfType<UIElement>().Where(item => GetZIndex(item) == newIndex))
                     {
                         if (elm != ordered[i])
                         {
-                            Canvas.SetZIndex(elm, currentIndex);
+                            SetZIndex(elm, currentIndex);
                             break;
                         }
                     }
@@ -182,8 +178,7 @@ namespace LijsDev.DesignerCanvas
 
         private void Order_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //e.CanExecute = SelectionService.CurrentSelection.Count() > 0;
-            e.CanExecute = true;
+            e.CanExecute = SelectedItems.Count > 0;
         }
 
         #endregion
@@ -192,26 +187,20 @@ namespace LijsDev.DesignerCanvas
 
         private void BringToFront_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            List<UIElement> selectionSorted = (from item in SelectionService.CurrentSelection
-                                               orderby Canvas.GetZIndex(item as UIElement) ascending
-                                               select item as UIElement).ToList();
+            var selectionSorted = SelectedItems.Cast<UIElement>().OrderBy(GetZIndex).ToList();
+            var childrenSorted = Children.OfType<UIElement>().OrderBy(GetZIndex).ToList();
 
-            List<UIElement> childrenSorted = (from UIElement item in this.Children
-                                              orderby Canvas.GetZIndex(item as UIElement) ascending
-                                              select item as UIElement).ToList();
-
-            int i = 0;
-            int j = 0;
-            foreach (UIElement item in childrenSorted)
+            var i = 0;
+            var j = 0;
+            foreach (var item in childrenSorted)
             {
                 if (selectionSorted.Contains(item))
                 {
-                    int idx = Canvas.GetZIndex(item);
-                    Canvas.SetZIndex(item, childrenSorted.Count - selectionSorted.Count + j++);
+                    SetZIndex(item, childrenSorted.Count - selectionSorted.Count + j++);
                 }
                 else
                 {
-                    Canvas.SetZIndex(item, i++);
+                    SetZIndex(item, i++);
                 }
             }
         }
@@ -222,26 +211,24 @@ namespace LijsDev.DesignerCanvas
 
         private void SendBackward_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            List<UIElement> ordered = (from item in SelectionService.CurrentSelection
-                                       orderby Canvas.GetZIndex(item as UIElement) ascending
-                                       select item as UIElement).ToList();
+            var ordered = SelectedItems.Cast<UIElement>().OrderBy(GetZIndex).ToList();
 
-            int count = this.Children.Count;
+            int count = Children.Count;
 
             for (int i = 0; i < ordered.Count; i++)
             {
-                int currentIndex = Canvas.GetZIndex(ordered[i]);
+                int currentIndex = GetZIndex(ordered[i]);
                 int newIndex = Math.Max(i, currentIndex - 1);
                 if (currentIndex != newIndex)
                 {
-                    Canvas.SetZIndex(ordered[i], newIndex);
-                    IEnumerable<UIElement> it = this.Children.OfType<UIElement>().Where(item => Canvas.GetZIndex(item) == newIndex);
+                    SetZIndex(ordered[i], newIndex);
+                    IEnumerable<UIElement> it = Children.OfType<UIElement>().Where(item => GetZIndex(item) == newIndex);
 
                     foreach (UIElement elm in it)
                     {
                         if (elm != ordered[i])
                         {
-                            Canvas.SetZIndex(elm, currentIndex);
+                            SetZIndex(elm, currentIndex);
                             break;
                         }
                     }
@@ -255,26 +242,20 @@ namespace LijsDev.DesignerCanvas
 
         private void SendToBack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            List<UIElement> selectionSorted = (from item in SelectionService.CurrentSelection
-                                               orderby Canvas.GetZIndex(item as UIElement) ascending
-                                               select item as UIElement).ToList();
+            var selectionSorted = SelectedItems.Cast<UIElement>().OrderBy(GetZIndex).ToList();
+            var childrenSorted = Children.OfType<UIElement>().OrderBy(GetZIndex).ToList();
 
-            List<UIElement> childrenSorted = (from UIElement item in this.Children
-                                              orderby Canvas.GetZIndex(item as UIElement) ascending
-                                              select item as UIElement).ToList();
-            int i = 0;
-            int j = 0;
+            var i = 0;
+            var j = 0;
             foreach (UIElement item in childrenSorted)
             {
                 if (selectionSorted.Contains(item))
                 {
-                    int idx = Canvas.GetZIndex(item);
-                    Canvas.SetZIndex(item, j++);
-
+                    SetZIndex(item, j++);
                 }
                 else
                 {
-                    Canvas.SetZIndex(item, selectionSorted.Count + i++);
+                    SetZIndex(item, selectionSorted.Count + i++);
                 }
             }
         }
@@ -365,7 +346,7 @@ namespace LijsDev.DesignerCanvas
 
         private void CopyCurrentSelection()
         {
-            var selectedDesignerItems = SelectionService.CurrentSelection.OfType<DesignerItem>();
+            var selectedDesignerItems = SelectedItems.OfType<DesignerItem>();
 
             var designerItemsXML = SerializeDesignerItems(selectedDesignerItems);
 
@@ -390,24 +371,21 @@ namespace LijsDev.DesignerCanvas
 
         private void DeleteCurrentSelection()
         {
-            foreach (DesignerItem item in SelectionService.CurrentSelection.OfType<DesignerItem>())
+            foreach (var item in SelectedItems.OfType<DesignerItem>().ToList())
             {
-                this.Children.Remove(item);
+                Children.Remove(item);
+                SelectionService.RemoveFromSelection(item);
             }
-
-            SelectionService.ClearSelection();
             UpdateZIndex();
         }
 
         private void UpdateZIndex()
         {
-            List<UIElement> ordered = (from UIElement item in this.Children
-                                       orderby Canvas.GetZIndex(item as UIElement)
-                                       select item as UIElement).ToList();
+            var ordered = Children.OfType<UIElement>().OrderBy(GetZIndex).ToList();
 
             for (int i = 0; i < ordered.Count; i++)
             {
-                Canvas.SetZIndex(ordered[i], i);
+                SetZIndex(ordered[i], i);
             }
         }
 
