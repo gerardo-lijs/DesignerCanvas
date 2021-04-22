@@ -59,16 +59,31 @@ namespace LijsDev.DesignerCanvas
             // Update selection
             if (designer.ToolMode == Tool.Select)
             {
-                if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
+                if (e.RightButton == MouseButtonState.Pressed)
                 {
-                    if (IsSelected)
-                        designer.SelectionService.RemoveFromSelection(this);
+                    if (!IsSelected)
+                    {
+                        designer.SelectionService.SelectItem(this);
+                    }
                     else
-                        designer.SelectionService.AddToSelection(this);
+                    {
+                        // Allow context menu without changing selection
+                    }
+                    e.Handled = true;
                 }
-                else if (!IsSelected)
+                else
                 {
-                    designer.SelectionService.SelectItem(this);
+                    if ((Keyboard.Modifiers & (ModifierKeys.Shift | ModifierKeys.Control)) != ModifierKeys.None)
+                    {
+                        if (IsSelected)
+                            designer.SelectionService.RemoveFromSelection(this);
+                        else
+                            designer.SelectionService.AddToSelection(this);
+                    }
+                    else if (!IsSelected)
+                    {
+                        designer.SelectionService.SelectItem(this);
+                    }
                 }
                 Focus();
             }

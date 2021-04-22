@@ -139,6 +139,13 @@ namespace LijsDev.DesignerCanvas
         }
         #endregion ToolMode
 
+        public bool DisableClipboard
+        {
+            get => (bool)GetValue(DisableClipboardProperty);
+            set => SetValue(DisableClipboardProperty, value);
+        }
+        public static readonly DependencyProperty DisableClipboardProperty = DependencyProperty.Register(nameof(DisableClipboard), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(false));
+
         public List<IDesignerItem> SelectedItems { get; } = new();
 
         private SelectionService selectionService;

@@ -3,29 +3,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:LijsDev.DesignerCanvas"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:c="clr-namespace:LijsDev.DesignerCanvas.Controls">
+    xmlns:c="clr-namespace:LijsDev.DesignerCanvas.Controls"
+    xmlns:converters="clr-namespace:LijsDev.DesignerCanvas.Converters">
+
+    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
 
     <ContextMenu x:Key="DesignerCanvasContextMenu">
-        <MenuItem Header="Paste" Command="{x:Static ApplicationCommands.Paste}">
+        <MenuItem Header="Paste" Command="{x:Static ApplicationCommands.Paste}" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}" >
             <MenuItem.Icon>
-                <Image Source="Resources/Images/Paste.png" Width="16"/>
+                <Image Source="/Resources/Images/Paste.png" Width="16"/>
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem Header="Select All" Command="{x:Static local:DesignerCanvasCommands.SelectAll}"/>
     </ContextMenu>
 
     <ContextMenu x:Key="DesignerItemContextMenu">
-        <MenuItem Header="Cut" Command="{x:Static ApplicationCommands.Cut}">
+        <MenuItem Header="Cut" Command="{x:Static ApplicationCommands.Cut}" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem.Icon>
                 <Image Source="/Resources/Images/Cut.png" Width="16"/>
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="Copy" Command="{x:Static ApplicationCommands.Copy}">
+        <MenuItem Header="Copy" Command="{x:Static ApplicationCommands.Copy}" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem.Icon>
                 <Image Source="/Resources/Images/Copy.png" Width="16"/>
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="Paste" Command="{x:Static ApplicationCommands.Paste}">
+        <MenuItem Header="Paste" Command="{x:Static ApplicationCommands.Paste}" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem.Icon>
                 <Image Source="/Resources/Images/Paste.png" Width="16"/>
             </MenuItem.Icon>
@@ -99,11 +102,12 @@
         <Setter Property="MinWidth" Value="10"/>
         <Setter Property="MinHeight" Value="10"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="ContextMenu" Value="{StaticResource DesignerItemContextMenu}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:DesignerItem}">
-                    <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                          ContextMenu="{StaticResource DesignerItemContextMenu}">
+                    <!--<Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" ContextMenu="{StaticResource DesignerItemContextMenu}">-->
+                    <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                         <!-- PART_DragThumb -->
                         <c:DragThumb x:Name="PART_DragThumb"
                                      Opacity="0" />

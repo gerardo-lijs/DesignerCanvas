@@ -48,7 +48,7 @@ namespace LijsDev.DesignerCanvas
 
         private void Copy_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = SelectedItems.Count > 0;
+            e.CanExecute = !DisableClipboard && SelectedItems.Count > 0;
         }
 
         #endregion
@@ -105,6 +105,12 @@ namespace LijsDev.DesignerCanvas
 
         private void Paste_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            if (DisableClipboard)
+            {
+                e.CanExecute = false;
+                return;
+            }
+
             for (int i = 0; i < 10; i++)
             {
                 try
@@ -143,7 +149,7 @@ namespace LijsDev.DesignerCanvas
 
         private void Cut_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = SelectedItems.Count > 0;
+            e.CanExecute = !DisableClipboard && SelectedItems.Count > 0;
         }
 
         #endregion
