@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -155,6 +156,37 @@ namespace LijsDev.DesignerCanvas
             {
                 selectionService ??= new SelectionService(this);
                 return selectionService;
+            }
+        }
+
+        public void SelectItem(Guid id)
+        {
+            var designerItem = Children.OfType<IDesignerItem>().Where(x => x.Id == id).FirstOrDefault();
+            if (designerItem is null) throw new Exception($"Could not find designer item with the specified Id: {id}");
+
+            // Check
+            if (!designerItem.AllowSelection) return;
+
+            // Select
+            designerItem.IsSelected = true;
+            selectionService.ClearSelection();
+            selectionService.AddToSelection(designerItem);
+        }
+
+        public void SelectItems(List<Guid> ids)
+        {
+            selectionService.ClearSelection();
+            foreach (var id in ids)
+            {
+                var designerItem = Children.OfType<IDesignerItem>().Where(x => x.Id == id).FirstOrDefault();
+                if (designerItem is null) throw new Exception($"Could not find designer item with the specified Id: {id}");
+
+                // Check
+                if (!designerItem.AllowSelection) continue;
+
+                // Select
+                designerItem.IsSelected = true;
+                selectionService.AddToSelection(designerItem);
             }
         }
 

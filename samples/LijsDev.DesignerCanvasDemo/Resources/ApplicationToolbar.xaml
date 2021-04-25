@@ -1,94 +1,135 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:lijsdev="http://lijs.dev/xaml/controls">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lijsdev="http://lijs.dev/xaml/controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Styles/ToolBar.xaml"/>
+        <ResourceDictionary Source="Styles/ToolBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <ToolBar x:Key="MyToolbar" Height="120">
-        <!--File-->
-        <GroupBox Header="File" Style="{StaticResource ToolbarGroup}" Margin="5,3,3,3">
+        <!--  File  -->
+        <GroupBox
+            Margin="5,3,3,3"
+            Header="File"
+            Style="{StaticResource ToolbarGroup}">
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button Margin="3" Width="55" Style="{StaticResource ToolBarButtonBaseStyle}"
-                        HorizontalContentAlignment="Center"
-                        Command="{x:Static ApplicationCommands.New}"
-                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                <Button
+                    Width="55"
+                    Margin="3"
+                    HorizontalContentAlignment="Center"
+                    Command="{x:Static ApplicationCommands.New}"
+                    CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                    Style="{StaticResource ToolBarButtonBaseStyle}">
                     <Button.Content>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"/>
-                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="4*" />
+                                <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
-                            <Image Source="Images/GenericDocument.png" Width="45"/>
-                            <TextBlock Grid.Row="1" Text="New" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                            <Image Width="45" Source="Images/GenericDocument.png" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Text="New" />
                         </Grid>
                     </Button.Content>
                 </Button>
             </StackPanel>
         </GroupBox>
 
-        <!--Edit-->
-        <GroupBox Header="Edit" Style="{StaticResource ToolbarGroup}" Margin="3">
+        <!--  Edit  -->
+        <GroupBox
+            Margin="3"
+            Header="Edit"
+            Style="{StaticResource ToolbarGroup}">
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button Margin="3" Width="55"
-                        Style="{StaticResource ToolBarButtonBaseStyle}"
-                        Command="{x:Static ApplicationCommands.Paste}"
-                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                <Button
+                    Width="55"
+                    Margin="3"
+                    Command="{x:Static ApplicationCommands.Paste}"
+                    CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                    Style="{StaticResource ToolBarButtonBaseStyle}">
                     <Button.Content>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"/>
-                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="4*" />
+                                <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
-                            <Image Source="Images/PasteBig.png" Width="45"/>
-                            <TextBlock Grid.Row="1" Text="Paste" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                            <Image Width="45" Source="Images/PasteBig.png" />
+                            <TextBlock
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Text="Paste" />
                         </Grid>
                     </Button.Content>
                 </Button>
-                <StackPanel Orientation="Vertical" Margin="0,2,0,2">
-                    <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static ApplicationCommands.Cut}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                <StackPanel Margin="0,2,0,2" Orientation="Vertical">
+                    <Button
+                        Margin="1"
+                        Padding="2"
+                        HorizontalContentAlignment="Left"
+                        Command="{x:Static ApplicationCommands.Cut}"
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                        Style="{StaticResource ToolBarButtonBaseStyle}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="Images/Cut.png" Width="16"/>
-                                <TextBlock Margin="3,0,3,0" Text="Cut" VerticalAlignment="Center" Grid.Column="1"/>
+                                <Image Width="16" Source="Images/Cut.png" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="3,0,3,0"
+                                    VerticalAlignment="Center"
+                                    Text="Cut" />
                             </Grid>
                         </Button.Content>
                     </Button>
-                    <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static ApplicationCommands.Copy}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button
+                        Margin="1"
+                        Padding="2"
+                        HorizontalContentAlignment="Left"
+                        Command="{x:Static ApplicationCommands.Copy}"
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                        Style="{StaticResource ToolBarButtonBaseStyle}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="Images/Copy.png" Width="16"/>
-                                <TextBlock Margin="3,0,3,0" Text="Copy" VerticalAlignment="Center" Grid.Column="1"/>
+                                <Image Width="16" Source="Images/Copy.png" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="3,0,3,0"
+                                    VerticalAlignment="Center"
+                                    Text="Copy" />
                             </Grid>
                         </Button.Content>
                     </Button>
-                    <Button Margin="1" Padding="2" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static ApplicationCommands.Delete}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button
+                        Margin="1"
+                        Padding="2"
+                        HorizontalContentAlignment="Left"
+                        Command="{x:Static ApplicationCommands.Delete}"
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                        Style="{StaticResource ToolBarButtonBaseStyle}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/Resources/Images/Delete.png" Width="16"/>
-                                <TextBlock Margin="3,0,3,0" Text="Delete" VerticalAlignment="Center" Grid.Column="1"/>
+                                <Image Width="16" Source="/Resources/Images/Delete.png" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="3,0,3,0"
+                                    VerticalAlignment="Center"
+                                    Text="Delete" />
                             </Grid>
                         </Button.Content>
                     </Button>
@@ -96,78 +137,116 @@
             </StackPanel>
         </GroupBox>
 
-        <!--Arrange-->
-        <GroupBox Header="Arrange" Style="{StaticResource ToolbarGroup}" Margin="3">
+        <!--  Arrange  -->
+        <GroupBox
+            Margin="3"
+            Header="Arrange"
+            Style="{StaticResource ToolbarGroup}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="1" Margin="7,0,0,0">
-                    <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static lijsdev:DesignerCanvasCommands.BringForward}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button
+                        Margin="0,3,0,3"
+                        Padding="5"
+                        HorizontalContentAlignment="Left"
+                        Command="{x:Static lijsdev:DesignerCanvasCommands.BringForward}"
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                        Style="{StaticResource ToolBarButtonBaseStyle}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="Images/BringForward.png" Width="16"/>
-                                <TextBlock Margin="3" Text="Forward" VerticalAlignment="Center" Grid.Column="1"/>
+                                <Image Width="16" Source="Images/BringForward.png" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="3"
+                                    VerticalAlignment="Center"
+                                    Text="Forward" />
                             </Grid>
                         </Button.Content>
                     </Button>
-                    <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static lijsdev:DesignerCanvasCommands.BringToFront}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button
+                        Margin="0,3,0,3"
+                        Padding="5"
+                        HorizontalContentAlignment="Left"
+                        Command="{x:Static lijsdev:DesignerCanvasCommands.BringToFront}"
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                        Style="{StaticResource ToolBarButtonBaseStyle}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="Images/BringToFront.png" Width="16"/>
-                                <TextBlock Margin="3" Text="To Front" VerticalAlignment="Center" Grid.Column="1"/>
+                                <Image Width="16" Source="Images/BringToFront.png" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="3"
+                                    VerticalAlignment="Center"
+                                    Text="To Front" />
                             </Grid>
                         </Button.Content>
                     </Button>
                 </StackPanel>
-                <Line Stroke="{StaticResource ToolbarBorderBrush}" 
-                      StrokeThickness="1" X1="0" Y1="0" X2="0" Y2="20" 
-                      Stretch="Fill" HorizontalAlignment="Left"
-                      Grid.Column="1" Margin="3,0,0,0"/>
+                <Line
+                    Grid.Column="1"
+                    Margin="3,0,0,0"
+                    HorizontalAlignment="Left"
+                    Stretch="Fill"
+                    Stroke="{StaticResource ToolbarBorderBrush}"
+                    StrokeThickness="1"
+                    X1="0"
+                    X2="0"
+                    Y1="0"
+                    Y2="20" />
                 <StackPanel Grid.Column="2">
-                    <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static lijsdev:DesignerCanvasCommands.SendBackward}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button
+                        Margin="0,3,0,3"
+                        Padding="5"
+                        HorizontalContentAlignment="Left"
+                        Command="{x:Static lijsdev:DesignerCanvasCommands.SendBackward}"
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                        Style="{StaticResource ToolBarButtonBaseStyle}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="Images/SendBackward.png" Width="16"/>
-                                <TextBlock Margin="3" Text="Backward" VerticalAlignment="Center"  Grid.Column="1"/>
+                                <Image Width="16" Source="Images/SendBackward.png" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="3"
+                                    VerticalAlignment="Center"
+                                    Text="Backward" />
                             </Grid>
                         </Button.Content>
                     </Button>
-                    <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static lijsdev:DesignerCanvasCommands.SendToBack}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                    <Button
+                        Margin="0,3,0,3"
+                        Padding="5"
+                        HorizontalContentAlignment="Left"
+                        Command="{x:Static lijsdev:DesignerCanvasCommands.SendToBack}"
+                        CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                        Style="{StaticResource ToolBarButtonBaseStyle}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="Images/SendToBack.png" Width="16"/>
-                                <TextBlock Margin="3" Text="To Back" VerticalAlignment="Center" Grid.Column="1"/>
+                                <Image Width="16" Source="Images/SendToBack.png" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="3"
+                                    VerticalAlignment="Center"
+                                    Text="To Back" />
                             </Grid>
                         </Button.Content>
                     </Button>
@@ -175,38 +254,58 @@
             </Grid>
         </GroupBox>
 
-        <!--Tools-->
-        <GroupBox Header="Tools" Style="{StaticResource ToolbarGroup}" Margin="3">
-            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="7,0,0,0">
-                <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static lijsdev:DesignerCanvasCommands.ToolModeChange}"
-                            CommandParameter="{x:Static lijsdev:Tool.Select}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+        <!--  Tools  -->
+        <GroupBox
+            Margin="3"
+            Header="Tools"
+            Style="{StaticResource ToolbarGroup}">
+            <StackPanel
+                Grid.Column="1"
+                Margin="7,0,0,0"
+                Orientation="Horizontal">
+                <Button
+                    Margin="0,3,0,3"
+                    Padding="5"
+                    HorizontalContentAlignment="Left"
+                    Command="{x:Static lijsdev:DesignerCanvasCommands.ToolModeChange}"
+                    CommandParameter="{x:Static lijsdev:Tool.Select}"
+                    CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                    Style="{StaticResource ToolBarButtonBaseStyle}">
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Image Source="Images/BringForward.png" Width="16"/>
-                            <TextBlock Margin="3" Text="Select" VerticalAlignment="Center" Grid.Column="1"/>
+                            <Image Width="16" Source="Images/BringForward.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="3"
+                                VerticalAlignment="Center"
+                                Text="Select" />
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button Margin="0,3,0,3" Padding="5" HorizontalContentAlignment="Left"
-                            Style="{StaticResource ToolBarButtonBaseStyle}"
-                            Command="{x:Static lijsdev:DesignerCanvasCommands.ToolModeChange}"
-                            CommandParameter="{x:Static lijsdev:Tool.Rectangle}"
-                            CommandTarget="{Binding ElementName=DemoDesignerCanvas}">
+                <Button
+                    Margin="0,3,0,3"
+                    Padding="5"
+                    HorizontalContentAlignment="Left"
+                    Command="{x:Static lijsdev:DesignerCanvasCommands.ToolModeChange}"
+                    CommandParameter="{x:Static lijsdev:Tool.Rectangle}"
+                    CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                    Style="{StaticResource ToolBarButtonBaseStyle}">
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
+                                <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Image Source="Images/BringToFront.png" Width="16"/>
-                            <TextBlock Margin="3" Text="Rectangle" VerticalAlignment="Center" Grid.Column="1"/>
+                            <Image Width="16" Source="Images/BringToFront.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="3"
+                                VerticalAlignment="Center"
+                                Text="Rectangle" />
                         </Grid>
                     </Button.Content>
                 </Button>
