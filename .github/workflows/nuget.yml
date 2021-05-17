@@ -1,0 +1,47 @@
+name: Continous Deployment
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+ 
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+ 
+    - name: Restore
+      run: dotnet restore
+      working-directory: src/LijsDev.DesignerCanvas
+ 
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: src/LijsDev.DesignerCanvas
+ 
+    - name: Test
+      run: dotnet test --no-restore
+      working-directory: src/LijsDev.DesignerCanvas
+      
+    - name: Pack
+      run: dotnet pack --configuration Release --no-build --include-source --include-symbols -o ./artifacts
+      working-directory: src/LijsDev.DesignerCanvas
+
+    - name: setup nuget
+      uses: NuGet/setup-nuget@v1.0.5
+      with:
+        nuget-version: latest
+
+    - name: Publish Balea nuget
+      run: dotnet nuget push ./artifacts/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: src/LijsDev.DesignerCanvas
