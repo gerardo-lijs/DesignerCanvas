@@ -44,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: NuGet Package
-        path: /src/**/*.nupkg
+        path: src/LijsDev.DesignerCanvas/bin/Release/*.nupkg

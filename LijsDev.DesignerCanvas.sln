@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LijsDev.DesignerCanvas", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B78E28AB-712C-44DA-9DDC-13DEA1CECBF1}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\CI.yml = .github\workflows\CI.yml
+		.github\workflows\package.yml = .github\workflows\package.yml
 	EndProjectSection
 EndProject
 Global
