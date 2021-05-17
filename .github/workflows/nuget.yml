@@ -43,5 +43,5 @@ jobs:
         nuget-version: latest
 
     - name: Publish NuGet Package
-      run: dotnet nuget push ./src/LijsDev.DesignerCanvas/artifacts/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      run: dotnet nuget push ./artifacts/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: src/LijsDev.DesignerCanvas
