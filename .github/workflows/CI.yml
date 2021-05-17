@@ -25,19 +25,19 @@ jobs:
         dotnet-version: 5.0.x
  
     - name: Restore
-      run: dotnet restore '/src/**/*.csproj'
+      run: dotnet restore /src/LijsDev.DesignerCanvas/LijsDev.DesignerCanvas.csproj
  
     - name: Build
-      run: dotnet build '/src/**/*.csproj' --configuration Release --no-restore
+      run: dotnet build /src/LijsDev.DesignerCanvas/LijsDev.DesignerCanvas.csproj --configuration Release --no-restore
  
     - name: Test
-      run: dotnet test '/src/**/*.csproj' --no-restore
+      run: dotnet test /src/LijsDev.DesignerCanvas/LijsDev.DesignerCanvas.csproj --no-restore
 
     - name: Pack
-      run: dotnet pack '/src/**/*.csproj' --configuration Release --no-build
+      run: dotnet pack /src/LijsDev.DesignerCanvas/LijsDev.DesignerCanvas.csproj --configuration Release --no-build
  
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
         name: NuGet Package
-        path: '**/*.nupkg'
+        path: /src/**/*.nupkg
