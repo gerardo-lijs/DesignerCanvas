@@ -25,20 +25,16 @@ jobs:
         dotnet-version: 5.0.x
  
     - name: Restore
-      run: dotnet restore
-      working-directory: src
+      run: dotnet restore '/src/**/*.csproj'
  
     - name: Build
-      run: dotnet build --configuration Release --no-restore
-      working-directory: src
+      run: dotnet build '/src/**/*.csproj' --configuration Release --no-restore
  
     - name: Test
-      run: dotnet test --no-restore
-      working-directory: src
+      run: dotnet test '/src/**/*.csproj' --no-restore
 
     - name: Pack
-      run: dotnet pack --configuration Release --no-build
-      working-directory: src
+      run: dotnet pack '/src/**/*.csproj' --configuration Release --no-build
  
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
