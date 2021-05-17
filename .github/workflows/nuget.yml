@@ -37,11 +37,11 @@ jobs:
       run: dotnet pack --configuration Release --no-build --include-source --include-symbols -o ./artifacts
       working-directory: src/LijsDev.DesignerCanvas
 
-    - name: setup nuget
-      uses: NuGet/setup-nuget@v1.0.5
+    - name: Install NuGet
+      uses: NuGet/setup-nuget@v1
       with:
         nuget-version: latest
 
-    - name: Publish Balea nuget
-      run: dotnet nuget push ./artifacts/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+    - name: Publish NuGet Package
+      run: dotnet nuget push ./src/LijsDev.DesignerCanvas/artifacts/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: src/LijsDev.DesignerCanvas
