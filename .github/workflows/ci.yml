@@ -35,13 +35,3 @@ jobs:
     - name: Test
       run: dotnet test --no-restore
       working-directory: src/LijsDev.DesignerCanvas
-
-    - name: Pack
-      run: dotnet pack --configuration Release --no-build
-      working-directory: src/LijsDev.DesignerCanvas
- 
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: NuGet Package
-        path: src/LijsDev.DesignerCanvas/bin/Release/*.nupkg
