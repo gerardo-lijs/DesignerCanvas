@@ -309,6 +309,29 @@
                         </Grid>
                     </Button.Content>
                 </Button>
+                <Button
+                    Margin="0,3,0,3"
+                    Padding="5"
+                    HorizontalContentAlignment="Left"
+                    Command="{x:Static lijsdev:DesignerCanvasCommands.ToolModeChange}"
+                    CommandParameter="{x:Static lijsdev:Tool.DetectRectangle}"
+                    CommandTarget="{Binding ElementName=DemoDesignerCanvas}"
+                    Style="{StaticResource ToolBarButtonBaseStyle}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image Width="16" Source="Images/BringToFront.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="3"
+                                VerticalAlignment="Center"
+                                Text="Detect rectangle" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
             </StackPanel>
         </GroupBox>
     </ToolBar>

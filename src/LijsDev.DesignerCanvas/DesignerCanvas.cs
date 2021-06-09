@@ -228,6 +228,10 @@ namespace LijsDev.DesignerCanvas
                 else
                     Cursor = Cursors.Cross;
             }
+            else if (ToolMode == Tool.DetectRectangle)
+            {
+                Cursor = Add_Cursor;
+            }
             else
             {
                 Cursor = Cursors.Arrow;
@@ -274,6 +278,11 @@ namespace LijsDev.DesignerCanvas
                 case Tool.Polygon:
                     break;
                 case Tool.DetectRectangle:
+                    {
+                        // Auto detect rectangle at current position
+                        var detectCenterPosition = e.GetPosition(this);
+                        RaiseRectangleAutoDetectEvent(detectCenterPosition.X, detectCenterPosition.Y);
+                    }
                     break;
                 case Tool.DetectPolygon:
                     break;
