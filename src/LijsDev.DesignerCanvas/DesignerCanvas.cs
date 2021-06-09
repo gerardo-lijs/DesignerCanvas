@@ -75,6 +75,22 @@ namespace LijsDev.DesignerCanvas
         }
         #endregion RectangleAutoDetectEvent
 
+        #region ItemsDeletedEvent
+
+        public static readonly RoutedEvent ItemsDeletedEvent = EventManager.RegisterRoutedEvent(nameof(ItemsDeleted), RoutingStrategy.Bubble, typeof(ItemsDeletedEventHandler), typeof(DesignerCanvas));
+        public event ItemsDeletedEventHandler ItemsDeleted
+        {
+            add => AddHandler(ItemsDeletedEvent, value);
+            remove => RemoveHandler(ItemsDeletedEvent, value);
+        }
+
+        protected internal void RaiseItemsDeletedEvent()
+        {
+            var newEventArgs = new RoutedEventArgs(ItemsDeletedEvent);
+            RaiseEvent(newEventArgs);
+        }
+        #endregion ItemsDeletedEvent
+
         #region ToolMode
         public static readonly DependencyProperty ToolModeProperty = DependencyProperty.Register("ToolMode", typeof(Tool), typeof(DesignerCanvas), new PropertyMetadata(Tool.Select, new PropertyChangedCallback(OnToolModeChanged)));
         public Tool ToolMode
@@ -146,6 +162,13 @@ namespace LijsDev.DesignerCanvas
             set => SetValue(DisableClipboardProperty, value);
         }
         public static readonly DependencyProperty DisableClipboardProperty = DependencyProperty.Register(nameof(DisableClipboard), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(false));
+
+        public bool DisableZOrder
+        {
+            get => (bool)GetValue(DisableZOrderProperty);
+            set => SetValue(DisableZOrderProperty, value);
+        }
+        public static readonly DependencyProperty DisableZOrderProperty = DependencyProperty.Register(nameof(DisableZOrder), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(false));
 
         public List<IDesignerItem> SelectedItems { get; } = new();
 

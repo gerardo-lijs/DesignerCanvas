@@ -14,7 +14,7 @@
             Header="Paste"
             Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem.Icon>
-                <Image Width="16" Source="/Resources/Images/Paste.png" />
+                <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/Paste.png" />
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem Command="{x:Static local:DesignerCanvasCommands.SelectAll}" Header="Select All" />
@@ -26,7 +26,7 @@
             Header="Cut"
             Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem.Icon>
-                <Image Width="16" Source="/Resources/Images/Cut.png" />
+                <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/Cut.png" />
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem
@@ -34,7 +34,7 @@
             Header="Copy"
             Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem.Icon>
-                <Image Width="16" Source="/Resources/Images/Copy.png" />
+                <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/Copy.png" />
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem
@@ -42,34 +42,34 @@
             Header="Paste"
             Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableClipboard, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem.Icon>
-                <Image Width="16" Source="/Resources/Images/Paste.png" />
+                <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/Paste.png" />
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem Command="{x:Static ApplicationCommands.Delete}" Header="Delete">
             <MenuItem.Icon>
-                <Image Width="16" Source="/Resources/Images/Delete.png" />
+                <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/Delete.png" />
             </MenuItem.Icon>
         </MenuItem>
-        <Separator />
-        <MenuItem Header="Order">
+        <Separator Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableZOrder, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+        <MenuItem Header="Order" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=DisableZOrder, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <MenuItem Command="{x:Static local:DesignerCanvasCommands.BringForward}" Header="Bring Forward">
                 <MenuItem.Icon>
-                    <Image Width="16" Source="/Resources/Images/BringForward.png" />
+                    <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/BringForward.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Command="{x:Static local:DesignerCanvasCommands.BringToFront}" Header="Bring To Front">
                 <MenuItem.Icon>
-                    <Image Width="16" Source="/Resources/Images/BringToFront.png" />
+                    <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/BringToFront.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Command="{x:Static local:DesignerCanvasCommands.SendBackward}" Header="Send Backward">
                 <MenuItem.Icon>
-                    <Image Width="16" Source="/Resources/Images/SendBackward.png" />
+                    <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/SendBackward.png" />
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Command="{x:Static local:DesignerCanvasCommands.SendToBack}" Header="Send To Back">
                 <MenuItem.Icon>
-                    <Image Width="16" Source="/Resources/Images/SendToBack.png" />
+                    <Image Width="16" Source="pack://application:,,,/LijsDev.DesignerCanvas;component/Resources/Images/SendToBack.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>

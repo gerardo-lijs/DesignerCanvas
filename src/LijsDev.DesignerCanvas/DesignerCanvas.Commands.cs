@@ -183,7 +183,7 @@ namespace LijsDev.DesignerCanvas
 
         private void Order_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = SelectedItems.Count > 0;
+            e.CanExecute = !DisableZOrder && SelectedItems.Count > 0;
         }
 
         #endregion
@@ -381,6 +381,7 @@ namespace LijsDev.DesignerCanvas
                 Children.Remove(item);
                 SelectionService.RemoveFromSelection(item);
             }
+            RaiseItemsDeletedEvent();
             UpdateZIndex();
         }
 
