@@ -176,6 +176,9 @@
                             <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_DragThumb" Property="Cursor" Value="SizeAll" />
                         </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DesignerCanvas}}, Path=IsReadOnly}" Value="True">
+                            <Setter TargetName="PART_DragThumb" Property="Cursor" Value="Arrow" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

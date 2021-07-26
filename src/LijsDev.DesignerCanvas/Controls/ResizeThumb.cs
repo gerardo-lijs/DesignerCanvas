@@ -21,6 +21,9 @@ namespace LijsDev.DesignerCanvas.Controls
             // Get Canvas
             if (VisualTreeHelper.GetParent(designerItem) is not DesignerCanvas designer) return;
 
+            // Check edit enabled
+            if (designer.IsReadOnly) return;
+
             // Resize vertical
             var itemTop = Canvas.GetTop(designerItem);
             switch (VerticalAlignment)

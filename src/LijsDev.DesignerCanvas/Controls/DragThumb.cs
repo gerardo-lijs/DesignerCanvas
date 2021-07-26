@@ -22,6 +22,9 @@ namespace LijsDev.DesignerCanvas.Controls
             // Get Canvas
             if (VisualTreeHelper.GetParent(designerItem) is not DesignerCanvas designer) return;
 
+            // Check edit enabled
+            if (designer.IsReadOnly) return;
+
             // Only drag in Select Mode
             if (designer.ToolMode == Tool.Select)
             {

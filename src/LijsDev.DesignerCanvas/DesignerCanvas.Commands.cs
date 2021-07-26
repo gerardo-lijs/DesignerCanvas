@@ -105,6 +105,12 @@ namespace LijsDev.DesignerCanvas
 
         private void Paste_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            if (IsReadOnly)
+            {
+                e.CanExecute = false;
+                return;
+            }
+
             if (DisableClipboard)
             {
                 e.CanExecute = false;
@@ -134,6 +140,12 @@ namespace LijsDev.DesignerCanvas
 
         private void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            if (IsReadOnly)
+            {
+                e.CanExecute = false;
+                return;
+            }
+
             e.CanExecute = SelectedItems.Count > 0;
         }
 
@@ -149,6 +161,12 @@ namespace LijsDev.DesignerCanvas
 
         private void Cut_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            if (IsReadOnly)
+            {
+                e.CanExecute = false;
+                return;
+            }
+
             e.CanExecute = !DisableClipboard && SelectedItems.Count > 0;
         }
 
@@ -183,6 +201,12 @@ namespace LijsDev.DesignerCanvas
 
         private void Order_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            if (IsReadOnly)
+            {
+                e.CanExecute = false;
+                return;
+            }
+
             e.CanExecute = !DisableZOrder && SelectedItems.Count > 0;
         }
 

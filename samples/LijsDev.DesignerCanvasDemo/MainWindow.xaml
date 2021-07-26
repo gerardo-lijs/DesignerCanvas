@@ -27,6 +27,7 @@
                 <lijsdev:DesignerCanvas
                     x:Name="DemoDesignerCanvas"
                     DisableClipboard="True"
+                    IsReadOnly="False"
                     RectangleDrawn="DemoDesignerCanvas_RectangleDrawn">
 
                     <lijsdev:DesignerItem
@@ -37,6 +38,16 @@
                         Margin="50"
                         Background="White">
                         <Rectangle Fill="Coral" IsHitTestVisible="False" />
+                    </lijsdev:DesignerItem>
+
+                    <lijsdev:DesignerItem
+                        Canvas.Left="200"
+                        Canvas.Top="10"
+                        Width="150"
+                        Height="150"
+                        Margin="50"
+                        Background="White">
+                        <Rectangle Fill="Blue" IsHitTestVisible="False" />
                     </lijsdev:DesignerItem>
 
                 </lijsdev:DesignerCanvas>

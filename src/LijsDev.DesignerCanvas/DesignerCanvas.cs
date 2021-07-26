@@ -55,6 +55,7 @@ namespace LijsDev.DesignerCanvas
 
         protected internal void RaiseRectangleDrawnEvent(double left, double top, double width, double height)
         {
+            if (IsReadOnly) return;
             var newEventArgs = new RectangleDrawnEventArgs(RectangleDrawnEvent, left, top, width, height);
             RaiseEvent(newEventArgs);
         }
@@ -70,6 +71,7 @@ namespace LijsDev.DesignerCanvas
 
         protected internal void RaiseRectangleAutoDetectEvent(double centerPosX, double centerPosY)
         {
+            if (IsReadOnly) return;
             var newEventArgs = new RectangleAutoDetectEventArgs(RectangleAutoDetectEvent, centerPosX, centerPosY);
             RaiseEvent(newEventArgs);
         }
@@ -86,6 +88,7 @@ namespace LijsDev.DesignerCanvas
 
         protected internal void RaiseItemsDeletedEvent()
         {
+            if (IsReadOnly) return;
             var newEventArgs = new RoutedEventArgs(ItemsDeletedEvent);
             RaiseEvent(newEventArgs);
         }
@@ -131,15 +134,13 @@ namespace LijsDev.DesignerCanvas
                 case Tool.Select:
                     break;
                 case Tool.Rectangle:
-                    if (_crosshairPen is null)
+                    if (!IsReadOnly && _crosshairPen is null)
                     {
                         _crosshairPen = new Pen(Brushes.LightSlateGray, 1)
                         {
                             DashStyle = new DashStyle(new double[] { 5 }, 1)
                         };
                     }
-                    // Create crosshair adorner
-                    //adornerLayer.Add(new CrosshairAdorner(this));
                     break;
                 case Tool.Polygon:
                     break;
@@ -155,6 +156,13 @@ namespace LijsDev.DesignerCanvas
             InvalidateVisual();
         }
         #endregion ToolMode
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(DesignerItem), new FrameworkPropertyMetadata(false));
 
         public bool DisableClipboard
         {
@@ -221,6 +229,12 @@ namespace LijsDev.DesignerCanvas
 
         private void RefreshCursor()
         {
+            if (IsReadOnly)
+            {
+                Cursor = Cursors.Arrow;
+                return;
+            }
+
             if (ToolMode == Tool.Rectangle)
             {
                 if (Keyboard.Modifiers == ModifierKeys.Control)
@@ -260,24 +274,28 @@ namespace LijsDev.DesignerCanvas
                 case Tool.Select:
                     break;
                 case Tool.Rectangle:
-                    if ((Keyboard.Modifiers & (ModifierKeys.Control)) != ModifierKeys.None)
+                    if (!IsReadOnly)
                     {
-                        // Auto detect rectangle at current position
-                        var detectCenterPosition = e.GetPosition(this);
-                        RaiseRectangleAutoDetectEvent(detectCenterPosition.X, detectCenterPosition.Y);
+                        if ((Keyboard.Modifiers & (ModifierKeys.Control)) != ModifierKeys.None)
+                        {
+                            // Auto detect rectangle at current position
+                            var detectCenterPosition = e.GetPosition(this);
+                            RaiseRectangleAutoDetectEvent(detectCenterPosition.X, detectCenterPosition.Y);
+                        }
+                        else
+                        {
+                            // in case that this click is the start of a rectangle operation we cache the start point
+                            _mouseDownStartPoint = e.GetPosition(this);
+                            _crosshairRender = false;
+                            InvalidateVisual();
+                        }
+                        e.Handled = true;
                     }
-                    else
-                    {
-                        // in case that this click is the start of a rectangle operation we cache the start point
-                        _mouseDownStartPoint = e.GetPosition(this);
-                        _crosshairRender = false;
-                        InvalidateVisual();
-                    }
-                    e.Handled = true;
                     break;
                 case Tool.Polygon:
                     break;
                 case Tool.DetectRectangle:
+                    if (!IsReadOnly)
                     {
                         // Auto detect rectangle at current position
                         var detectCenterPosition = e.GetPosition(this);
@@ -362,26 +380,29 @@ namespace LijsDev.DesignerCanvas
                     }
                     break;
                 case Tool.Rectangle:
-                    if (e.LeftButton != MouseButtonState.Pressed && e.RightButton != MouseButtonState.Pressed)
+                    if (!IsReadOnly)
                     {
-                        _crosshairRender = true;
-                        currentPosition = e.GetPosition(this);
-                        InvalidateVisual();
-                    }
-                    else
-                    {
-                        // Create rectangle adorner
-                        var adornerLayer = AdornerLayer.GetAdornerLayer(this);
-                        if (adornerLayer is not null)
+                        if (e.LeftButton != MouseButtonState.Pressed && e.RightButton != MouseButtonState.Pressed)
                         {
-                            var adorner = new RectangleAdorner(this, _mouseDownStartPoint);
-                            if (adorner is not null)
+                            _crosshairRender = true;
+                            currentPosition = e.GetPosition(this);
+                            InvalidateVisual();
+                        }
+                        else
+                        {
+                            // Create rectangle adorner
+                            var adornerLayer = AdornerLayer.GetAdornerLayer(this);
+                            if (adornerLayer is not null)
                             {
-                                adornerLayer.Add(adorner);
+                                var adorner = new RectangleAdorner(this, _mouseDownStartPoint);
+                                if (adorner is not null)
+                                {
+                                    adornerLayer.Add(adorner);
+                                }
                             }
                         }
+                        e.Handled = true;
                     }
-                    e.Handled = true;
                     break;
                 case Tool.Polygon:
                     break;
